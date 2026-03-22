@@ -20,9 +20,11 @@ class Order {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function updateStatus($id, $status) {
-        $query = "UPDATE orders SET status=? WHERE id=?";
+    public function updateDeposit($id, $amount) {
+        $query = "UPDATE orders 
+                SET deposit_amount = ?, status = 'deposit_paid'
+                WHERE id = ?";
         $stmt = $this->conn->prepare($query);
-        return $stmt->execute([$status, $id]);
+        return $stmt->execute([$amount, $id]);
     }
 }

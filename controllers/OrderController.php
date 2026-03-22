@@ -23,7 +23,18 @@ class OrderController {
     // Buyer đặt cọc
     public function deposit() {
         $id = $_GET['id'];
-        $this->model->updateStatus($id, 'deposit_paid');
+        $amount = $_GET['amount'];
+
+        $order = $this->model->getByBuyer($id);
+        $price = $order['price'];
+
+        $minDeposit = max($price * 0.2, 500000);
+
+        if ($amount < $minDeposit) {
+            die("Số tiền cọc không hợp lệ!");
+        }
+
+        $this->model->updateDeposit($id, $amount);
         header("Location: index.php");
     }
 
