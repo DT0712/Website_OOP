@@ -5,9 +5,9 @@
     <p>📞 Điện thoại: 0909-xxx-xxx</p>
     <p>
         <span style="display: inline-block; width: 24px;">📧</span>Email: duytd2183@ut.edu.vn<br>
-        <span style="display: inline-block; width: 70px;"></span>huyta0719@ut.edu.vn<br>
-        <span style="display: inline-block; width: 70px;"></span>thuntc3402@ut.edu.vn<br>
-        <span style="display: inline-block; width: 70px;"></span>thuthuyy004thuy@gmail.com
+        <span style="display: inline-block; width: 70px;"></span>huehtb3441@ut.edu.vn<br>
+        <span style="display: inline-block; width: 70px;"></span>lamth2471@ut.edu.vn<br>
+        <span style="display: inline-block; width: 70px;"></span>bind2581@ut.edu.vn
     </p>
 
   </div>
