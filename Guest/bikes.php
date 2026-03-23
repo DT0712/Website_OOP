@@ -161,6 +161,98 @@ include "includes/header.php";
     color: #555;
 }
 
+/* ===== FEATURED ===== */
+.featured {
+    padding: 80px 0;
+    background: #fff;
+    text-align: center;
+}
+
+.featured h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+/* list */
+.bike-list {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+/* card */
+.bike-card {
+    width: 300px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    position: relative;
+}
+
+.bike-card:hover {
+    transform: translateY(-10px);
+}
+
+/* image */
+.bike-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* price */
+.bike-card .price {
+    position: absolute;
+    top: 170px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    background: orange;
+    color: white;
+    padding: 6px 14px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* title */
+.bike-card h3 {
+    margin: 20px 0 10px;
+}
+
+/* desc */
+.bike-card .desc {
+    font-size: 14px;
+    color: #666;
+    padding: 0 15px;
+    height: 50px;
+}
+
+/* meta */
+.meta {
+    display: flex;
+    justify-content: space-around;
+    font-size: 13px;
+    margin: 10px 0;
+    color: #777;
+}
+
+/* button */
+.rent-btn {
+    display: inline-block;
+    margin: 15px 0 20px;
+    padding: 10px 20px;
+    background: red;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.rent-btn:hover {
+    background: darkred;
+}
+
 /* animation */
 @keyframes fadeUp {
     from {
@@ -233,6 +325,45 @@ include "includes/header.php";
             </div>
         </div>
 
+    </div>
+</div>
+
+<!-- ===== FEATURED BIKES ===== -->
+<div class="featured">
+    <h2>FEATURED BIKES</h2>
+
+    <div class="bike-list">
+        <?php
+        $sql = "SELECT * FROM bicycles WHERE is_featured = 1 LIMIT 3";
+        $result = mysqli_query($conn, $sql);
+
+        while($row = mysqli_fetch_assoc($result)) {
+        ?>
+            <div class="bike-card">
+                <img src="<?php echo $row['main_image']; ?>" alt="">
+
+                <div class="price">
+                    <?php echo number_format($row['price']); ?> VNĐ
+                </div>
+
+                <h3><?php echo $row['name']; ?></h3>
+
+                <p class="desc">
+                    <?php echo $row['description']; ?>
+                </p>
+
+                <div class="meta">
+                    <span><?php echo $row['frame_size']; ?></span>
+                    <span><?php echo $row['location']; ?></span>
+                    <span><?php echo $row['condition_status']; ?></span>
+                </div>
+
+                <a href="detail.php?id=<?php echo $row['id']; ?>" class="rent-btn">
+    XEM CHI TIẾT
+</a>
+                
+            </div>
+        <?php } ?>
     </div>
 </div>
 
