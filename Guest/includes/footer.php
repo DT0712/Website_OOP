@@ -14,8 +14,8 @@
 
   <div class="footer-column">
     <h4>Thông tin môn học</h4>
-    <p>Môn học: <strong>Thương Mại Điện Tử</strong></p>
-    <p>Giáo viên hướng dẫn: <strong>Trần Vũ Đại</strong></p>
+    <p>Môn học: <strong>XD phần mềm hướng đối tượng</strong></p>
+    <p>Giáo viên hướng dẫn: <strong>Ths Nguyễn Văn Chiến</strong></p>
     <p>Niên khóa: 2023</p>
   </div>    
 
