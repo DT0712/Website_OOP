@@ -16,21 +16,56 @@ class OrderController {
     }
 
     public function index() {
-        $orders = $this->model->getByBuyer($_SESSION['user_id']);
+        $buyer_id = $_SESSION['user_id'];
+        $orders = $this->model->getByBuyer($buyer_id);
+        $brands = $this->model->getPurchasedBrands($buyer_id);
         require __DIR__ . "/../views/orders.php";
     }
 
     // Buyer đặt cọc
     public function deposit() {
         $id = $_GET['id'];
-        $this->model->updateStatus($id, 'deposit_paid');
+        $amount = $_GET['amount'];
+
+        $order = $this->model->getByBuyer($id);
+        $price = $order['price'];
+
+        $minDeposit = max($price * 0.2, 500000);
+
+        if ($amount < $minDeposit) {
+            die("Số tiền cọc không hợp lệ!");
+        }
+
+        $this->model->updateDeposit($id, $amount);
         header("Location: index.php");
     }
 
     // Hủy đơn
     public function cancel() {
-        $id = $_GET['id'];
-        $this->model->updateStatus($id, 'cancelled');
+        $order_id = $_GET['id'];
+        $buyer_id = $_SESSION['user_id'];
+
+        // check quyền + trạng thái
+        $order = $this->model->getById($order_id);
+
+        if (!$order) {
+            die("Đơn không tồn tại!");
+        }
+
+        if ($order['buyer_id'] != $buyer_id) {
+            die("Bạn không có quyền!");
+        }
+
+        // không cho hủy nếu đã hoàn thành
+        if ($order['status'] == 'completed') {
+            die("Không thể hủy đơn đã hoàn thành!");
+        }
+
+        // cập nhật trạng thái
+        $this->model->cancelOrder($order_id);
+
+        // reload lại trang
         header("Location: index.php");
+        exit;
     }
 }

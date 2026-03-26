@@ -1,4 +1,5 @@
 <?php
+include 'includes/header.php';
 $action = $_GET['action'] ?? 'index';
 
 require_once "controllers/OrderController.php";
@@ -12,3 +13,4 @@ if ($action == 'deposit') {
 } else {
     $controller->index();
 }
+include 'includes/footer.php';
