@@ -3,24 +3,7 @@
 <head>
     <title>Buyer Orders</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: #f8f9fa;
-        }
-
-        .card-custom {
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .table img {
-            border-radius: 8px;
-        }
-
-        .cancelled-row {
-            opacity: 0.6;
-        }
-    </style>
+    <link rel="stylesheet" href="/buyer-order-module/assets/css/style.css?v=<?= time() ?>">
 </head>
 <body>
 
@@ -80,7 +63,7 @@
 
                 <td>
                     <?php if($o['status'] == 'accepted'): ?>
-                        <button class="btn btn-warning btn-sm"
+                        <button class="btn btn-soft btn-deposit"
                             onclick="openDepositModal(<?= $o['id'] ?>, <?= $o['price'] ?>)">
                             Đặt cọc
                         </button>
@@ -88,7 +71,7 @@
 
                     <?php if(!in_array($o['status'], ['completed', 'cancelled'])): ?>
                         <a href="?action=cancel&id=<?= $o['id'] ?>"
-                            class="btn btn-danger btn-sm"
+                            class="btn btn-soft btn-cancel"
                             onclick="return confirm('Bạn có chắc muốn hủy đơn này không?')">
                             Hủy
                         </a>
@@ -104,32 +87,35 @@
         <h4 class="mb-3">🏷️ Brand đã mua</h4>
 
         <table class="table table-hover align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th style="width: 50%">Brand</th>
-                    <th style="width: 50%">Số lần mua</th>
-                </tr>
-            </thead>
-
             <tbody>
-            <?php if (!empty($brands)): ?>
-                <?php foreach($brands as $b): ?>
-                    <tr>
-                        <td><strong><?= $b['name'] ?></strong></td>
-                        <td>
-                            <span class="badge bg-success">
-                                <?= $b['total'] ?>
-                            </span>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="3" class="text-center text-muted">
-                        Chưa có dữ liệu
-                    </td>
-                </tr>
-            <?php endif; ?>
+            <?php
+            // tìm max để tính %
+            $max = 0;
+            foreach ($brands as $b) {
+                if ($b['total'] > $max) $max = $b['total'];
+            }
+            ?>
+
+            <?php foreach($brands as $b): 
+                $percent = ($max > 0) ? ($b['total'] / $max) * 100 : 0;
+            ?>
+            <tr>
+                <td><strong><?= $b['name'] ?></strong></td>
+                <td style="width: 60%;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        
+                        <span style="font-size: 13px; font-weight: 600; min-width: 40px;">
+                            <?= round($percent) ?>%
+                        </span>
+
+                        <div class="progress" style="flex: 1;">
+                            <div class="progress-bar" style="width: <?= $percent ?>%"></div>
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div>
