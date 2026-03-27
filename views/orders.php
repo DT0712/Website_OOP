@@ -12,7 +12,7 @@
         <h4 class="mb-3">🛒 Đơn mua của tôi</h4>
 
     <table class="table align-middle">
-        <thead class="table-light">
+        <thead>
             <tr>
                 <th>Ảnh</th>
                 <th>Xe</th>
@@ -26,12 +26,12 @@
         <tbody>
         <?php
         $statusClass = [
-            'pending' => 'bg-secondary',
-            'accepted' => 'bg-primary',
-            'rejected' => 'bg-dark',
-            'deposit_paid' => 'bg-warning',
-            'completed' => 'bg-success',
-            'cancelled' => 'bg-danger'
+            'pending' => 'badge-pending',
+            'accepted' => 'badge-accepted',
+            'rejected' => 'badge-rejected',
+            'deposit_paid' => 'badge-deposit_paid',
+            'completed' => 'badge-completed',
+            'cancelled' => 'badge-cancelled'
         ];
 
         $statusText = [
@@ -56,7 +56,7 @@
                 <td><?= number_format($o['deposit_amount']) ?></td>
 
                 <td>
-                    <span class="badge <?= $statusClass[$o['status']] ?>">
+                    <span class="btn-soft <?= $statusClass[$o['status']] ?>">
                         <?= $statusText[$o['status']] ?>
                     </span>
                 </td>
@@ -83,7 +83,7 @@
     </table>
     </div>
 
-    <div class="card card-custom p-4" style="margin-bottom: 50px;">
+    <div class="card card-custom p-4" style="margin-bottom: 50px; margin-right: 370px">
         <h4 class="mb-3">🏷️ Brand đã mua</h4>
 
         <table class="table table-hover align-middle">
@@ -98,18 +98,29 @@
 
             <?php foreach($brands as $b): 
                 $percent = ($max > 0) ? ($b['total'] / $max) * 100 : 0;
+                if ($percent <= 20) {
+                    $color = '#f44336';
+                } elseif ($percent <= 40) {
+                    $color = '#ff9800';
+                } elseif ($percent <= 60) {
+                    $color = '#ffc107';
+                } elseif ($percent <= 80) {
+                    $color = '#2196f3';
+                } else {
+                    $color = '#4caf50';
+                }
             ?>
             <tr>
                 <td><strong><?= $b['name'] ?></strong></td>
-                <td style="width: 60%;">
+                <td style="width: 40%;">
                     <div style="display: flex; align-items: center; gap: 10px;">
                         
                         <span style="font-size: 13px; font-weight: 600; min-width: 40px;">
                             <?= round($percent) ?>%
                         </span>
 
-                        <div class="progress" style="flex: 1;">
-                            <div class="progress-bar" style="width: <?= $percent ?>%"></div>
+                        <div class="progress" style="width: 50%">
+                            <div class="progress-bar" style="width: <?= $percent ?>%; background: <?= $color ?>;"></div>
                         </div>
 
                     </div>

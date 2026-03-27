@@ -61,3 +61,67 @@ body {
     padding-right: 5px;
     line-height: 8px;
 }
+
+.badge-pending {
+    background-image: linear-gradient(30deg, #b8bdb8, #7c807d);
+    color: #f5f2f2;
+}
+
+.badge-accepted {
+    background-image: linear-gradient(30deg, #7382f5, #3330f2);
+    color: #f5f2f2;
+}
+
+.badge-rejected {
+    background-image: linear-gradient(30deg, #f57773, #f24330);
+    color: #f5f2f2;
+}
+
+.badge-deposit_paid {
+    background-image: linear-gradient(30deg, #73d5f5, #30a1f2);
+    color: #f5f2f2;
+}
+
+.badge-completed {
+    background-image: linear-gradient(30deg, #79f573, #30f233);
+    color: #f5f2f2;
+}
+
+.badge-cancelled {
+    background-image: linear-gradient(30deg, #f57773, #f24330);
+    color: #f5f2f2;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+thead {
+    background: #00f2fe;
+}
+
+thead th {
+    background-color: #f6f1f1 !important;
+    background: #f8f9fa;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 400;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-top: 2px solid #5a2a26;
+    border-bottom: 2px solid #5a2a26;
+}
+
+/* Bo góc trái */
+thead th:first-child {
+    border-left: 2px solid #5a2a26;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+/* Bo góc phải */
+thead th:last-child {
+    border-right: 2px solid #5a2a26;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
