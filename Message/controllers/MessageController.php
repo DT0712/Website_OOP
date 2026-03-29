@@ -7,6 +7,9 @@ class MessageController {
     public function __construct() {
         session_start();
         // gia lap login, thay the sau
+        if (isset($_GET['switch_user'])) {
+        $_SESSION['user_id'] = (int)$_GET['switch_user'];
+    }
         if (!isset($_SESSION['user_id'])) {
             $_SESSION['user_id'] = 1;
         }
@@ -19,10 +22,11 @@ class MessageController {
         require __DIR__ . "/../views/conversations.php";
     }
 
-    
     public function chat() {
         $hoi_thoai_id = $_GET['id'] ?? 0;
         $messages     = $this->model->getMessages($hoi_thoai_id);
+        $conversation = $this->model->getConversationDetail($hoi_thoai_id);
+        $conversations = $this->model->getConversations($_SESSION['user_id']); 
         require __DIR__ . "/../views/chat.php";
     }
 
