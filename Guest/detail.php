@@ -203,6 +203,13 @@ if ($result && mysqli_num_rows($result) > 0) {
             </div>
 
             <button class="order-btn">ĐẶT HÀNG</button>
+            
+            <!-- Nút nhắn tin - kết nối sang Message Service -->
+            <a href="/Website_OOP/Message/index.php?action=create&seller_id=<?= $row['seller_id'] ?>&xe_id=<?= $row['id'] ?>"
+                class="order-btn" 
+                style="margin-top:10px; display:inline-block; background:red; text-decoration:none; margin-left:100px;">
+                 NHẮN TIN VỚI NGƯỜI BÁN
+            </a>
 
         </div>
 
