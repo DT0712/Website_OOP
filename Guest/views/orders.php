@@ -3,7 +3,7 @@
 <head>
     <title>Buyer Orders</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../Buyer_order/assets/css/style.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../Guest/assets/css/style.css?v=<?= time() ?>">
 </head>
 <body>
 
@@ -135,7 +135,7 @@
 <!-- Modal -->
 <div class="modal fade" id="depositModal" tabindex="-1">
   <div class="modal-dialog">
-    <form method="GET" action="index.php">
+    <form method="GET" action="buyer_order.php">
         <input type="hidden" name="action" value="deposit">
         <input type="hidden" name="id" id="order_id">
 
