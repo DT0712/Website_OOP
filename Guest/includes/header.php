@@ -145,7 +145,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <!-- ICON -->
     <div class="icons">
         <i class="fa fa-search"></i>
-        <i class="fa fa-shopping-cart"></i>
+        <a href="../Buyer_order" ><i class="fa fa-shopping-cart"></i></a>
     </div>
 
 </div>  

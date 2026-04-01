@@ -3,7 +3,7 @@
 <head>
     <title>Buyer Orders</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/buyer-order-module/assets/css/style.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../Buyer_order/assets/css/style.css?v=<?= time() ?>">
 </head>
 <body>
 
@@ -46,7 +46,7 @@
         <?php foreach($orders as $o): ?>
             <tr class="<?= $o['status'] == 'cancelled' ? 'cancelled-row' : '' ?>">
                 <td>
-                    <img src="/buyer-order-module/<?= $o['main_image'] ?>" 
+                    <img src="../Buyer_order/<?= $o['main_image'] ?>" 
                         width="80" height="60"
                         style="object-fit: cover; border-radius: 5px;"
                         onerror="this.src='https://via.placeholder.com/80x60'" >
