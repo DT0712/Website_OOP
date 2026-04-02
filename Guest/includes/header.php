@@ -11,6 +11,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
     <!-- ICON -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
@@ -136,7 +138,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
         <a href="services.php" class="<?= ($current_page == 'services.php') ? 'active' : '' ?>">DỊCH VỤ</a>
 
-        <a href="blog.php" class="<?= ($current_page == 'blog.php') ? 'active' : '' ?>">BLOG</a>
+        <a href="views/blog.php" class="<?= ($current_page == 'blog.php') ? 'active' : '' ?>">BLOG</a>
 
         <a href="contact.php" class="<?= ($current_page == 'contact.php') ? 'active' : '' ?>">LIÊN HỆ</a>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 01, 2026 lúc 04:54 PM
+-- Thời gian đã tạo: Th4 02, 2026 lúc 08:33 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bicycles` (
   `id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL DEFAULT 2,
   `name` varchar(255) NOT NULL,
   `price` int(11) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
@@ -41,6 +42,7 @@ CREATE TABLE `bicycles` (
   `sub_image1` varchar(255) DEFAULT NULL,
   `sub_image2` varchar(255) DEFAULT NULL,
   `sub_image3` varchar(255) DEFAULT NULL,
+  `is_featured` tinyint(1) DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -48,10 +50,10 @@ CREATE TABLE `bicycles` (
 -- Đang đổ dữ liệu cho bảng `bicycles`
 --
 
-INSERT INTO `bicycles` (`id`, `name`, `price`, `category_id`, `brand_id`, `condition_status`, `frame_size`, `location`, `description`, `main_image`, `sub_image1`, `sub_image2`, `sub_image3`, `created_at`) VALUES
-(1, 'Giant Escape 3', 7500000, 3, 1, 'Như mới 95%', 'M', 'TP.HCM', 'Xe đi nhẹ, bảo dưỡng định kỳ, chưa thay thế linh kiện lớn.', 'assets/images/giant-escape-3-main.jpg', 'assets/images/giant-escape-3-1.jpg', 'assets/images/giant-escape-3-2.jpg', 'assets/images/giant-escape-3-3.jpg', '2026-03-25 09:03:02'),
-(2, 'Trek Marlin 7', 12000000, 2, 2, 'Đã sử dụng', 'L', 'Hà Nội', 'Xe leo núi mạnh mẽ, phanh đĩa, phù hợp địa hình khó.', 'assets/images/trek-marlin-7-main.jpg', 'assets/images/trek-marlin-7-1.jpg', 'assets/images/trek-marlin-7-2.jpg', 'assets/images/trek-marlin-7-3.jpg', '2026-03-25 09:03:02'),
-(3, 'Twitter Thunder Carbon', 18500000, 1, 3, 'Như mới 98%', 'S', 'Đà Nẵng', 'Khung carbon siêu nhẹ, chạy đường dài cực tốt.', 'assets/images/twitter-thunder-carbon-main.jpg', 'assets/images/twitter-thunder-carbon-1.jpg', 'assets/images/twitter-thunder-carbon-2.jpg', 'assets/images/twitter-thunder-carbon-3.jpg', '2026-03-25 09:03:02');
+INSERT INTO `bicycles` (`id`, `seller_id`, `name`, `price`, `category_id`, `brand_id`, `condition_status`, `frame_size`, `location`, `description`, `main_image`, `sub_image1`, `sub_image2`, `sub_image3`, `is_featured`, `created_at`) VALUES
+(1, 2, 'Giant Escape 3', 7500000, 3, 1, 'Như mới 95%', 'M', 'TP.HCM', 'Xe đi nhẹ, bảo dưỡng định kỳ, chưa thay thế linh kiện lớn.', 'assets/images/giant-escape-3-main.jpg', 'assets/images/giant-escape-3-1.jpg', 'assets/images/giant-escape-3-2.jpg', 'assets/images/giant-escape-3-3.jpg', 1, '2026-03-25 09:03:02'),
+(2, 2, 'Trek Marlin 7', 12000000, 2, 2, 'Đã sử dụng', 'L', 'Hà Nội', 'Xe leo núi mạnh mẽ, phanh đĩa, phù hợp địa hình khó.', 'assets/images/trek-marlin-7-main.jpg', 'assets/images/trek-marlin-7-1.jpg', 'assets/images/trek-marlin-7-2.jpg', 'assets/images/trek-marlin-7-3.jpg', 1, '2026-03-25 09:03:02'),
+(3, 2, 'Twitter Thunder Carbon', 18500000, 1, 3, 'Như mới 98%', 'S', 'Đà Nẵng', 'Khung carbon siêu nhẹ, chạy đường dài cực tốt.', 'assets/images/twitter-thunder-carbon-main.jpg', 'assets/images/twitter-thunder-carbon-1.jpg', 'assets/images/twitter-thunder-carbon-2.jpg', 'assets/images/twitter-thunder-carbon-3.jpg', 1, '2026-03-25 09:03:02');
 
 -- --------------------------------------------------------
 
@@ -103,6 +105,27 @@ INSERT INTO `categories` (`id`, `name`, `description`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `cuoc_hoi_thoai`
+--
+
+CREATE TABLE `cuoc_hoi_thoai` (
+  `id` int(11) NOT NULL,
+  `buyer_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `xe_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `cuoc_hoi_thoai`
+--
+
+INSERT INTO `cuoc_hoi_thoai` (`id`, `buyer_id`, `seller_id`, `xe_id`, `created_at`) VALUES
+(1, 1, 2, 1, '2026-04-01 15:30:04');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `orders`
 --
 
@@ -132,6 +155,43 @@ INSERT INTO `orders` (`id`, `buyer_id`, `seller_id`, `bike_id`, `deposit_amount`
 (9, 1, 2, 2, 0.00, 'accepted', '2026-03-21 08:52:14'),
 (10, 1, 2, 2, 2400000.00, 'deposit_paid', '2026-03-21 08:52:14');
 
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `tin_nhan`
+--
+
+CREATE TABLE `tin_nhan` (
+  `id` int(11) NOT NULL,
+  `hoi_thoai_id` int(11) NOT NULL,
+  `nguoi_gui_id` int(11) NOT NULL,
+  `noi_dung` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('buyer','seller','admin') DEFAULT 'buyer',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`) VALUES
+(1, 'Nguyễn Văn A', 'buyer@test.com', '123456', 'buyer', '2026-04-01 15:08:05'),
+(2, 'Trần Thị B', 'seller@test.com', '123456', 'seller', '2026-04-01 15:08:05');
+
 --
 -- Chỉ mục cho các bảng đã đổ
 --
@@ -157,9 +217,32 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `cuoc_hoi_thoai`
+--
+ALTER TABLE `cuoc_hoi_thoai`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `buyer_id` (`buyer_id`),
+  ADD KEY `seller_id` (`seller_id`),
+  ADD KEY `xe_id` (`xe_id`);
+
+--
 -- Chỉ mục cho bảng `orders`
 --
 ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `tin_nhan`
+--
+ALTER TABLE `tin_nhan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `hoi_thoai_id` (`hoi_thoai_id`),
+  ADD KEY `nguoi_gui_id` (`nguoi_gui_id`);
+
+--
+-- Chỉ mục cho bảng `users`
+--
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -185,10 +268,28 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT cho bảng `cuoc_hoi_thoai`
+--
+ALTER TABLE `cuoc_hoi_thoai`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT cho bảng `tin_nhan`
+--
+ALTER TABLE `tin_nhan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -200,6 +301,21 @@ ALTER TABLE `orders`
 ALTER TABLE `bicycles`
   ADD CONSTRAINT `bicycles_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
   ADD CONSTRAINT `bicycles_ibfk_2` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`);
+
+--
+-- Các ràng buộc cho bảng `cuoc_hoi_thoai`
+--
+ALTER TABLE `cuoc_hoi_thoai`
+  ADD CONSTRAINT `cuoc_hoi_thoai_ibfk_1` FOREIGN KEY (`buyer_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `cuoc_hoi_thoai_ibfk_2` FOREIGN KEY (`seller_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `cuoc_hoi_thoai_ibfk_3` FOREIGN KEY (`xe_id`) REFERENCES `bicycles` (`id`);
+
+--
+-- Các ràng buộc cho bảng `tin_nhan`
+--
+ALTER TABLE `tin_nhan`
+  ADD CONSTRAINT `tin_nhan_ibfk_1` FOREIGN KEY (`hoi_thoai_id`) REFERENCES `cuoc_hoi_thoai` (`id`),
+  ADD CONSTRAINT `tin_nhan_ibfk_2` FOREIGN KEY (`nguoi_gui_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
