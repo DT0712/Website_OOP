@@ -227,6 +227,176 @@ $result = mysqli_query($conn, $sql);
 .product-meta span {
     width: 48%;
 }
+
+/* ================= ECO MINIMAL PRO ================= */
+.eco-minimal {
+    padding: 40px 80px 20px;
+    background: linear-gradient(180deg, #f9fafc, #eef2f6);
+}
+
+/* HEADER */
+/* ===== DARK HEADER FULL ===== */
+.eco-dark-header {
+    width: 100vw; /* full màn */
+    margin-left: calc(-50vw + 50%); /* fix full width khi nằm trong container */
+    
+    background: linear-gradient(135deg, #1c1c1c, #2b2b2b);
+    color: white;
+    text-align: center;
+
+    padding: 80px 20px 100px; /* tăng padding dưới */
+    position: relative;
+    
+    margin-bottom: 60px; /* 👉 tạo khoảng cách với section dưới */
+}
+
+/* CONTENT CENTER */
+.eco-dark-header h2 {
+    font-size: 38px;
+    margin: 10;
+}
+
+.eco-dark-header span {
+    color: #4CAF50;
+}
+
+.eco-dark-header p {
+    margin-top: 12px;
+    color: #bbb;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ===== TRIANGLE ===== */
+.eco-dark-header::after {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-top: 20px solid #2b2b2b;
+}
+
+/* LAYOUT */
+.eco-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* SIDE */
+.eco-side {
+    width: 600px;
+}
+
+/* ITEM (KHÔNG CÒN CARD) */
+.eco-item {
+    position: relative;
+    margin-bottom: 40px;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+/* TEXT */
+.eco-item h4 {
+    margin: 0 0 8px;
+    font-size: 16px;
+}
+
+.eco-item p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.8; /* 👉 cho text dài đẹp */
+}
+
+/* ICON */
+.eco-item .icon {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #4CAF50, #66bb6a);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 16px;
+    box-shadow: 0 6px 15px rgba(76,175,80,0.4);
+}
+
+/* ===== LEFT SIDE CĂN PHẢI ===== */
+.eco-side.left .eco-item {
+    text-align: right;
+    padding-right: 40px; /* tạo khoảng cho icon */
+    padding-left: 0;
+}
+
+/* icon bên trái (nằm gần center) */
+.eco-side.left .eco-item .icon {
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+/* ===== RIGHT SIDE CÁCH ICON ===== */
+.eco-side.right .eco-item {
+    padding-left: 45px; /* 👉 đẩy text ra xa icon */
+    padding-right: 0;
+}
+
+.eco-side.right .eco-item .icon {
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* CENTER */
+.eco-center {
+    width: 360px;
+    position: relative;
+}
+
+.eco-center img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover; 
+    border-radius: 50%; 
+    box-shadow: 
+        0 10px 30px rgba(0,0,0,0.2),
+        0 0 20px rgba(76,175,80,0.3); /* glow nhẹ */
+}
+.eco-center {
+    transform: translateY(-20px); 
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+/* RING */
+.ring {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(76,175,80,0.3);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: rotate 25s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
 </style>
 
 <!-- ================= BANNER ================= -->
@@ -238,6 +408,7 @@ $result = mysqli_query($conn, $sql);
         <button>Explore Now</button>
     </div>
 </div>
+
 <!-- ================= FEATURES ================= -->
 <div class="features-section">
     <p class="sub-title">// FEATURES //</p>
@@ -275,6 +446,87 @@ $result = mysqli_query($conn, $sql);
 
     </div>
 </div>
+
+<!-- ================= ECO MINIMAL PRO ================= -->
+<div class="eco-minimal">
+
+    <div class="eco-dark-header">
+        <h2><span>Smart Cycling</span> For Modern Living</h2>
+        <p>Khám phá giải pháp di chuyển thông minh, bền vững và nâng cao chất lượng cuộc sống mỗi ngày.</p>
+    </div>
+
+    <div class="eco-wrapper">
+
+        <!-- LEFT -->
+        <div class="eco-side left">
+            <div class="eco-item">
+                <h4>Energy Efficiency</h4>
+                <p>
+                    Xe đạp giúp tiết kiệm tối đa năng lượng và chi phí sử dụng trong thời gian dài, 
+                    đồng thời giảm phụ thuộc vào nhiên liệu hóa thạch và các nguồn tài nguyên không tái tạo.
+                </p>
+                <div class="icon">⚡</div>
+            </div>
+
+            <div class="eco-item">
+                <h4>Smart Urban Mobility</h4>
+                <p>
+                    Mang lại khả năng di chuyển linh hoạt trong môi trường đô thị đông đúc, 
+                    giúp bạn dễ dàng tránh kẹt xe và tiết kiệm đáng kể thời gian di chuyển hàng ngày.
+                </p>
+                <div class="icon">💡</div>
+            </div>
+
+            <div class="eco-item">
+                <h4>Eco Lifestyle</h4>
+                <p>
+                    Góp phần xây dựng phong cách sống xanh, giảm thiểu tác động tiêu cực đến môi trường 
+                    và hướng tới một tương lai bền vững cho cộng đồng và thế hệ sau.
+                </p>
+                <div class="icon">🌱</div>
+            </div>
+        </div>
+
+        <!-- CENTER -->
+        <div class="eco-center">
+            <img src="assets/images/bike-center.png" alt="bike">
+            <div class="ring"></div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="eco-side right">
+            <div class="eco-item">
+                <div class="icon">🍃</div>
+                <h4>Clean Environment</h4>
+                <p>
+                    Không tạo ra khí thải độc hại, xe đạp giúp giữ gìn không khí trong lành, 
+                    giảm ô nhiễm và cải thiện đáng kể chất lượng môi trường sống trong đô thị.
+                </p>
+            </div>
+
+            <div class="eco-item">
+                <div class="icon">♻️</div>
+                <h4>Long-term Usage</h4>
+                <p>
+                    Với độ bền cao và khả năng bảo trì đơn giản, xe đạp có thể sử dụng trong thời gian dài 
+                    mà không phát sinh nhiều chi phí sửa chữa hay thay thế linh kiện.
+                </p>
+            </div>
+
+            <div class="eco-item">
+                <div class="icon">🧬</div>
+                <h4>Health & Fitness</h4>
+                <p>
+                    Đạp xe thường xuyên giúp cải thiện sức khỏe tim mạch, tăng cường thể lực 
+                    và mang lại cảm giác thư giãn, giảm căng thẳng sau những giờ làm việc mệt mỏi.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 <!-- ================= PRODUCT ================= -->
 <div class="product-section">
     <h2>🔥 Sản phẩm nổi bật</h2>

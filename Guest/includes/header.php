@@ -1,151 +1,198 @@
-<?php
-$current_page = basename($_SERVER['PHP_SELF']);
-?>
+    <?php
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Bike Market</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+    }
 
-    <!-- ICON -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    $current_page = basename($_SERVER['PHP_SELF']);
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+    // giả lập giỏ hàng (sau này bạn thay bằng DB)
+    $cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 
-        /* ===== TOP BAR ===== */
-        .topbar {
-            background: #1a1a1a;
-            color: #aaa;
-            font-size: 13px;
-            padding: 8px 60px;
-            display: flex;
-            justify-content: space-between;
-        }
+    // kiểm tra login
+    $is_logged_in = isset($_SESSION['user']);
 
-        .topbar a {
-            color: #aaa;
-            text-decoration: none;
-            margin-right: 15px;
-        }
+    $avatar = $is_logged_in && !empty($_SESSION['user']['avatar'])
+        ? $_SESSION['user']['avatar']
+        : 'https://i.imgur.com/6VBx3io.png';
+    ?>
 
-        .topbar a:hover {
-            color: #fff;
-        }
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <title>Bike Market</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* ===== HEADER ===== */
-        .header {
-            background: rgba(0,0,0,0.85);
-            height: 80px; /* 🔥 CHIỀU CAO CHUẨN */
-            padding: 0 60px;
-            display: flex;
-            align-items: center;
-        }
+        <!-- ICON -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        /* LOGO */
-        .logo {
-            color: white;
-            font-size: 26px;
-            font-weight: bold;
-        }
+        <style>
+            body { margin: 0; font-family: Arial; }
 
-        .logo span {
-            color: red;
-        }
+            .topbar {
+                background: #1a1a1a;
+                color: #aaa;
+                font-size: 13px;
+                padding: 8px 60px;
+                display: flex;
+                justify-content: space-between;
+            }
 
-        /* MENU */
-        .menu {
-            display: flex;
-            height: 100%;
-            margin-left: auto;
-            margin-right: 80px;
-            width: 850px;
-            justify-content: space-between;
-        }
+            .topbar a {
+                color: #aaa;
+                text-decoration: none;
+                margin-right: 15px;
+            }
 
-        .menu a {
-            color: #ddd;
-            text-decoration: none;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            height: 100%;
-            font-size: 14px;
-            transition: 0.3s;
-            transition: 0.3s;
-        }
+            .topbar a:hover { color: #fff; }
 
-        /* 🔥 ACTIVE (HOME) */
-        .menu a.active {
-            background: #e60000;
-            color: white;
-        }
+            .header {
+                background: rgba(0,0,0,0.85);
+                height: 80px;
+                padding: 0 60px;
+                display: flex;
+                align-items: center;
+            }
 
-        /* 🔥 HOVER GIỐNG TEMPLATE */
-        .menu a:hover {
-            background: #e60000;
-            color: white;
-        }
+            .logo {
+                color: white;
+                font-size: 26px;
+                font-weight: bold;
+            }
 
-        /* ICON */
-        .icons {
-            color: white;
-        }
+            .logo span { color: red; }
 
-        .icons i {
-            margin-left: 15px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
+            .menu {
+                display: flex;
+                height: 100%;
+                margin-left: auto;
+                margin-right: 40px;
+                width: 700px;
+                justify-content: space-between;
+            }
 
-<!-- TOP BAR -->
-<div class="topbar">
-    <div>
-        <a href="#"><i class="fa fa-user"></i> Đăng nhập</a>
-        <a href="#"><i class="fa fa-user-plus"></i> Đăng ký</a>
-        <a href="#"><i class="fa fa-heart"></i> Yêu thích</a>
+            .menu a {
+                color: #ddd;
+                text-decoration: none;
+                padding: 0 20px;
+                display: flex;
+                align-items: center;
+                height: 100%;
+                font-size: 14px;
+                transition: 0.3s;
+            }
+
+            .menu a.active,
+            .menu a:hover {
+                background: #e60000;
+                color: white;
+            }
+
+            /* SEARCH */
+            .search-box {
+                position: relative;
+                margin-right: 15px;
+            }
+
+            .search-box input {
+                padding: 6px 30px 6px 10px;
+                border-radius: 20px;
+                border: none;
+                outline: none;
+            }
+
+            .search-box button {
+                position: absolute;
+                right: 5px;
+                top: 3px;
+                border: none;
+                background: none;
+                cursor: pointer;
+            }
+
+            /* ICON */
+            .icons {
+                color: white;
+                display: flex;
+                align-items: center;
+            }
+
+            .cart {
+                position: relative;
+                margin-left: 10px;
+            }
+
+            .cart span {
+                position: absolute;
+                top: -8px;
+                right: -10px;
+                background: red;
+                color: white;
+                font-size: 11px;
+                padding: 2px 6px;
+                border-radius: 50%;
+            }
+        </style>
+    </head>
+    <body>
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div>
+            <?php if($is_logged_in): ?>
+                <span>Xin chào, <?= $_SESSION['user']['name'] ?></span>
+                <a href="logout.php">Đăng xuất</a>
+            <?php else: ?>
+                <a href="login.php"><i class="fa fa-user"></i> Đăng nhập</a>
+                <a href="register.php"><i class="fa fa-user-plus"></i> Đăng ký</a>
+            <?php endif; ?>
+
+            <a href="#"><i class="fa fa-heart"></i> Yêu thích</a>
+        </div>
+
+        <div>
+            <i class="fa fa-phone"></i> 0123 456 789
+        </div>
     </div>
 
-    <div>
-        <i class="fa fa-phone"></i> 0123 456 789
+    <!-- HEADER -->
+    <div class="header">
+
+        <!-- LOGO -->
+        <div class="logo">
+            <a href="index.php" style="color:white;text-decoration:none;">
+                Bike<span>Market</span>
+            </a>
+        </div>
+
+        <!-- MENU -->
+        <div class="menu">
+            <a href="index.php" class="<?= ($current_page == 'index.php') ? 'active' : '' ?>">HOME</a>
+            <a href="bikes.php" class="<?= ($current_page == 'bikes.php') ? 'active' : '' ?>">XE ĐẠP</a>
+            <a href="sell.php" class="<?= ($current_page == 'sell.php') ? 'active' : '' ?>">ĐĂNG BÁN</a>
+            <a href="services.php" class="<?= ($current_page == 'services.php') ? 'active' : '' ?>">DỊCH VỤ</a>
+            <a href="blog.php" class="<?= ($current_page == 'blog.php') ? 'active' : '' ?>">BLOG</a>
+            <a href="contact.php" class="<?= ($current_page == 'contact.php') ? 'active' : '' ?>">LIÊN HỆ</a>
+        </div>
+
+        <!-- SEARCH -->
+        <form class="search-box" action="search.php" method="GET">
+            <input type="text" name="keyword" placeholder="Tìm xe..." required>
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
+        <!-- ICON -->
+        <div class="icons">
+
+            <!-- CART -->
+            <a href="cart.php" class="cart" style="color:white;">
+                <i class="fa fa-shopping-cart"></i>
+                <?php if($cart_count > 0): ?>
+                    <span><?= $cart_count ?></span>
+                <?php endif; ?>
+            </a>
+
+        </div>
+
     </div>
-</div>
-
-<!-- HEADER -->
-<div class="header">
-
-    <!-- LOGO -->
-    <div class="logo">
-        Bike<span>Market</span>
-    </div>
-
-    <!-- MENU -->
-    <div class="menu">
-        <a href="index.php" class="<?= ($current_page == 'index.php') ? 'active' : '' ?>">HOME</a>
-
-        <a href="bikes.php" class="<?= ($current_page == 'bikes.php') ? 'active' : '' ?>">XE ĐẠP</a>
-
-        <a href="sell.php" class="<?= ($current_page == 'sell.php') ? 'active' : '' ?>">ĐĂNG BÁN</a>
-
-        <a href="services.php" class="<?= ($current_page == 'services.php') ? 'active' : '' ?>">DỊCH VỤ</a>
-
-        <a href="blog.php" class="<?= ($current_page == 'blog.php') ? 'active' : '' ?>">BLOG</a>
-
-        <a href="contact.php" class="<?= ($current_page == 'contact.php') ? 'active' : '' ?>">LIÊN HỆ</a>
-
-    </div>
-
-    <!-- ICON -->
-    <div class="icons">
-        <i class="fa fa-search"></i>
-        <a href="../Buyer_order" ><i class="fa fa-shopping-cart"></i></a>
-    </div>
-
-</div>  
