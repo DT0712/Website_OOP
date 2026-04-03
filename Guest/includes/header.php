@@ -24,8 +24,10 @@
         <title>Bike Market</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- ICON -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- ICON -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
         <style>
             body { margin: 0; font-family: Arial; }
@@ -166,33 +168,26 @@
             </a>
         </div>
 
-        <!-- MENU -->
-        <div class="menu">
-            <a href="index.php" class="<?= ($current_page == 'index.php') ? 'active' : '' ?>">HOME</a>
-            <a href="bikes.php" class="<?= ($current_page == 'bikes.php') ? 'active' : '' ?>">XE ĐẠP</a>
-            <a href="sell.php" class="<?= ($current_page == 'sell.php') ? 'active' : '' ?>">ĐĂNG BÁN</a>
-            <a href="services.php" class="<?= ($current_page == 'services.php') ? 'active' : '' ?>">DỊCH VỤ</a>
-            <a href="blog.php" class="<?= ($current_page == 'blog.php') ? 'active' : '' ?>">BLOG</a>
-            <a href="contact.php" class="<?= ($current_page == 'contact.php') ? 'active' : '' ?>">LIÊN HỆ</a>
-        </div>
+    <!-- MENU -->
+    <div class="menu">
+        <a href="index.php" class="<?= ($current_page == 'index.php') ? 'active' : '' ?>">HOME</a>
 
-        <!-- SEARCH -->
-        <form class="search-box" action="search.php" method="GET">
-            <input type="text" name="keyword" placeholder="Tìm xe..." required>
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
+        <a href="bikes.php" class="<?= ($current_page == 'bikes.php') ? 'active' : '' ?>">XE ĐẠP</a>
 
-        <!-- ICON -->
-        <div class="icons">
+        <a href="sell.php" class="<?= ($current_page == 'sell.php') ? 'active' : '' ?>">ĐĂNG BÁN</a>
 
-            <!-- CART -->
-            <a href="cart.php" class="cart" style="color:white;">
-                <i class="fa fa-shopping-cart"></i>
-                <?php if($cart_count > 0): ?>
-                    <span><?= $cart_count ?></span>
-                <?php endif; ?>
-            </a>
+        <a href="services.php" class="<?= ($current_page == 'services.php') ? 'active' : '' ?>">DỊCH VỤ</a>
 
-        </div>
+        <a href="views/blog.php" class="<?= ($current_page == 'blog.php') ? 'active' : '' ?>">BLOG</a>
+
+        <a href="contact.php" class="<?= ($current_page == 'contact.php') ? 'active' : '' ?>">LIÊN HỆ</a>
+
+    </div>
+
+    <!-- ICON -->
+    <div class="icons">
+        <i class="fa fa-search"></i>
+        <a href="buyer_order.php" ><i class="fa fa-shopping-cart"></i></a>
+    </div>
 
     </div>

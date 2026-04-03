@@ -5,8 +5,6 @@ class OrderController {
     private $model;
 
     public function __construct() {
-        session_start();
-
         // giả lập login (sau này bỏ)
         if (!isset($_SESSION['user_id'])) {
             $_SESSION['user_id'] = 1;
@@ -37,7 +35,8 @@ class OrderController {
         }
 
         $this->model->updateDeposit($id, $amount);
-        header("Location: index.php");
+        header("Location: buyer_order.php");
+        exit;
     }
 
     // Hủy đơn
@@ -65,7 +64,7 @@ class OrderController {
         $this->model->cancelOrder($order_id);
 
         // reload lại trang
-        header("Location: index.php");
+        header("Location: buyer_order.php");
         exit;
     }
 }

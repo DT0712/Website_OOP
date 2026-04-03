@@ -1,12 +1,12 @@
 <?php
-require_once "config/database.php";
+require_once "config.php";
 
 class Order {
     private $conn;
 
     public function __construct() {
-        $db = new Database();
-        $this->conn = $db->connect();
+        global $conn;
+        $this->conn = $conn;
     }
 
     public function getByBuyer($buyer_id) {
@@ -16,8 +16,11 @@ class Order {
                 WHERE o.buyer_id = ?";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->execute([$buyer_id]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->bind_param("i", $buyer_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function updateDeposit($id, $amount) {
@@ -25,7 +28,8 @@ class Order {
                 SET deposit_amount = ?, status = 'deposit_paid'
                 WHERE id = ?";
         $stmt = $this->conn->prepare($query);
-        return $stmt->execute([$amount, $id]);
+        $stmt->bind_param("di", $amount, $id);
+        return $stmt->execute();
     }
 
     public function getPurchasedBrands($buyer_id) {
@@ -40,9 +44,11 @@ class Order {
                 LIMIT 5";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([$buyer_id]);
+        $stmt->bind_param("i", $buyer_id);
+        $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function cancelOrder($id) {
@@ -51,13 +57,17 @@ class Order {
                 WHERE id = ?";
 
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([$id]);
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
     }
 
     public function getById($id) {
         $sql = "SELECT * FROM orders WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
     }
 }
