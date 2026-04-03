@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once "config.php";
 include "includes/header.php";
 
@@ -20,59 +20,64 @@ if ($result && mysqli_num_rows($result) > 0) {
 /* ===== HERO ===== */
 .detail-banner {
     display: flex;
-    height: 650px;
     position: relative;
     overflow: hidden;
-    background: #f4f4f4;
+    min-height: 500px;
+    background: transparent;
+    margin-top: 30px;
 }
 
-/* nền trắng chéo */
+/* nền trắng */
 .detail-banner::before {
     content: "";
     position: absolute;
-    width: 65%;
+    width: 37%;
     height: 100%;
     background: #fff;
     clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
     z-index: 1;
 }
 
-/* nền ảnh + overlay */
+/* nền xanh */
 .detail-banner::after {
     content: "";
     position: absolute;
     right: 0;
-    width: 60%;
-    height: 100%;
+    top: 0;
+    bottom: 0;
+    width: 37%;
     background:
-        linear-gradient(135deg, rgba(255,0,0,0.4), rgba(0,0,0,0.9)),
+        linear-gradient(135deg, rgba(37,99,235,0.6), rgba(15,23,42,0.9)),
         url('assets/images/bgxe.jpg') no-repeat center;
     background-size: cover;
     clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
     z-index: 0;
 }
 
-/* ===== LEFT ===== */
-.detail-left {
-    width: 45%;
-    padding: 80px;
+/* ===== KHỐI ĐỎ ===== */
+.red-shape {
+    position: absolute;
+    bottom: 0px;
+    left: 63%;
+    width: 220px;
+    height: 50px;
+    background: linear-gradient(90deg, #ff3b30, #c62828);
+    clip-path: polygon(5% 0, 86% 0, 80% 100%, 0% 100%);
     z-index: 2;
 }
 
-.detail-left h1 {
-    font-size: 34px;
-    font-weight: bold;
+/* ===== LEFT ===== */
+.detail-left {
+    width: 45%;
+    padding: 80px 80px 80px 120px;
+    z-index: 2;
 }
 
-.detail-left h2 {
-    font-size: 26px;
-    color: red;
-}
+.detail-left h1 { font-size: 38px; }
+.detail-left h2 { color: red; }
 
-/* ===== INFO TABLE ===== */
-.info-table {
-    margin-top: 25px;
-}
+/* ===== INFO ===== */
+.info-table { margin-top: 25px; }
 
 .info-row {
     display: flex;
@@ -81,105 +86,125 @@ if ($result && mysqli_num_rows($result) > 0) {
     border-bottom: 1px solid #eee;
 }
 
-.label {
-    width: 130px;
-    color: #888;
-    font-size: 14px;
-}
-
-.value {
-    flex: 1;
-    text-align: left;
-    font-weight: bold;
-    color: #222;
-    line-height: 1.6;
-}
-
-/* nút */
-.order-btn {
-    margin-top: 20px;
-    padding: 12px 25px;
-    background: #000;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    position: relative;
-}
-
-.order-btn::after {
-    content: "";
-    position: absolute;
-    right: -20px;
-    top: 0;
-    border-left: 20px solid #000;
-    border-top: 22px solid transparent;
-    border-bottom: 22px solid transparent;
-}
+.label { width: 130px; color: #888; }
+.value { flex: 1; font-weight: normal; }
 
 /* ===== RIGHT ===== */
 .detail-right {
-    width: 55%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;
     z-index: 2;
 }
 
-.detail-right img {
-    max-width: 75%;
-    transform: translateX(-80px);
-    z-index: 2;
+/* ===== MAIN IMAGE ===== */
+#mainImage {
+    max-width: 100%;
+    margin-bottom: 30px;
+    margin-right: -30px;
     filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+    transition: 0.3s;
 }
 
-/* ánh sáng */
-.detail-right::before {
-    content: "";
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: red;
-    filter: blur(120px);
-    right: 80px;
-}
-
-/* ===== THUMBNAILS ===== */
-.thumbs {
-    margin-top: 20px;
+/* ===== THUMB ===== */
+.thumbs-outside {
     display: flex;
+    justify-content: center;
     gap: 10px;
+    margin-top: 30px;
+    padding: 12px;
+    background: #fff;
+    border-radius: 14px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: 40px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-.thumbs img {
-    width: 70px;
-    height: 70px;
+.thumbs-outside img {
+    width: 90px;
+    height: 90px;
     object-fit: cover;
     cursor: pointer;
-    border: 2px solid transparent;
-    transition: 0.3s;
-    background: #fff;
-    padding: 3px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    opacity: 0.85;
+    transition: 0.25s;
 }
 
-.thumbs img:hover,
-.thumbs img.active {
-    border: 2px solid red;
+.thumbs-outside img:hover {
+    opacity: 1;
+    transform: scale(1.08);
+}
+
+.thumbs-outside img.active {
+    border-color: #ee4d2d;
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* ===== BUTTON GROUP ===== */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.action-buttons button {
+    padding: 15px 26px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 144px;
+}
+
+/* nút giỏ */
+.cart-btn {
+    background: #fff;
+    color: #e53935;
+    border: 2px solid #e53935;
+}
+
+.cart-btn:hover {
+    background: #ffe5e5;
+}
+
+/* nút đặt hàng */
+.order-btn {
+    background: linear-gradient(90deg, #ff3b30, #c62828);
+    color: #fff;
+    border: none;
+}
+
+.order-btn:hover {
+    transform: scale(1.05);
+}
+
+/* icon */
+.cart-icon {
+    font-size: 22px;
+    margin-right: 8px;
 }
 </style>
 
-
+<!-- ===== MAIN ===== -->
 <div class="detail-banner">
+
+    <!-- KHỐI ĐỎ -->
+    <div class="red-shape"></div>
 
     <!-- LEFT -->
     <div class="detail-left">
-
         <h1><?php echo htmlspecialchars($row['name']); ?></h1>
         <h2><?php echo number_format($row['price'], 0, ',', '.'); ?> VNĐ</h2>
 
         <div class="info-table">
-
             <div class="info-row">
                 <span class="label">Nơi sản xuất</span>
                 <span class="value"><?php echo htmlspecialchars($row['location']); ?></span>
@@ -202,43 +227,56 @@ if ($result && mysqli_num_rows($result) > 0) {
                 </span>
             </div>
 
-            <button class="order-btn">ĐẶT HÀNG</button>
-
+            <div class="action-buttons">
+                <button class="cart-btn">
+                    <span class="cart-icon">🛒</span>
+                    Thêm Giỏ Hàng
+                </button>
+                <button class="order-btn">Đặt Hàng</button>
+            </div>
         </div>
-
     </div>
 
     <!-- RIGHT -->
     <div class="detail-right">
-
-        <img id="mainImage" 
-             src="<?php echo $row['main_image']; ?>" 
+        <img id="mainImage"
+             src="<?php echo $row['main_image']; ?>"
              onerror="this.src='assets/images/default-bike.png'">
-
-        <div class="thumbs">
-            <img src="<?php echo $row['main_image']; ?>" onclick="changeImage(this)">
-            <img src="<?php echo $row['sub_image1']; ?>" onclick="changeImage(this)">
-            <img src="<?php echo $row['sub_image2']; ?>" onclick="changeImage(this)">
-            <img src="<?php echo $row['sub_image3']; ?>" onclick="changeImage(this)">
-        </div>
-
     </div>
 
 </div>
 
+<!-- ===== THUMBNAILS ===== -->
+<div class="thumbs-outside">
+    <?php foreach (['main_image','sub_image1','sub_image2','sub_image3'] as $img): ?>
+        <?php if (!empty($row[$img])): ?>
+            <img src="<?php echo $row[$img]; ?>" onclick="changeImage(this)">
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+
 <script>
 function changeImage(img) {
-    document.getElementById("mainImage").src = img.src;
+    const main = document.getElementById("mainImage");
 
-    document.querySelectorAll(".thumbs img").forEach(el => {
+    main.style.opacity = 0;
+
+    setTimeout(() => {
+        main.src = img.src;
+        main.style.opacity = 1;
+    }, 150);
+
+    document.querySelectorAll(".thumbs-outside img").forEach(el => {
         el.classList.remove("active");
     });
 
     img.classList.add("active");
 }
 
-// active mặc định
-document.querySelector(".thumbs img").classList.add("active");
+document.addEventListener("DOMContentLoaded", function () {
+    const first = document.querySelector(".thumbs-outside img");
+    if (first) first.classList.add("active");
+});
 </script>
 
 <?php include "includes/footer.php"; ?>
