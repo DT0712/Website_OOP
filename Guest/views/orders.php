@@ -46,7 +46,7 @@
         <?php foreach($orders as $o): ?>
             <tr class="<?= $o['status'] == 'cancelled' ? 'cancelled-row' : '' ?>">
                 <td>
-                    <img src="../Buyer_order/<?= $o['main_image'] ?>" 
+                    <img src="../Guest/<?= $o['main_image'] ?>" 
                         width="80" height="60"
                         style="object-fit: cover; border-radius: 5px;"
                         onerror="this.src='https://via.placeholder.com/80x60'" >
