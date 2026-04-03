@@ -1,15 +1,31 @@
-<?php
-$current_page = basename($_SERVER['PHP_SELF']);
-?>
+    <?php
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Bike Market</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+    }
+
+    $current_page = basename($_SERVER['PHP_SELF']);
+
+    // giả lập giỏ hàng (sau này bạn thay bằng DB)
+    $cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
+
+    // kiểm tra login
+    $is_logged_in = isset($_SESSION['user']);
+
+    $avatar = $is_logged_in && !empty($_SESSION['user']['avatar'])
+        ? $_SESSION['user']['avatar']
+        : 'https://i.imgur.com/6VBx3io.png';
+    ?>
+
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <title>Bike Market</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- ICON -->
+<<<<<<< HEAD
     <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -19,120 +35,159 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <!-- CSS riêng -->
 <link rel="stylesheet" href="assets/css/header.css">
 <link rel="stylesheet" href="assets/css/footer.css">
+=======
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+>>>>>>> 849b7e826977be681f7ab084eab12d3ad6585d0f
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+        <style>
+            body { margin: 0; font-family: Arial; }
 
-        /* ===== TOP BAR ===== */
-        .topbar {
-            background: #1a1a1a;
-            color: #aaa;
-            font-size: 13px;
-            padding: 8px 60px;
-            display: flex;
-            justify-content: space-between;
-        }
+            .topbar {
+                background: #1a1a1a;
+                color: #aaa;
+                font-size: 13px;
+                padding: 8px 60px;
+                display: flex;
+                justify-content: space-between;
+            }
 
-        .topbar a {
-            color: #aaa;
-            text-decoration: none;
-            margin-right: 15px;
-        }
+            .topbar a {
+                color: #aaa;
+                text-decoration: none;
+                margin-right: 15px;
+            }
 
-        .topbar a:hover {
-            color: #fff;
-        }
+            .topbar a:hover { color: #fff; }
 
-        /* ===== HEADER ===== */
-        .header {
-            background: rgba(0,0,0,0.85);
-            height: 80px; /* 🔥 CHIỀU CAO CHUẨN */
-            padding: 0 60px;
-            display: flex;
-            align-items: center;
-        }
+            .header {
+                background: rgba(0,0,0,0.85);
+                height: 80px;
+                padding: 0 60px;
+                display: flex;
+                align-items: center;
+            }
 
-        /* LOGO */
-        .logo {
-            color: white;
-            font-size: 26px;
-            font-weight: bold;
-        }
+            .logo {
+                color: white;
+                font-size: 26px;
+                font-weight: bold;
+            }
 
-        .logo span {
-            color: red;
-        }
+            .logo span { color: red; }
 
-        /* MENU */
-        .menu {
-            display: flex;
-            height: 100%;
-            margin-left: auto;
-            margin-right: 80px;
-            width: 850px;
-            justify-content: space-between;
-        }
+            .menu {
+                display: flex;
+                height: 100%;
+                margin-left: auto;
+                margin-right: 40px;
+                width: 700px;
+                justify-content: space-between;
+            }
 
-        .menu a {
-            color: #ddd;
-            text-decoration: none;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            height: 100%;
-            font-size: 14px;
-            transition: 0.3s;
-            transition: 0.3s;
-        }
+            .menu a {
+                color: #ddd;
+                text-decoration: none;
+                padding: 0 20px;
+                display: flex;
+                align-items: center;
+                height: 100%;
+                font-size: 14px;
+                transition: 0.3s;
+            }
 
-        /* 🔥 ACTIVE (HOME) */
-        .menu a.active {
-            background: #e60000;
-            color: white;
-        }
+            .menu a.active,
+            .menu a:hover {
+                background: #e60000;
+                color: white;
+            }
 
-        /* 🔥 HOVER GIỐNG TEMPLATE */
-        .menu a:hover {
-            background: #e60000;
-            color: white;
-        }
+            /* SEARCH */
+            .search-box {
+                position: relative;
+                margin-right: 15px;
+            }
 
-        /* ICON */
-        .icons {
-            color: white;
-        }
+            .search-box input {
+                padding: 6px 30px 6px 10px;
+                border-radius: 20px;
+                border: none;
+                outline: none;
+            }
 
-        .icons i {
-            margin-left: 15px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
+            .search-box button {
+                position: absolute;
+                right: 5px;
+                top: 3px;
+                border: none;
+                background: none;
+                cursor: pointer;
+            }
 
-<!-- TOP BAR -->
-<div class="topbar">
-    <div>
-        <a href="#"><i class="fa fa-user"></i> Đăng nhập</a>
-        <a href="#"><i class="fa fa-user-plus"></i> Đăng ký</a>
-        <a href="#"><i class="fa fa-heart"></i> Yêu thích</a>
+            /* ICON */
+            .icons {
+                color: white;
+                display: flex;
+                align-items: center;
+            }
+
+            .cart {
+                position: relative;
+                margin-left: 10px;
+            }
+
+            .cart span {
+                position: absolute;
+                top: -8px;
+                right: -10px;
+                background: red;
+                color: white;
+                font-size: 11px;
+                padding: 2px 6px;
+                border-radius: 50%;
+            }
+            html, body {
+                overflow-x: hidden !important;
+            }
+            body {
+                overflow-y: scroll;  
+            }
+            body::-webkit-scrollbar {
+                display: none;
+            }    
+        </style>
+    </head>
+    <body>
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div>
+            <?php if($is_logged_in): ?>
+                <span>Xin chào, <?= $_SESSION['user']['name'] ?></span>
+                <a href="logout.php">Đăng xuất</a>
+            <?php else: ?>
+                <a href="login.php"><i class="fa fa-user"></i> Đăng nhập</a>
+                <a href="register.php"><i class="fa fa-user-plus"></i> Đăng ký</a>
+            <?php endif; ?>
+
+            <a href="#"><i class="fa fa-heart"></i> Yêu thích</a>
+        </div>
+
+        <div>
+            <i class="fa fa-phone"></i> 0123 456 789
+        </div>
     </div>
 
-    <div>
-        <i class="fa fa-phone"></i> 0123 456 789
-    </div>
-</div>
+    <!-- HEADER -->
+    <div class="header">
 
-<!-- HEADER -->
-<div class="header">
-
-    <!-- LOGO -->
-    <div class="logo">
-        Bike<span>Market</span>
-    </div>
+        <!-- LOGO -->
+        <div class="logo">
+            <a href="index.php" style="color:white;text-decoration:none;">
+                Bike<span>Market</span>
+            </a>
+        </div>
 
     <!-- MENU -->
     <div class="menu">
@@ -144,7 +199,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
         <a href="services.php" class="<?= ($current_page == 'services.php') ? 'active' : '' ?>">DỊCH VỤ</a>
 
-        <a href="blog.php" class="<?= ($current_page == 'blog.php') ? 'active' : '' ?>">BLOG</a>
+        <a href="views/blog.php" class="<?= ($current_page == 'blog.php') ? 'active' : '' ?>">BLOG</a>
 
         <a href="contact.php" class="<?= ($current_page == 'contact.php') ? 'active' : '' ?>">LIÊN HỆ</a>
 
@@ -153,7 +208,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <!-- ICON -->
     <div class="icons">
         <i class="fa fa-search"></i>
-        <i class="fa fa-shopping-cart"></i>
+        <a href="buyer_order.php" ><i class="fa fa-shopping-cart"></i></a>
     </div>
 
-</div>  
+    </div>

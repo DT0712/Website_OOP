@@ -1,4 +1,4 @@
-<script src="assets/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="/Website_OOP/Message/assets/css/footer.css">
 <footer id="contact"  class="footer">
   <div class="footer-column">
     <h4>Liên hệ</h4>
@@ -17,7 +17,7 @@
     <p>Môn học: <strong>XD phần mềm hướng đối tượng</strong></p>
     <p>Giáo viên hướng dẫn: <strong>Ths Nguyễn Văn Chiến</strong></p>
     <p>Niên khóa: 2023</p>
-  </div>
+  </div>    
 
   <div class="footer-column">
     <h4>Trường Đại học GTVT TP.HCM</h4>
