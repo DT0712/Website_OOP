@@ -135,6 +135,15 @@
                 padding: 2px 6px;
                 border-radius: 50%;
             }
+            html, body {
+                overflow-x: hidden !important;
+            }
+            body {
+                overflow-y: scroll;  
+            }
+            body::-webkit-scrollbar {
+                display: none;
+            }    
         </style>
     </head>
     <body>
