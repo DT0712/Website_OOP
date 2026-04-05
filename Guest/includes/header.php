@@ -25,7 +25,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- ICON -->
-<<<<<<< HEAD
+
     <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -35,11 +35,7 @@
 <!-- CSS riêng -->
 <link rel="stylesheet" href="assets/css/header.css">
 <link rel="stylesheet" href="assets/css/footer.css">
-=======
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
->>>>>>> 849b7e826977be681f7ab084eab12d3ad6585d0f
+
 
         <style>
             body { margin: 0; font-family: Arial; }
