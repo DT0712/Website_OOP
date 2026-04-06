@@ -196,7 +196,7 @@
     <!-- ICON -->
     <div class="icons">
         <i class="fa fa-search"></i>
-        <a href="buyer_order.php" ><i class="fa fa-shopping-cart"></i></a>
+        <a href="cart.php" ><i class="fa fa-shopping-cart"></i></a>
     </div>
 
     </div>
