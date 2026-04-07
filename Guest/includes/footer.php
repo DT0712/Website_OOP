@@ -1,4 +1,4 @@
-<script src="assets/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="assets/css/footer.css">
 <footer id="contact"  class="footer">
   <div class="footer-column">
     <h4>Liên hệ</h4>

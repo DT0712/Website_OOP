@@ -200,7 +200,7 @@
     <!-- ICON -->
     <div class="icons">
         <i class="fa fa-search"></i>
-        <a href="<?= $page ?>buyer_order.php" ><i class="fa fa-shopping-cart"></i></a>
+        <a href="<?= $page ?>cart.php" ><i class="fa fa-shopping-cart"></i></a>
     </div>
 
     </div>
