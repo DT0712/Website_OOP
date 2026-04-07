@@ -178,25 +178,29 @@
         </div>
 
     <!-- MENU -->
+    <?php
+        $page = '';
+        if ($current_page == 'blog.php') $page = '../';
+    ?>
     <div class="menu">
-        <a href="index.php" class="<?= ($current_page == 'index.php') ? 'active' : '' ?>">HOME</a>
+        <a href="<?= $page ?>index.php" class="<?= ($current_page == 'index.php') ? 'active' : '' ?>">HOME</a>
 
-        <a href="bikes.php" class="<?= ($current_page == 'bikes.php') ? 'active' : '' ?>">XE ĐẠP</a>
+        <a href="<?= $page ?>bikes.php" class="<?= ($current_page == 'bikes.php') ? 'active' : '' ?>">XE ĐẠP</a>
 
-        <a href="sell.php" class="<?= ($current_page == 'sell.php') ? 'active' : '' ?>">ĐĂNG BÁN</a>
+        <a href="<?= $page ?>sell.php" class="<?= ($current_page == 'sell.php') ? 'active' : '' ?>">ĐĂNG BÁN</a>
 
-        <a href="services.php" class="<?= ($current_page == 'services.php') ? 'active' : '' ?>">DỊCH VỤ</a>
+        <a href="<?= $page ?>services.php" class="<?= ($current_page == 'services.php') ? 'active' : '' ?>">DỊCH VỤ</a>
 
         <a href="views/blog.php" class="<?= ($current_page == 'blog.php') ? 'active' : '' ?>">BLOG</a>
 
-        <a href="contact.php" class="<?= ($current_page == 'contact.php') ? 'active' : '' ?>">LIÊN HỆ</a>
+        <a href="<?= $page ?>contact.php" class="<?= ($current_page == 'contact.php') ? 'active' : '' ?>">LIÊN HỆ</a>
 
     </div>
 
     <!-- ICON -->
     <div class="icons">
         <i class="fa fa-search"></i>
-        <a href="buyer_order.php" ><i class="fa fa-shopping-cart"></i></a>
+        <a href="<?= $page ?>buyer_order.php" ><i class="fa fa-shopping-cart"></i></a>
     </div>
 
     </div>
