@@ -17,7 +17,7 @@
             <div class="col-md-4">
                 <a href="blog_detail.php?id=1" style="text-decoration:none;" class="d-block">
                     <div class="blog-card">
-                        <img src="../assets/images/biketop.jpg">
+                        <img src="../assets/images/bike_top.jpg">
                         <div class="overlay">
                             <span class="tag">NEW</span>
                             Top xe đạp bán chạy tháng
@@ -29,7 +29,7 @@
             <div class="col-md-4">
                 <a href="blog_detail.php?id=2" style="text-decoration:none;" class="d-block">
                     <div class="blog-card">
-                        <img src="../assets/images/biketip.jpg">
+                        <img src="../assets/images/bike_tip.jpg">
                         <div class="overlay">
                             <span class="tag">TIPS</span>
                             Cách chọn xe đạp phù hợp
@@ -41,7 +41,7 @@
             <div class="col-md-4">
                 <a href="blog_detail.php?id=3" style="text-decoration:none;" class="d-block">
                     <div class="blog-card">
-                        <img src="../assets/images/biketravel.jpg">
+                        <img src="../assets/images/bike_travel.jpg">
                         <div class="overlay">
                             <span class="tag">TRAVEL</span>
                             Hành trình đạp xe đáng nhớ
@@ -62,7 +62,7 @@
                 <div class="col-md-6 mb-4">
                     <a href="blog_detail.php?id=4" style="text-decoration:none;" class="d-block">
                         <div class="blog-card">
-                            <img src="../assets/images/bikenewbie.jpg">
+                            <img src="../assets/images/bike_newbie.jpg">
                             <div class="overlay">
                                 <span class="tag">NEWBIE</span>
                                 Xe đạp thể thao cho người mới
@@ -74,7 +74,7 @@
                 <div class="col-md-6 mb-4">
                     <a href="blog_detail.php?id=5" style="text-decoration:none;" class="d-block">
                         <div class="blog-card">
-                            <img src="../assets/images/bikefix.jpg">
+                            <img src="../assets/images/bike_fix.jpg">
                             <div class="overlay">
                                 <span class="tag">TIPS</span>
                                 Kinh nghiệm bảo dưỡng xe
