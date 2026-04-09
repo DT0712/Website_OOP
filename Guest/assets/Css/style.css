@@ -145,12 +145,15 @@ thead th:last-child {
 
 .overlay {
     position: absolute;
+    top: 50%;
     bottom: 15px;
-    left: 15px;
+    left: 50%;
     background: white;
     padding: 10px;
     border-radius: 10px;
     font-weight: 600;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
 
 .tag {
@@ -175,9 +178,48 @@ thead th:last-child {
     border-radius: 15px;
 }
 
-.blog-logo {
-    font-family: 'Georgia', serif;
+.blog-header {
+    background: url('../images/bg-blog.jpg') no-repeat center;
+    background-size: cover;
+    height: 400px;
+    width: 115%;
+    margin-left: -100px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.blog-header .overlaylg {
+    background: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    margin-top: -100px;
+}
+
+.logo1 {
+    color: white;
+    font-size: 100px;
     font-weight: bold;
+    letter-spacing: 5px;
+}
+
+.subtitle {
+    color: #ddd;
+    font-size: 14px;
     letter-spacing: 2px;
-    font-size: 28px;
+}
+
+.slider-wrapper {
+    margin-top: -150px;
+    position: relative;
+    z-index: 2;
 }

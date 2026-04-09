@@ -122,7 +122,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 #mainImage {
     max-width: 100%;
     margin-bottom: 30px;
-    margin-right: -350px;
+    margin-right: -30px;
     filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
     transition: 0.3s;
 }
@@ -171,8 +171,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     margin-top: 25px;
 }
 
-.action-buttons a {
-    text-decoration: none;
+.action-buttons button {
     padding: 15px 26px;
     font-size: 16px;
     border-radius: 10px;
@@ -182,14 +181,13 @@ if ($result && mysqli_num_rows($result) > 0) {
     align-items: center;
     justify-content: center;
     min-width: 144px;
-    
 }
 
 /* nút giỏ */
 .cart-btn {
     background: #fff;
     color: #e53935;
-    border: 2px solid #e53935;  
+    border: 2px solid #e53935;
 }
 
 .cart-btn:hover {
@@ -359,15 +357,18 @@ if ($result && mysqli_num_rows($result) > 0) {
 </div>
 
             <div class="action-buttons">
-    <a href="#" class="cart-btn">
-        <span class="cart-icon">🛒</span>
-        Thêm Giỏ Hàng
-    </a>
-<a href="cart.php" 
-   class="order-btn <?= ($current_page == 'cart.php') ? 'active' : '' ?>">
-   Đặt Hàng
-</a>
-</div>
+                <button class="cart-btn">
+                    <span class="cart-icon">🛒</span>
+                    Thêm Giỏ Hàng
+                </button>
+                <button class="order-btn">Đặt Hàng</button>
+
+                <!-- [Message Service] Nút nhắn tin -->
+        <a href="/Website_OOP/Admin/index.php?action=create&seller_id=<?= $row['seller_id'] ?>&xe_id=<?= $row['id'] ?>"
+            style="padding:15px 26px; font-size:16px; border-radius:10px; background:linear-gradient(90deg,#00c853,#009624); color:white; text-decoration:none; display:flex; align-items:center; min-width:144px; justify-content:center;">
+            Chat
+        </a>
+            </div>
         </div>
     </div>
 
