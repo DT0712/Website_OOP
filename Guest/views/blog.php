@@ -3,7 +3,7 @@
 <div class="container mt-4 mb-5">
 
     <div class="blog-header">
-        <div class="overlay">
+        <div class="overlaylg">
             <h1 class="logo1">
                 BL<span class="smile-icon"><i class="fa-regular fa-face-smile"></i></span>G
             </h1>
@@ -89,10 +89,10 @@
         <div class="col-md-4">
             <div class="about-box text-center p-3">
                 <a href="../bikes.php" style="text-decoration:none;" class="d-block">
+                    <h5>Bike Market</h5>
                     <img src="../assets/images/bikestore.jpg"
                         class="rounded-circle mb-2" width="140" height="90"
                         style="object-fit:cover;">
-                    <h5>Bike Market</h5>
                     <p>Chuyên cung cấp xe đạp chính hãng,
                     hỗ trợ đặt cọc và giao hàng toàn quốc.</p>
                 </a>

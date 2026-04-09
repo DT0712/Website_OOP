@@ -145,12 +145,15 @@ thead th:last-child {
 
 .overlay {
     position: absolute;
+    top: 50%;
     bottom: 15px;
-    left: 15px;
+    left: 50%;
     background: white;
     padding: 10px;
     border-radius: 10px;
     font-weight: 600;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
 
 .tag {
@@ -187,7 +190,7 @@ thead th:last-child {
     position: relative;
 }
 
-.blog-header .overlay {
+.blog-header .overlaylg {
     background: rgba(0, 0, 0, 0.4);
     height: 100%;
     display: flex;
