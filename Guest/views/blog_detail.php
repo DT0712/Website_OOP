@@ -5,12 +5,12 @@ include "../config.php";
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 1;
 
-$sql = "SELECT * FROM posts WHERE id = $id";
+$sql = "SELECT * FROM blogs WHERE id = $id";
 $result = $conn->query($sql);
 $post = $result->fetch_assoc();
 
 if (!$post) {
-    $sql = "SELECT * FROM posts LIMIT 1";
+    $sql = "SELECT * FROM blogs LIMIT 1";
     $result = $conn->query($sql);
     $post = $result->fetch_assoc();
 }
@@ -54,7 +54,7 @@ if (!$post) {
     <h5 style="font-weight:700; margin-bottom:20px;">Bài viết liên quan</h5>
 
     <?php
-    $sql_related = "SELECT * FROM posts WHERE id != $id LIMIT 4";
+    $sql_related = "SELECT * FROM blogs WHERE id != $id LIMIT 4";
     $related = $conn->query($sql_related);
     ?>
 
