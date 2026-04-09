@@ -24,10 +24,12 @@ if (!$post) {
     </nav>
 
     <!-- Tag -->
-    <span style="background:#00bcd4; color:white; padding:4px 12px; 
-                 border-radius:20px; font-size:12px; font-weight:bold;">
-        <?= $post['tag'] ?>
-    </span>
+    <?php if($id != 6): ?>
+        <span style="background:#00bcd4; color:white; padding:4px 12px; 
+                    border-radius:20px; font-size:12px; font-weight:bold;">
+            <?= $post['tag'] ?>
+        </span>
+    <?php endif; ?>
 
     <!-- Tiêu đề -->
     <h2 style="margin-top:15px; font-weight:700;">

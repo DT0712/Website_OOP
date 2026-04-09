@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     </head>
@@ -63,20 +64,26 @@
         </div>
 
     <!-- MENU -->
+
     <?php
         $page = '';
-        if ($current_page == 'blog.php') $page = '../';
+        $views = 'views/';
+        if ($current_page == 'blog.php' || $current_page == 'blog_detail.php') {
+            $page = '../';
+            $views = '';
+        }
     ?>
+
     <div class="menu">
         <a href="<?= $page ?>index.php" class="<?= ($current_page == 'index.php') ? 'active' : '' ?>">HOME</a>
 
         <a href="<?= $page ?>bikes.php" class="<?= ($current_page == 'bikes.php') ? 'active' : '' ?>">XE ĐẠP</a>
 
-        <a href="sell.php" class="<?= ($current_page == 'sell.php') ? 'active' : '' ?>">ĐĂNG TIN</a>
+        <a href="<?= $page ?>sell.php" class="<?= ($current_page == 'sell.php') ? 'active' : '' ?>">ĐĂNG TIN</a>
 
         <a href="<?= $page ?>services.php" class="<?= ($current_page == 'services.php') ? 'active' : '' ?>">DỊCH VỤ</a>
 
-        <a href="views/blog.php" class="<?= ($current_page == 'blog.php') ? 'active' : '' ?>">BLOG</a>
+        <a href="<?= $views ?>blog.php" class="<?= ($current_page == 'blog.php') ? 'active' : '' ?>">BLOG</a>
 
         <a href="<?= $page ?>contact.php" class="<?= ($current_page == 'contact.php') ? 'active' : '' ?>">LIÊN HỆ</a>
 

@@ -88,7 +88,7 @@
 
         <div class="col-md-4">
             <div class="about-box text-center p-3">
-                <a href="../bikes.php" style="text-decoration:none;" class="d-block">
+                <a href="blog_detail.php?id=6" style="text-decoration:none;" class="d-block">
                     <h5>Bike Market</h5>
                     <img src="../assets/images/bikestore.jpg"
                         class="rounded-circle mb-2" width="140" height="90"

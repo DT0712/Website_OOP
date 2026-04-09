@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="assets/css/footer.css">
+<link rel="stylesheet" href="../assets/css/footer.css">
 <footer id="contact"  class="footer">
   <div class="footer-column">
     <h4>Liên hệ</h4>
