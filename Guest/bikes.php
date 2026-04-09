@@ -358,7 +358,7 @@ include "includes/header.php";
                     <span><?php echo $row['condition_status']; ?></span>
                 </div>
 
-                <a href="detail.php?id=<?php echo $row['id']; ?>" class="rent-btn">
+                <a href="detail.php?id=<?php echo $row['bicycle_id']; ?>" class="rent-btn">
     XEM CHI TIẾT
 </a>
                 
