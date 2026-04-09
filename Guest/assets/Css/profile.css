@@ -1,0 +1,296 @@
+/* ================= ROOT ================= */
+:root {
+    --primary: #00bcd4;
+    --secondary: #0097a7;
+    --light: #f8f9fa;
+    --dark: #495057;
+    --border: #dee2e6;
+}
+
+/* ================= BODY ================= */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9fa;
+    color: var(--dark);
+}
+
+/* ================= PROFILE HEADER ================= */
+.profile-header {
+    position: relative;
+    background: linear-gradient(135deg, #e91e63 0%, #9c27b0 35%, #673ab7 70%, #3f51b5 100%);
+    color: white;
+    padding: 5.5rem 0 3rem;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(103, 58, 183, 0.3);
+    min-height: 400px;
+}
+
+.profile-header.has-cover {
+    background: none;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header.has-cover::before,
+.profile-header.has-cover::after,
+.profile-header.has-cover .bubble-1,
+.profile-header.has-cover .bubble-2,
+.profile-header.has-cover .bubble-3 {
+    display: none;
+}
+
+/* ================= COVER IMAGE ================= */
+.cover-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+    z-index: 1;
+}
+
+.profile-header.has-cover .cover-image {
+    opacity: 1;
+}
+
+/* ================= BACKGROUND EFFECT ================= */
+.profile-header::before,
+.profile-header::after,
+.bubble {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.3;
+    z-index: 2;
+}
+
+.profile-header::before {
+    width: 450px;
+    height: 450px;
+    background: #e91e63;
+    top: -120px;
+    left: -100px;
+}
+
+.profile-header::after {
+    width: 550px;
+    height: 550px;
+    background: #3f51b5;
+    bottom: -180px;
+    right: -140px;
+}
+
+.bubble-1 {
+    width: 220px;
+    height: 220px;
+    background: rgba(255, 255, 255, 0.2);
+    top: 60px;
+    right: 80px;
+}
+
+.bubble-2 {
+    width: 320px;
+    height: 320px;
+    background: rgba(255, 255, 255, 0.15);
+    bottom: 100px;
+    left: 40px;
+}
+
+.bubble-3 {
+    width: 180px;
+    height: 180px;
+    background: rgba(255, 255, 255, 0.18);
+    top: 200px;
+    left: 180px;
+}
+
+/* ================= BUTTONS ================= */
+.change-cover-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #673ab7;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.5rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    z-index: 10;
+    transition: 0.3s;
+}
+
+.change-cover-btn:hover {
+    background: white;
+    transform: scale(1.15);
+    color: #e91e63;
+}
+
+/* ================= AVATAR ================= */
+.avatar-container {
+    position: relative;
+    display: inline-block;
+    z-index: 10;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 8px solid white;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    object-fit: cover;
+    background: white;
+    transition: 0.4s;
+}
+
+.avatar:hover {
+    transform: scale(1.08);
+}
+
+.change-avatar-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #9c27b0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.5rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.change-avatar-btn:hover {
+    background: white;
+    transform: scale(1.25);
+    color: #e91e63;
+}
+
+/* ================= TEXT ================= */
+.user-name {
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin: 1.5rem 0 0.6rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.user-location {
+    font-size: 1.15rem;
+    opacity: 0.95;
+}
+
+/* ================= CARD ================= */
+.profile-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.section-header {
+    background: var(--light);
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* ================= INFO ================= */
+.info-grid {
+    padding: 1.5rem;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 500;
+    min-width: 120px;
+    flex: 0 0 120px;
+}
+
+.info-value {
+    flex: 1;
+    color: #6c757d;
+}
+
+/* ================= BUTTON ================= */
+.edit-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    transition: 0.2s;
+}
+
+.edit-btn:hover {
+    background: var(--secondary);
+}
+
+/* ================= NAV ================= */
+.nav-link {
+    color: var(--dark);
+    padding: 0.875rem 1rem;
+    transition: 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* ================= TAB ================= */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ================= EMPTY ================= */
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #6c757d;
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.5;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .info-label {
+        min-width: auto;
+        margin-bottom: 0.25rem;
+    }
+}

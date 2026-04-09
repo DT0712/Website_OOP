@@ -5,8 +5,27 @@ include "includes/header.php";
 /* ===== LẤY ID AN TOÀN ===== */
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-$sql = "SELECT * FROM bicycles WHERE id = $id LIMIT 1";
+/* ===== LẤY FULL THÔNG TIN XE ===== */
+$sql = "
+SELECT b.*, 
+       c.name AS category_name,
+       br.name AS brand_name,
+       COUNT(o.id) AS total_orders
+FROM bicycles b
+LEFT JOIN categories c ON b.category_id = c.id
+LEFT JOIN brands br ON b.brand_id = br.id
+LEFT JOIN orders o ON b.bicycle_id = o.bike_id AND o.status IN ('accepted','deposit_paid','completed')
+WHERE b.bicycle_id = $id
+GROUP BY b.bicycle_id
+LIMIT 1
+";
+
 $result = mysqli_query($conn, $sql);
+
+/* ===== LẤY NỘI DUNG TAB CHI TIẾT ===== */
+$section_sql = "SELECT * FROM product_sections WHERE bicycle_id = $id LIMIT 1";
+$section_result = mysqli_query($conn, $section_sql);
+$product_section = mysqli_fetch_assoc($section_result);
 
 if ($result && mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
@@ -193,6 +212,101 @@ if ($result && mysqli_num_rows($result) > 0) {
     font-size: 22px;
     margin-right: 8px;
 }
+
+/* ===== TAB AREA FULL WIDTH ===== */
+.product-tabs {
+    width: 100%;
+    margin-top: 80px;
+}
+
+/* thanh tab full ngang */
+.tab-buttons {
+    width: 100%;
+    padding-left: 120px;   /* canh thẳng với khối trái phía trên */
+    border-bottom: 3px solid #eee;
+    display: flex;
+    gap: 40px;
+    background: #fff;
+}
+
+/* nút tab */
+.tab-btn {
+    padding: 18px 0;
+    font-size: 20px;
+    cursor: pointer;
+    color: #888;
+    border-bottom: 3px solid transparent;
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    color: #e53935;
+    border-color: #e53935;
+    font-weight: bold;
+}
+
+/* nội dung tab full ngang */
+.tab-content {
+    display: none;
+    width: 100%;
+    padding: 50px 120px;  /* canh lề giống tab */
+    line-height: 1.8;
+    font-size: 16px;
+    color: #444;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* khối nội dung lớn */
+.big-content {
+    background: #fafafa;
+    border-radius: 16px;
+    padding: 45px 60px;   /* bỏ padding trái dư */
+    white-space: pre-line;
+    max-width: 1500px;    /* giúp đọc dễ hơn */
+}
+.tab-buttons {
+    display: flex;
+    border-bottom: 3px solid #eee;
+    gap: 30px;
+}
+
+.tab-btn {
+    padding: 15px 5px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #888;
+    border-bottom: 3px solid transparent;
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    color: #e53935;
+    border-color: #e53935;
+    font-weight: bold;
+}
+
+.tab-content {
+    display: none;
+    width: 100%;
+    padding: 50px 120px 80px 120px; /* container giữ padding */
+    background: #f5f5f5;            /* nền xám full ngang */
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* box nội dung */
+.spec-box {
+    background: #fafafa;
+    padding: 30px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    white-space: pre-line;
+}
 </style>
 
 <!-- ===== MAIN ===== -->
@@ -229,6 +343,21 @@ if ($result && mysqli_num_rows($result) > 0) {
                 </span>
             </div>
 
+            <div class="info-row">
+    <span class="label">Thể loại</span>
+    <span class="value"><?php echo $row['category_name']; ?></span>
+</div>
+
+<div class="info-row">
+    <span class="label">Thương hiệu</span>
+    <span class="value"><?php echo $row['brand_name']; ?></span>
+</div>
+
+<div class="info-row">
+    <span class="label">Lượt mua</span>
+    <span class="value"><?php echo $row['total_orders']; ?> đã bán</span>
+</div>
+
             <div class="action-buttons">
     <a href="#" class="cart-btn">
         <span class="cart-icon">🛒</span>
@@ -260,6 +389,44 @@ if ($result && mysqli_num_rows($result) > 0) {
     <?php endforeach; ?>
 </div>
 
+<!-- ================= TAB ================= -->
+<div class="product-tabs">
+
+    <div class="tab-buttons">
+        <div class="tab-btn active" onclick="openTab(0)">Chi tiết sản phẩm</div>
+        <div class="tab-btn" onclick="openTab(1)">Đánh giá</div>
+    </div>
+
+<!-- TAB 1 -->
+<div class="tab-content active">
+
+    <?php if($product_section): ?>
+
+        <div class="big-content">
+            <?php
+                echo $product_section['thong_so'] . "\n\n";
+                echo $product_section['qua_tang'] . "\n\n";
+                echo $product_section['huong_dan'] . "\n\n";
+                echo $product_section['dong_kiem'] . "\n\n";
+                echo $product_section['doi_tra'];
+            ?>
+        </div>
+
+    <?php else: ?>
+        <p style="padding-left:120px">Chưa có thông tin chi tiết.</p>
+    <?php endif; ?>
+
+</div>
+
+    <!-- TAB 2 -->
+    <div class="tab-content">
+        <h3>Đánh giá sản phẩm</h3>
+        <p>⭐ Chức năng đánh giá sẽ được cập nhật sau.</p>
+        <p>Hiện chưa có đánh giá nào.</p>
+    </div>
+
+</div>
+
 <script>
 function changeImage(img) {
     const main = document.getElementById("mainImage");
@@ -282,6 +449,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const first = document.querySelector(".thumbs-outside img");
     if (first) first.classList.add("active");
 });
+
+function openTab(index) {
+    document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
+
+    document.querySelectorAll(".tab-btn")[index].classList.add("active");
+    document.querySelectorAll(".tab-content")[index].classList.add("active");
+}
 </script>
 
 <?php include "includes/footer.php"; ?>

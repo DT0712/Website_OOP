@@ -10,10 +10,10 @@
     $cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 
     // kiểm tra login
-    $is_logged_in = isset($_SESSION['user']);
+    $is_logged_in = isset($_SESSION['khach_hang']);
 
-    $avatar = $is_logged_in && !empty($_SESSION['user']['avatar'])
-        ? $_SESSION['user']['avatar']
+    $avatar = $is_logged_in && !empty($_SESSION['khach_hang']['anh_dai_dien'])
+        ? $_SESSION['khach_hang']['anh_dai_dien']
         : 'https://i.imgur.com/6VBx3io.png';
     ?>
 
@@ -27,124 +27,9 @@
     <!-- ICON -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/header.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <style>
-            body { margin: 0; font-family: Arial; }
-
-            .topbar {
-                background: #1a1a1a;
-                color: #aaa;
-                font-size: 13px;
-                padding: 8px 60px;
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .topbar a {
-                color: #aaa;
-                text-decoration: none;
-                margin-right: 15px;
-            }
-
-            .topbar a:hover { color: #fff; }
-
-            .header {
-                background: rgba(0,0,0,0.85);
-                height: 80px;
-                padding: 0 60px;
-                display: flex;
-                align-items: center;
-            }
-
-            .logo {
-                color: white;
-                font-size: 26px;
-                font-weight: bold;
-            }
-
-            .logo span { color: red; }
-
-            .menu {
-                display: flex;
-                height: 100%;
-                margin-left: auto;
-                margin-right: 40px;
-                width: 700px;
-                justify-content: space-between;
-            }
-
-            .menu a {
-                color: #ddd;
-                text-decoration: none;
-                padding: 0 20px;
-                display: flex;
-                align-items: center;
-                height: 100%;
-                font-size: 14px;
-                transition: 0.3s;
-            }
-
-            .menu a.active,
-            .menu a:hover {
-                background: #e60000;
-                color: white;
-            }
-
-            /* SEARCH */
-            .search-box {
-                position: relative;
-                margin-right: 15px;
-            }
-
-            .search-box input {
-                padding: 6px 30px 6px 10px;
-                border-radius: 20px;
-                border: none;
-                outline: none;
-            }
-
-            .search-box button {
-                position: absolute;
-                right: 5px;
-                top: 3px;
-                border: none;
-                background: none;
-                cursor: pointer;
-            }
-
-            /* ICON */
-            .icons {
-                color: white;
-                display: flex;
-                align-items: center;
-            }
-
-            .cart {
-                position: relative;
-                margin-left: 10px;
-            }
-
-            .cart span {
-                position: absolute;
-                top: -8px;
-                right: -10px;
-                background: red;
-                color: white;
-                font-size: 11px;
-                padding: 2px 6px;
-                border-radius: 50%;
-            }
-            html, body {
-                overflow-x: hidden !important;
-            }
-            body {
-                overflow-y: scroll;  
-            }
-            body::-webkit-scrollbar {
-                display: none;
-            }    
-        </style>
     </head>
     <body>
 
@@ -152,14 +37,14 @@
     <div class="topbar">
         <div>
             <?php if($is_logged_in): ?>
-                <span>Xin chào, <?= $_SESSION['user']['name'] ?></span>
-                <a href="logout.php">Đăng xuất</a>
+                <span>Xin chào, <?= $_SESSION['khach_hang']['ho_ten'] ?></span>
+                
             <?php else: ?>
                 <a href="login.php"><i class="fa fa-user"></i> Đăng nhập</a>
                 <a href="register.php"><i class="fa fa-user-plus"></i> Đăng ký</a>
             <?php endif; ?>
 
-            <a href="#"><i class="fa fa-heart"></i> Yêu thích</a>
+            
         </div>
 
         <div>
@@ -183,7 +68,7 @@
 
         <a href="bikes.php" class="<?= ($current_page == 'bikes.php') ? 'active' : '' ?>">XE ĐẠP</a>
 
-        <a href="sell.php" class="<?= ($current_page == 'sell.php') ? 'active' : '' ?>">ĐĂNG BÁN</a>
+        <a href="sell.php" class="<?= ($current_page == 'sell.php') ? 'active' : '' ?>">ĐĂNG TIN</a>
 
         <a href="services.php" class="<?= ($current_page == 'services.php') ? 'active' : '' ?>">DỊCH VỤ</a>
 
@@ -195,8 +80,34 @@
 
     <!-- ICON -->
     <div class="icons">
-        <i class="fa fa-search"></i>
-        <a href="cart.php" ><i class="fa fa-shopping-cart"></i></a>
+
+    <div class="search-box">
+        <input type="text" placeholder="Tìm kiếm...">
+        <button><i class="fa fa-search"></i></button>
     </div>
+
+    <?php if($is_logged_in): ?>
+    <a href="profile.php" class="user-pill">
+        <img src="<?= $avatar ?>">
+        <span>
+            <?= $_SESSION['khach_hang']['ho_ten'] ?>
+        </span>
+    </a>
+<?php else: ?>
+        <a href="login.php" style="color:white;margin-right:15px;">
+            <i class="fa fa-user"></i>
+        </a>
+    <?php endif; ?>
+
+    <div class="cart">
+        <a href="cart.php" style="color:white;">
+            <i class="fa fa-shopping-cart"></i>
+        </a>
+        <?php if($cart_count > 0): ?>
+            <span><?= $cart_count ?></span>
+        <?php endif; ?>
+    </div>
+
+</div>
 
     </div>
