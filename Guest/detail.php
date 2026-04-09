@@ -362,12 +362,6 @@ if ($result && mysqli_num_rows($result) > 0) {
                     Thêm Giỏ Hàng
                 </button>
                 <button class="order-btn">Đặt Hàng</button>
-
-                <!-- [Message Service] Nút nhắn tin -->
-        <a href="/Website_OOP/Admin/index.php?action=create&seller_id=<?= $row['seller_id'] ?>&xe_id=<?= $row['id'] ?>"
-            style="padding:15px 26px; font-size:16px; border-radius:10px; background:linear-gradient(90deg,#00c853,#009624); color:white; text-decoration:none; display:flex; align-items:center; min-width:144px; justify-content:center;">
-            Chat
-        </a>
             </div>
         </div>
     </div>
