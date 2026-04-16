@@ -397,6 +397,34 @@ $result = mysqli_query($conn, $sql);
     from { transform: translate(-50%, -50%) rotate(0deg); }
     to { transform: translate(-50%, -50%) rotate(360deg); }
 }
+/* ================= FLOATING CHAT FIXED ================= */
+#chat-bubble {
+    position: fixed;   /* ⭐ KEY: dính theo màn hình */
+    right: 25px;
+    bottom: 25px;
+
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#ff3c00,#ff7b00);
+    color: white;
+    font-size: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 99999;
+
+    transition: transform .2s, box-shadow .2s;
+}
+
+#chat-bubble:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+}
 </style>
 
 <!-- ================= BANNER ================= -->
@@ -560,5 +588,18 @@ $result = mysqli_query($conn, $sql);
         <?php } ?>
     </div>
 </div>
+<!-- FLOATING CHAT BUTTON -->
+<div id="chat-bubble">
+    💬
+</div>
+
+<script>
+const bubble = document.getElementById("chat-bubble");
+bubble.onclick = () => {
+    window.location.href = "chatai.php";
+}
+
+</script>
+
 
 <?php include "includes/footer.php"; ?>
