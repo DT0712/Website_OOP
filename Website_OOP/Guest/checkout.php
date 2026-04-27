@@ -18,7 +18,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
     foreach ($_SESSION['cart'] as $id => $item) {
         $id_sp = $item['id'];
         $qty = $item['quantity'];
-        $sql = "SELECT id, name, price, main_image FROM bicycles WHERE id = ?";
+        $sql = "SELECT bicycle_id, name, price, main_image FROM bicycles WHERE bicycle_id  = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id_sp);
         $stmt->execute();
@@ -130,8 +130,9 @@ include 'includes/header.php';
                 <div class="border-bottom pb-3 mb-3">
                     <?php foreach ($cart_items as $item): ?>
                     <div class="d-flex mb-3">
-                        <img src="<?= htmlspecialchars($item['main_image']) ?>"> 
-                             class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                        <img src="<?= htmlspecialchars($item['main_image']) ?>" 
+     class="rounded me-3" 
+     style="width: 60px; height: 60px; object-fit: cover;">
                         <div class="flex-grow-1">
                             <p class="mb-1 fw-semibold small"><?= htmlspecialchars($item['name']) ?></p>
                             <small class="text-muted">x<?= $item['quantity'] ?></small>

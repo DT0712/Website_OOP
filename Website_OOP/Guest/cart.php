@@ -19,7 +19,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'add' && isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $qty = isset($_GET['qty']) ? max(1, intval($_GET['qty'])) : 1;
 
-    $sql = "SELECT name, price, main_image FROM bicycles WHERE id = ?";
+    $sql = "SELECT bicycle_id, name, price, main_image 
+        FROM bicycles 
+        WHERE bicycle_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -176,7 +178,7 @@ setTimeout(closeCartPopup, 10000);
                         <?php foreach ($_SESSION['cart'] as $item): ?>
                             <?php $subtotal = $item['price'] * $item['quantity']; $total += $subtotal; ?>
                             <tr>
-                                <td><img src="assets/images/<?php echo htmlspecialchars($item['image']); ?>" style="width:80px; height:80px; object-fit:cover;"></td>
+                                <td><img src="<?php echo htmlspecialchars($item['image']); ?>" style="width:80px; height:80px; object-fit:cover;"></td>
                                 <td class="text-start fw-bold"><?php echo htmlspecialchars($item['name']); ?></td>
                                 <td><?php echo number_format($item['price']); ?>₫</td>
                                 <td>

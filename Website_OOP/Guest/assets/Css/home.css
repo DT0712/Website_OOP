@@ -13,10 +13,9 @@
 
 /* ================= FEATURES ================= */
 .features-section {
-    padding: 80px 60px;
-    background: linear-gradient(135deg, #1f1f1f, #2b2b2b, #1a1a1a);
+    padding: 60px;
+    background: #fff;
     text-align: center;
-    color: #fff;
 }
 
 .sub-title {
@@ -43,12 +42,14 @@
 
 /* CARD */
 .feature-card {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 30px 25px;
-    border-radius: 12px;
+    background: #fafafa;
+    padding: 30px 20px;
+    border-radius: 10px;
     transition: 0.3s;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(8px);
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .feature-card:hover {

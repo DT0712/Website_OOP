@@ -171,7 +171,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     margin-top: 25px;
 }
 
-.action-buttons button {
+.action-buttons a {
     padding: 15px 26px;
     font-size: 16px;
     border-radius: 10px;
@@ -181,6 +181,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     align-items: center;
     justify-content: center;
     min-width: 144px;
+    text-decoration: none;
 }
 
 /* nút giỏ */
@@ -357,12 +358,19 @@ if ($result && mysqli_num_rows($result) > 0) {
 </div>
 
             <div class="action-buttons">
-                <button class="cart-btn">
-                    <span class="cart-icon">🛒</span>
-                    Thêm Giỏ Hàng
-                </button>
-                <button class="order-btn">Đặt Hàng</button>
-            </div>
+
+<a href="cart.php?action=add&id=<?php echo $row['bicycle_id']; ?>&qty=1"
+   class="cart-btn">
+    <span class="cart-icon">🛒</span>
+    Thêm Giỏ Hàng
+</a>
+
+<a href="checkout.php?id=<?php echo $row['bicycle_id']; ?>"
+   class="order-btn">
+    Đặt Hàng
+</a>
+
+</div>
         </div>
     </div>
 
