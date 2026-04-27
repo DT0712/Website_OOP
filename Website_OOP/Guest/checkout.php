@@ -14,22 +14,42 @@ $cart_count = 0;
 $cart_items = [];
 $total_price = 0;
 
-if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+if (isset($_SESSION['cart']) && is_array($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+
     foreach ($_SESSION['cart'] as $id => $item) {
-        $id_sp = $item['id'];
-        $qty = $item['quantity'];
-        $sql = "SELECT bicycle_id, name, price, main_image FROM bicycles WHERE bicycle_id  = ?";
+
+        // Ép kiểu an toàn
+        $id_sp = isset($item['id']) ? (int)$item['id'] : 0;
+        $qty   = isset($item['quantity']) ? (int)$item['quantity'] : 0;
+
+        if ($id_sp <= 0 || $qty <= 0) continue;
+
+        $sql = "SELECT bicycle_id, name, price, main_image 
+                FROM bicycles 
+                WHERE bicycle_id = ?";
+
         $stmt = $conn->prepare($sql);
+
+        // 🔥 BẮT LỖI QUAN TRỌNG
+        if (!$stmt) {
+            die("❌ Lỗi SQL: " . $conn->error);
+        }
+
         $stmt->bind_param("i", $id_sp);
         $stmt->execute();
+
         $result = $stmt->get_result();
-        if ($row = $result->fetch_assoc()) {
+
+        if ($result && $row = $result->fetch_assoc()) {
             $row['quantity'] = $qty;
             $row['subtotal'] = $row['price'] * $qty;
+
             $cart_items[] = $row;
             $total_price += $row['subtotal'];
             $cart_count += $qty;
         }
+
+        $stmt->close();
     }
 }
 
