@@ -1,0 +1,475 @@
+.banner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: #000; 
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ================= FEATURES ================= */
+.features-section {
+    padding: 80px 60px;
+    background: linear-gradient(135deg, #1f1f1f, #2b2b2b, #1a1a1a);
+    text-align: center;
+    color: #fff;
+}
+
+.sub-title {
+    color: #ff3c00;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.main-title {
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+.main-title span {
+    color: #ff3c00;
+}
+
+/* GRID */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* CARD */
+.feature-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px 25px;
+    border-radius: 12px;
+    transition: 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ACTIVE CARD (giống ô giữa trong ảnh) */
+.feature-card.active {
+    border-bottom: 4px solid #ff3c00;
+    background: #fff;
+}
+
+/* ICON */
+.feature-card .icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+/* TEXT */
+.feature-card h3 {
+    margin-bottom: 10px;
+    font-size: 25px;
+}
+
+.feature-card p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+    text-align: justify;
+    line-height: 1.8; 
+}
+
+/* LINK */
+.feature-card a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #999;
+}
+
+.feature-card.active a {
+    color: #ff3c00;
+}
+
+/* ================= PRODUCT ================= */
+.product-section {
+    padding: 50px;
+    background: #f5f5f5;
+}
+
+.product-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+
+    max-width: 1100px;   /* 👈 giới hạn chiều rộng */
+    margin: 0 auto;      /* 👈 căn giữa toàn bộ grid */
+}
+
+.product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* CARD */
+.product-card {
+    width: 100%;              /* 👈 full theo grid */
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+}
+
+/* IMAGE */
+.product-image {
+    position: relative;
+    height: 220px;
+    background: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    max-width: 90%;
+    max-height: 180px;
+    object-fit: contain;
+    transition: 0.3s;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+/* PRICE FLOAT */
+.price-box {
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #ff6600;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    font-size: 16px;
+}
+
+/* INFO */
+.product-info {
+    padding: 25px 15px 15px;
+    text-align: center;
+}
+
+.product-info h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* META */
+.product-meta {
+    font-size: 13px;
+    color: #777;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.product-meta span {
+    width: 48%;
+}
+
+/* ================= ECO MINIMAL PRO ================= */
+.eco-minimal {
+    padding: 40px 80px 20px;
+    background: linear-gradient(180deg, #f9fafc, #eef2f6);
+}
+
+/* HEADER */
+/* ===== DARK HEADER FULL ===== */
+.eco-dark-header {
+    width: 100vw; /* full màn */
+    margin-left: calc(-50vw + 50%); /* fix full width khi nằm trong container */
+    
+    background: linear-gradient(135deg, #1c1c1c, #2b2b2b);
+    color: white;
+    text-align: center;
+
+    padding: 80px 20px 100px; /* tăng padding dưới */
+    position: relative;
+    
+    margin-bottom: 60px; /* 👉 tạo khoảng cách với section dưới */
+}
+
+/* CONTENT CENTER */
+.eco-dark-header h2 {
+    font-size: 38px;
+    margin: 10;
+}
+
+.eco-dark-header span {
+    color: #4CAF50;
+}
+
+.eco-dark-header p {
+    margin-top: 12px;
+    color: #bbb;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ===== TRIANGLE ===== */
+.eco-dark-header::after {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-top: 20px solid #2b2b2b;
+}
+
+/* LAYOUT */
+.eco-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* SIDE */
+.eco-side {
+    width: 600px;
+}
+
+/* ITEM (KHÔNG CÒN CARD) */
+.eco-item {
+    position: relative;
+    margin-bottom: 40px;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+/* TEXT */
+.eco-item h4 {
+    margin: 0 0 8px;
+    font-size: 16px;
+}
+
+.eco-item p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.8; /* 👉 cho text dài đẹp */
+}
+
+/* ICON */
+.eco-item .icon {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #4CAF50, #66bb6a);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 16px;
+    box-shadow: 0 6px 15px rgba(76,175,80,0.4);
+}
+
+/* ===== LEFT SIDE CĂN PHẢI ===== */
+.eco-side.left .eco-item {
+    text-align: right;
+    padding-right: 40px; /* tạo khoảng cho icon */
+    padding-left: 0;
+}
+
+/* icon bên trái (nằm gần center) */
+.eco-side.left .eco-item .icon {
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+/* ===== RIGHT SIDE CÁCH ICON ===== */
+.eco-side.right .eco-item {
+    padding-left: 45px; /* 👉 đẩy text ra xa icon */
+    padding-right: 0;
+}
+
+.eco-side.right .eco-item .icon {
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* CENTER */
+.eco-center {
+    width: 360px;
+    position: relative;
+}
+
+.eco-center img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover; 
+    border-radius: 50%; 
+    box-shadow: 
+        0 10px 30px rgba(0,0,0,0.2),
+        0 0 20px rgba(76,175,80,0.3); /* glow nhẹ */
+}
+.eco-center {
+    transform: translateY(-20px); 
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+/* RING */
+.ring {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(76,175,80,0.3);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: rotate 25s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+/* ================= FLOATING CHAT FIXED ================= */
+#chat-bubble {
+    position: fixed;   /* ⭐ KEY: dính theo màn hình */
+    right: 25px;
+    bottom: 25px;
+
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#ff3c00,#ff7b00);
+    color: white;
+    font-size: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    cursor: pointer;
+    z-index: 99999;
+
+    transition: transform .2s, box-shadow .2s;
+}
+
+#chat-bubble:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+}
+
+/* ================= CHAT WIDGET ================= */
+
+#chat-widget{
+    position: fixed;
+    right: 25px;
+    bottom: 100px;
+    width: 330px;
+    height: 430px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 99999;
+    font-family: Arial;
+}
+
+/* header */
+#chat-header{
+    background: linear-gradient(135deg,#ff3c00,#ff7b00);
+    color:white;
+    padding:14px;
+    font-weight:bold;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+#chat-close{
+    cursor:pointer;
+}
+
+/* messages */
+#chat-messages{
+    flex:1;
+    padding:15px;
+    overflow-y:auto;
+    background:#f7f7f7;
+}
+
+/* message style */
+.msg-user{
+    background:#ff7b00;
+    color:white;
+    padding:8px 12px;
+    border-radius:12px 12px 0 12px;
+    margin-bottom:10px;
+    max-width:75%;
+    margin-left:auto;
+}
+
+.msg-ai{
+    background:#e4e6eb;
+    padding:8px 12px;
+    border-radius:12px 12px 12px 0;
+    margin-bottom:10px;
+    max-width:75%;
+}
+
+/* input */
+#chat-input-box{
+    display:flex;
+    border-top:1px solid #ddd;
+}
+
+#chat-input{
+    flex:1;
+    border:none;
+    padding:10px;
+    outline:none;
+}
+
+#chat-input-box button{
+    background:#ff3c00;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    cursor:pointer;
+}

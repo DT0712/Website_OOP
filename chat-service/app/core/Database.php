@@ -1,5 +1,4 @@
 <?php
-
 class Database {
 
     public static function connect() {
@@ -15,9 +14,10 @@ class Database {
         );
 
         if ($conn->connect_error) {
-            die("DB Error");
+            die("DB Connection Error");
         }
 
+        $conn->set_charset("utf8mb4");
         return $conn;
     }
 }
