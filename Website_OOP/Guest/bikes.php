@@ -289,12 +289,12 @@ include "includes/header.php";
         <div class="side">
             <div class="pair">
                 <div class="item left"
-                    style="background-image:url('assets/images/bike1.jpg')">
+                    style="background-image:url('assets/images/bike1.png')">
                     <span>ROAD</span>
                 </div>
 
                 <div class="item right"
-                    style="background-image:url('assets/images/bike1.jpg')">
+                    style="background-image:url('assets/images/bike1.png')">
                     <span>BIKE</span>
                 </div>
             </div>
@@ -312,13 +312,13 @@ include "includes/header.php";
             <div class="pair">
 
                 <!-- đúng thứ tự -->
-                <div class="item right"
-                    style="background-image:url('assets/images/bike1.jpg')">
+                <div class="item left"
+                    style="background-image:url('assets/images/bike2.jpg')">
                     <span>ROAD</span>
                 </div>
 
-                <div class="item left"
-                    style="background-image:url('assets/images/bike1.jpg')">
+                <div class="item right"
+                    style="background-image:url('assets/images/bike2.jpg')">
                     <span>BIKE</span>
                 </div>
 

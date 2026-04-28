@@ -1,475 +1,77 @@
 <?php
 include 'config.php';
 include 'includes/header.php';
-
-// Lấy sản phẩm
-$sql = "SELECT bicycles.*, brands.name AS brand_name 
-        FROM bicycles 
-        INNER JOIN brands ON bicycles.brand_id = brands.id";
-$result = mysqli_query($conn, $sql);
 ?>
 
-<style>
-/* ================= BANNER ================= */
-.banner {
-    position: relative;
-    height: 500px;
-    background: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70') no-repeat center/cover;
-    color: white;
-    display: flex;
-    align-items: center;
-    padding-left: 60px;
+<link rel="stylesheet" href="assets/Css/home.css">
+
+<?php
+$sql = "SELECT bicycles.*, brands.name AS brand_name 
+        FROM bicycles 
+        INNER JOIN brands ON bicycles.brand_id = brands.id
+        WHERE bicycles.is_featured = 1";
+
+$result = mysqli_query($conn, $sql);
+
+// DEBUG lỗi
+if (!$result) {
+    die("SQL ERROR: " . mysqli_error($conn));
 }
-
-.banner::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-}
-
-.banner-content {
-    position: relative;
-    z-index: 2;
-}
-
-.banner-content h1 {
-    font-size: 50px;
-    margin: 0;
-}
-
-.banner-content h2 {
-    font-size: 40px;
-}
-
-.banner-content p {
-    font-size: 20px;
-    margin-top: 10px;
-}
-
-.banner-content button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: red;
-    border: none;
-    color: white;
-    cursor: pointer;
-}
-
-/* ================= FEATURES ================= */
-.features-section {
-    padding: 60px;
-    background: #fff;
-    text-align: center;
-}
-
-.sub-title {
-    color: #ff3c00;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.main-title {
-    font-size: 40px;
-    margin-bottom: 40px;
-}
-
-.main-title span {
-    color: #ff3c00;
-}
-
-/* GRID */
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-/* CARD */
-.feature-card {
-    background: #fafafa;
-    padding: 30px 20px;
-    border-radius: 10px;
-    transition: 0.3s;
-    border: 1px solid #eee;
-}
-
-.feature-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-/* ACTIVE CARD (giống ô giữa trong ảnh) */
-.feature-card.active {
-    border-bottom: 4px solid #ff3c00;
-    background: #fff;
-}
-
-/* ICON */
-.feature-card .icon {
-    font-size: 40px;
-    margin-bottom: 15px;
-}
-
-/* TEXT */
-.feature-card h3 {
-    margin-bottom: 10px;
-}
-
-.feature-card p {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 15px;
-}
-
-/* LINK */
-.feature-card a {
-    text-decoration: none;
-    font-weight: bold;
-    color: #999;
-}
-
-.feature-card.active a {
-    color: #ff3c00;
-}
-
-/* ================= PRODUCT ================= */
-.product-section {
-    padding: 50px;
-    background: #f5f5f5;
-}
-
-.product-section h2 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.product-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    justify-content: center;
-}
-
-/* CARD */
-.product-card {
-    width: 300px;
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    transition: 0.3s;
-    position: relative;
-}
-
-.product-card:hover {
-    transform: translateY(-8px);
-}
-
-/* IMAGE */
-.product-image {
-    position: relative;
-    height: 220px;
-    background: #f9f9f9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.product-image img {
-    max-width: 90%;
-    max-height: 180px;
-    object-fit: contain;
-    transition: 0.3s;
-}
-
-.product-card:hover .product-image img {
-    transform: scale(1.05);
-}
-
-/* PRICE FLOAT */
-.price-box {
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #fff;
-    padding: 8px 20px;
-    border-radius: 6px;
-    font-weight: bold;
-    color: #ff6600;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-    font-size: 16px;
-}
-
-/* INFO */
-.product-info {
-    padding: 25px 15px 15px;
-    text-align: center;
-}
-
-.product-info h3 {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-/* META */
-.product-meta {
-    font-size: 13px;
-    color: #777;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-.product-meta span {
-    width: 48%;
-}
-
-/* ================= ECO MINIMAL PRO ================= */
-.eco-minimal {
-    padding: 40px 80px 20px;
-    background: linear-gradient(180deg, #f9fafc, #eef2f6);
-}
-
-/* HEADER */
-/* ===== DARK HEADER FULL ===== */
-.eco-dark-header {
-    width: 100vw; /* full màn */
-    margin-left: calc(-50vw + 50%); /* fix full width khi nằm trong container */
-    
-    background: linear-gradient(135deg, #1c1c1c, #2b2b2b);
-    color: white;
-    text-align: center;
-
-    padding: 80px 20px 100px; /* tăng padding dưới */
-    position: relative;
-    
-    margin-bottom: 60px; /* 👉 tạo khoảng cách với section dưới */
-}
-
-/* CONTENT CENTER */
-.eco-dark-header h2 {
-    font-size: 38px;
-    margin: 10;
-}
-
-.eco-dark-header span {
-    color: #4CAF50;
-}
-
-.eco-dark-header p {
-    margin-top: 12px;
-    color: #bbb;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* ===== TRIANGLE ===== */
-.eco-dark-header::after {
-    content: "";
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    
-    border-left: 30px solid transparent;
-    border-right: 30px solid transparent;
-    border-top: 20px solid #2b2b2b;
-}
-
-/* LAYOUT */
-.eco-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-}
-
-/* SIDE */
-.eco-side {
-    width: 600px;
-}
-
-/* ITEM (KHÔNG CÒN CARD) */
-.eco-item {
-    position: relative;
-    margin-bottom: 40px;
-    padding-right: 30px;
-    padding-left: 30px;
-}
-
-/* TEXT */
-.eco-item h4 {
-    margin: 0 0 8px;
-    font-size: 16px;
-}
-
-.eco-item p {
-    font-size: 14px;
-    color: #666;
-    line-height: 1.8; /* 👉 cho text dài đẹp */
-}
-
-/* ICON */
-.eco-item .icon {
-    position: absolute;
-    width: 42px;
-    height: 42px;
-    background: linear-gradient(135deg, #4CAF50, #66bb6a);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 16px;
-    box-shadow: 0 6px 15px rgba(76,175,80,0.4);
-}
-
-/* ===== LEFT SIDE CĂN PHẢI ===== */
-.eco-side.left .eco-item {
-    text-align: right;
-    padding-right: 40px; /* tạo khoảng cho icon */
-    padding-left: 0;
-}
-
-/* icon bên trái (nằm gần center) */
-.eco-side.left .eco-item .icon {
-    right: -12px;
-    top: 50%;
-    transform: translateY(-50%);
-}
+?>
 
 
-/* ===== RIGHT SIDE CÁCH ICON ===== */
-.eco-side.right .eco-item {
-    padding-left: 45px; /* 👉 đẩy text ra xa icon */
-    padding-right: 0;
-}
-
-.eco-side.right .eco-item .icon {
-    left: -12px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-/* CENTER */
-.eco-center {
-    width: 360px;
-    position: relative;
-}
-
-.eco-center img {
-    width: 280px;
-    height: 280px;
-    object-fit: cover; 
-    border-radius: 50%; 
-    box-shadow: 
-        0 10px 30px rgba(0,0,0,0.2),
-        0 0 20px rgba(76,175,80,0.3); /* glow nhẹ */
-}
-.eco-center {
-    transform: translateY(-20px); 
-    position: relative;
-    display: flex;
-    justify-content: center;
-}
-
-
-
-/* RING */
-.ring {
-    position: absolute;
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    border: 1.5px dashed rgba(76,175,80,0.3);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: rotate 25s linear infinite;
-}
-
-@keyframes rotate {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-/* ================= FLOATING CHAT FIXED ================= */
-#chat-bubble {
-    position: fixed;   /* ⭐ KEY: dính theo màn hình */
-    right: 25px;
-    bottom: 25px;
-
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    background: linear-gradient(135deg,#ff3c00,#ff7b00);
-    color: white;
-    font-size: 28px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-    cursor: pointer;
-    z-index: 99999;
-
-    transition: transform .2s, box-shadow .2s;
-}
-
-#chat-bubble:hover {
-    transform: scale(1.1);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-}
-</style>
 
 <!-- ================= BANNER ================= -->
 <div class="banner">
-    <div class="banner-content">
-        <h1>DOMINATE</h1>
-        <h2>THE INTERNET</h2>
-        <p>Attract, Engage & Convert more customers</p>
-        <button>Explore Now</button>
-    </div>
+    <img src="assets/images/BikeMarket.png" alt="banner">
 </div>
 
 <!-- ================= FEATURES ================= -->
 <div class="features-section">
-    <p class="sub-title">// FEATURES //</p>
-    <h2 class="main-title">Core Features<span>.</span></h2>
+    <p class="sub-title">// GIỚI THIỆU //</p>
+    <h2 class="main-title">Điểm nổi bật</h2>
 
     <div class="features-grid">
 
         <div class="feature-card">
             <div class="icon">🚲</div>
             <h3>All Kind Brand</h3>
-            <p>Chúng tôi cung cấp nhiều dòng xe đạp từ các thương hiệu nổi tiếng.</p>
-            <a href="#">Read More</a>
+            <p>
+                Chúng tôi cung cấp đa dạng các dòng xe đạp từ những thương hiệu nổi tiếng 
+                trên thế giới như Giant, Trek, Twitter, đảm bảo chất lượng và độ bền cao. 
+                Khách hàng có thể dễ dàng lựa chọn sản phẩm phù hợp với nhu cầu di chuyển, 
+                thể thao hoặc giải trí hàng ngày.
+            </p>
         </div>
 
         <div class="feature-card">
             <div class="icon">🛠️</div>
             <h3>Expert Mechanics</h3>
-            <p>Đội ngũ kỹ thuật viên giàu kinh nghiệm, hỗ trợ tận tâm.</p>
-            <a href="#">Read More</a>
+            <p>
+                Đội ngũ kỹ thuật viên chuyên nghiệp với nhiều năm kinh nghiệm trong lĩnh vực 
+                sửa chữa và bảo trì xe đạp. Chúng tôi luôn sẵn sàng hỗ trợ kiểm tra, tư vấn 
+                và khắc phục sự cố nhanh chóng để đảm bảo xe của bạn luôn hoạt động ổn định.
+            </p>
         </div>
 
         <div class="feature-card active">
             <div class="icon">⚙️</div>
-            <h3>Repair Vehicles</h3>
-            <p>Dịch vụ sửa chữa chuyên nghiệp, nhanh chóng và hiệu quả.</p>
-            <a href="#">Read More</a>
+            <h3>Repair & Maintenance</h3>
+            <p>
+                Dịch vụ sửa chữa và bảo dưỡng toàn diện từ cơ bản đến nâng cao, bao gồm 
+                thay thế linh kiện, cân chỉnh phanh, bảo dưỡng xích và hệ thống truyền động. 
+                Giúp kéo dài tuổi thọ xe và đảm bảo an toàn tối đa khi sử dụng.
+            </p>
         </div>
 
         <div class="feature-card">
             <div class="icon">🎨</div>
-            <h3>Paint & Customize</h3>
-            <p>Tùy chỉnh màu sắc và phong cách theo ý thích của bạn.</p>
-            <a href="#">Read More</a>
+            <h3>Customize Your Bike</h3>
+            <p>
+                Dịch vụ tùy chỉnh xe theo phong cách cá nhân: thay đổi màu sơn, nâng cấp 
+                phụ kiện, lựa chọn khung và bánh xe theo ý thích. Giúp bạn sở hữu chiếc xe 
+                độc đáo, thể hiện cá tính riêng biệt.
+            </p>
         </div>
 
     </div>
@@ -554,52 +156,75 @@ $result = mysqli_query($conn, $sql);
     </div>
 </div>
 
-
-<!-- ================= PRODUCT ================= -->
 <div class="product-section">
     <h2>🔥 Sản phẩm nổi bật</h2>
 
     <div class="product-grid">
         <?php while($row = mysqli_fetch_assoc($result)) { ?>
-            
+
+        <a href="detail.php?id=<?php echo $row['bicycle_id']; ?>" class="product-link">
             <div class="product-card">
 
-    <div class="product-image">
-        <img src="<?php echo $row['main_image']; ?>" alt="">
+                <div class="product-image">
+                    <img src="<?php echo $row['main_image']; ?>" alt="">
 
-        <div class="price-box">
-            <?php echo number_format($row['price'], 0, ',', '.'); ?> đ
-        </div>
-    </div>
+                    <div class="price-box">
+                        <?php echo number_format($row['price'], 0, ',', '.'); ?> đ
+                    </div>
+                </div>
 
-    <div class="product-info">
-        <h3><?php echo $row['name']; ?></h3>
+                <div class="product-info">
+                    <h3><?php echo $row['name']; ?></h3>
 
-        <div class="product-meta">
-            <span>📍 <?php echo $row['location']; ?></span>
-            <span>⚙️ <?php echo $row['condition_status']; ?></span>
-            <span>📏 Size: <?php echo $row['frame_size']; ?></span>
-            <span>🏷️ <?php echo $row['brand_name']; ?></span>
-        </div>
-    </div>
+                    <div class="product-meta">
+                        <span>📍 <?php echo $row['location']; ?></span>
+                        <span>⚙️ <?php echo $row['condition_status']; ?></span>
+                        <span>📏 Size: <?php echo $row['frame_size']; ?></span>
+                        <span>🏷️ <?php echo $row['brand_name']; ?></span>
+                    </div>
+                </div>
 
-</div>
+            </div>
+        </a>
 
         <?php } ?>
     </div>
 </div>
-<!-- FLOATING CHAT BUTTON -->
-<div id="chat-bubble">
-    💬
+<!-- FLOAT BUTTON -->
+<div id="chat-bubble">💬</div>
+<!-- CHAT WIDGET -->
+<div id="chat-widget">
+
+    <div id="chat-header">
+        🤖 AI Bike Support
+        <span id="chat-close">✖</span>
+    </div>
+
+    <div id="chat-messages">
+        <div class="msg-ai">Xin chào 👋 Tôi có thể tư vấn xe đạp cho bạn!</div>
+    </div>
+
+    <div id="chat-input-box">
+        <input id="chat-input" placeholder="Nhập tin nhắn..." />
+        <button onclick="sendMessage()">Gửi</button>
+    </div>
+
 </div>
 
 <script>
 const bubble = document.getElementById("chat-bubble");
-bubble.onclick = () => {
-    window.location.href = "chatai.php";
-}
+const widget = document.getElementById("chat-widget");
+const closeBtn = document.getElementById("chat-close");
 
+bubble.addEventListener("click", () => {
+    widget.style.display = "flex";
+});
+
+closeBtn.addEventListener("click", () => {
+    widget.style.display = "none";
+});
 </script>
+<script src="/Website_OOP/Website_OOP/guest/chat/chat.js"></script>
 
 
 <?php include "includes/footer.php"; ?>
