@@ -10,7 +10,6 @@ class Inspection {
         $this->conn = $db->connect();
     }
 
-    // Inspector tạo báo cáo mới
     public function createReport(array $data) {
         $sql = "INSERT INTO {$this->table}
                     (bicycle_id, inspector_id,
@@ -32,45 +31,88 @@ class Inspection {
             ':drivetrain_condition' => $data['drivetrain_condition'],
             ':tire_condition'       => $data['tire_condition'],
             ':overall_score'        => $data['overall_score'],
-            ':notes'                => $data['notes']        ?? null,
-            ':report_file'          => $data['report_file']  ?? null,
+            ':notes'                => $data['notes']       ?? null,
+            ':report_file'          => $data['report_file'] ?? null,
         ]);
-
         return $this->conn->lastInsertId();
     }
 
-    // Lấy tất cả báo cáo của 1 chiếc xe
     public function getByBicycleId(int $bicycle_id) {
-        $sql  = "SELECT * FROM {$this->table}
-                 WHERE bicycle_id = :bicycle_id
-                 ORDER BY created_at DESC";
-        $stmt = $this->conn->prepare($sql);
+        $stmt = $this->conn->prepare(
+            "SELECT * FROM {$this->table}
+             WHERE bicycle_id = :bicycle_id
+             ORDER BY created_at DESC"
+        );
         $stmt->execute([':bicycle_id' => $bicycle_id]);
         return $stmt->fetchAll();
     }
 
-    // Admin duyệt báo cáo
     public function approveReport(int $report_id, int $admin_id) {
-        $sql  = "UPDATE {$this->table}
-                 SET status      = 'approved',
-                     approved_by = :admin_id,
-                     approved_at = NOW()
-                 WHERE id = :id AND status = 'pending'";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([
-            ':admin_id' => $admin_id,
-            ':id'       => $report_id
-        ]);
-        // rowCount() = số dòng bị ảnh hưởng
-        // Nếu = 0 nghĩa là report không tồn tại hoặc đã được duyệt rồi
+        $stmt = $this->conn->prepare(
+            "UPDATE {$this->table}
+             SET status = 'approved', approved_by = :admin_id, approved_at = NOW()
+             WHERE id = :id AND status = 'pending'"
+        );
+        $stmt->execute([':admin_id' => $admin_id, ':id' => $report_id]);
         return $stmt->rowCount();
     }
 
-    // Lấy 1 report theo id (dùng để trả về sau khi tạo/approve)
+    public function rejectReport(int $report_id, int $admin_id) {
+        $stmt = $this->conn->prepare(
+            "UPDATE {$this->table}
+             SET status = 'rejected', approved_by = :admin_id, approved_at = NOW()
+             WHERE id = :id AND status = 'pending'"
+        );
+        $stmt->execute([':admin_id' => $admin_id, ':id' => $report_id]);
+        return $stmt->rowCount();
+    }
+
     public function getById(int $id) {
-        $sql  = "SELECT * FROM {$this->table} WHERE id = :id";
-        $stmt = $this->conn->prepare($sql);
+        $stmt = $this->conn->prepare(
+            "SELECT * FROM {$this->table} WHERE id = :id"
+        );
         $stmt->execute([':id' => $id]);
         return $stmt->fetch();
+    }
+
+    public function getAllReports(string $status = 'all') {
+        if ($status === 'all') {
+            $stmt = $this->conn->query(
+                "SELECT * FROM {$this->table} ORDER BY created_at DESC"
+            );
+        } else {
+            $stmt = $this->conn->prepare(
+                "SELECT * FROM {$this->table}
+                 WHERE status = :status ORDER BY created_at DESC"
+            );
+            $stmt->execute([':status' => $status]);
+        }
+        return $stmt->fetchAll();
+    }
+
+    // ── Thêm mới: Thống kê theo status ──────────────────────
+    public function getStats() {
+        $rows = $this->conn->query(
+            "SELECT status, COUNT(*) as cnt
+             FROM {$this->table} GROUP BY status"
+        )->fetchAll();
+
+        $stats = ['pending' => 0, 'approved' => 0, 'rejected' => 0, 'total' => 0];
+        foreach ($rows as $r) {
+            $stats[$r['status']] = (int)$r['cnt'];
+            $stats['total']     += (int)$r['cnt'];
+        }
+        return $stats;
+    }
+
+    // ── Thêm mới: 5 báo cáo mới nhất ────────────────────────
+    public function getRecent(int $limit = 5) {
+        $stmt = $this->conn->prepare(
+            "SELECT * FROM {$this->table}
+             ORDER BY created_at DESC LIMIT :limit"
+        );
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }

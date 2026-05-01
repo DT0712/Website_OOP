@@ -15,7 +15,7 @@ if ($bicycle_id > 0) {
         'ignore_errors' => true,
     ]];
     $resp   = @file_get_contents(
-        "http://localhost/Website_OOP/InspectionService/public/index.php/inspection/$bicycle_id",
+        "http://localhost/Website_OOP/Inspection-Service/public/index.php/inspection/$bicycle_id",
         false, stream_context_create($opts)
     );
     $result = json_decode($resp, true);
@@ -50,10 +50,9 @@ function scoreColor(int $score): array {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <style>
-/* CSS sidebar/main do teammate quản lý — KHÔNG define lại ở đây */
+
 body { background: #f5f7fb; display: flex; }
 
-/* ── CSS riêng của trang này ── */
 .verified-banner {
     background: linear-gradient(135deg,#d1fae5,#a7f3d0);
     border: 2px solid #059669; border-radius: 14px;

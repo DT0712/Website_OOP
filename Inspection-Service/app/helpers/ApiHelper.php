@@ -5,7 +5,7 @@ class ApiHelper {
     private static function baseUrl() {
         $protocol = (!empty($_SERVER['HTTPS'])) ? 'https' : 'http';
         $host     = $_SERVER['HTTP_HOST'];
-        return $protocol . '://' . $host . '/Website_OOP/InspectionService/index.php';
+        return $protocol . '://' . $host . '/Website_OOP/Inspection-Service/public/index.php';
     }
 
      //Gọi API với method + endpoint + data + headers

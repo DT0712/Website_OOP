@@ -12,7 +12,7 @@ $error   = null;
 $success = null;
 
 $bikes_response = @file_get_contents(
-    "http://localhost/Website_OOP/Website_OOP/Guest/api/bicycle.php?action=list"
+    "http://localhost/Website_OOP/Website_OOP/Guest/bicycle.php?action=list"
 );
 $bikes = [];
 if ($bikes_response) {
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]
     ];
     $resp   = @file_get_contents(
-        "http://localhost/Website_OOP/InspectionService/public/index.php/inspection/report",
+        "http://localhost/Website_OOP/Inspection-Service/public/index.php/inspection/report",
         false,
         stream_context_create($opts)
     );
