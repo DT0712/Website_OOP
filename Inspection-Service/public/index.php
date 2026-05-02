@@ -14,14 +14,22 @@ require_once __DIR__ . '/../app/controllers/InspectionController.php';
 
 $method    = $_SERVER['REQUEST_METHOD'];
 $full_path = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-$base      = '/Website_OOP/Inspection-Service/public/index.php';
-$path      = str_starts_with($full_path, $base)
-             ? substr($full_path, strlen($base))
-             : $full_path;
 
-if (empty($path)) {
+$base_with    = '/Website_OOP/Inspection-Service/public/index.php';
+$base_without = '/Website_OOP/Inspection-Service/public';
+
+if (str_starts_with($full_path, $base_with)) {
+    $path = substr($full_path, strlen($base_with));
+} elseif (str_starts_with($full_path, $base_without)) {
+    $path = substr($full_path, strlen($base_without));
+} else {
+    $path = $full_path;
+}
+
+if (empty($path) || $path === '/') {
     Response::success("Inspection Service đang chạy", ['version' => '1.0'], 200);
 }
+
 
 $controller = new InspectionController();
 
