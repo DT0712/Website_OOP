@@ -1,3 +1,7 @@
+<?php 
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 .sidebar {
@@ -68,8 +72,8 @@
             <i class="fa fa-credit-card"></i> Quản lý giao dịch
         </a>
 
-        <a href="message_management.php"
-        class="<?= ($current_page == 'message_management.php') ? 'active' : '' ?>">
+        <a href="admin_contacts.php"
+        class="<?= ($current_page == 'admin_contacts.php') ? 'active' : '' ?>">
             <i class="fa fa-envelope"></i> Phản hồi tin nhắn
         </a>
 

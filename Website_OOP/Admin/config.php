@@ -8,7 +8,7 @@ $database = "oop_bicycle_system";
 $conn = mysqli_connect($host, $user, $password, $database);
 
 if (!$conn) {
-    die("Kết nối database thất bại: " . mysqli_connect_error());
+    die("DB chưa kết nối");
 }
 
 mysqli_set_charset($conn, "utf8");

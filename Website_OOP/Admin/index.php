@@ -192,8 +192,8 @@ body {
         <i class="fa fa-credit-card"></i> Quản lý giao dịch
     </a>
 
-    <a href="message_management.php"
-    class="<?= ($current_page == 'message_management.php') ? 'active' : '' ?>">
+    <a href="admin_contacts.php"
+    class="<?= ($current_page == 'admin_contacts.php') ? 'active' : '' ?>">
         <i class="fa fa-envelope"></i> Phản hồi tin nhắn
     </a>
 
