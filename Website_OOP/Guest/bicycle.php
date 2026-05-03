@@ -13,7 +13,7 @@ if (isset($_GET['id'])) {
             FROM bicycles b
             LEFT JOIN categories c  ON b.category_id = c.id
             LEFT JOIN brands br     ON b.brand_id    = br.id
-            WHERE b.id = $id
+            WHERE b.bicycle_id = $id
             LIMIT 1";
 
     $result = mysqli_query($conn, $sql);
@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
         echo json_encode([
             'success' => true,
             'data'    => [
-                'bicycle_id'       => (int)$row['id'],
+                'bicycle_id'       => (int)$row['bicycle_id'],
                 'name'             => $row['name'],
                 'price'            => (int)$row['price'],
                 'frame_size'       => $row['frame_size'],
@@ -45,19 +45,19 @@ if (isset($_GET['id'])) {
 }
 
 if (($_GET['action'] ?? '') === 'list') {
-    $sql = "SELECT b.id, b.name, b.price,
+    $sql = "SELECT b.bicycle_id, b.name, b.price,
                    b.frame_size, b.condition_status, b.location,
                    br.name AS brand_name
             FROM bicycles b
             LEFT JOIN brands br ON b.brand_id = br.id
-            ORDER BY b.id ASC";
+            ORDER BY b.bicycle_id ASC";
 
     $result = mysqli_query($conn, $sql);
     $bikes  = [];
 
     while ($row = mysqli_fetch_assoc($result)) {
         $bikes[] = [
-            'bicycle_id'       => (int)$row['id'],
+            'bicycle_id'       => (int)$row['bicycle_id'],
             'name'             => $row['name'],
             'price'            => (int)$row['price'],
             'frame_size'       => $row['frame_size'],
