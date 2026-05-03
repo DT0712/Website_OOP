@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../models/Payment.php';
+require_once dirname(__DIR__) . '/models/Payment.php';
 
 class PaymentService {
     private $paymentModel;
@@ -16,7 +16,7 @@ class PaymentService {
         } 
         else if ($method === 'bank') {
             $status = 'pending';
-            $payment_url = "http://localhost/payment-service/fake_bank.php?order_id=" . $order_id;
+            $payment_url = "http://localhost/Website_OOP/payment-service/public/bank.php?order_id=" . $order_id;
         } 
         else {
             $status = 'failed';

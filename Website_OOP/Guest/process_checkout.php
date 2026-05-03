@@ -18,7 +18,11 @@ $dien_thoai  = trim($_POST['dien_thoai']);
 $email       = trim($_POST['email'] ?? '');
 $dia_chi     = trim($_POST['dia_chi']);
 $ghi_chu     = trim($_POST['ghi_chu'] ?? '');
-$phuong_thuc = $_POST['phuong_thuc'];
+$phuong_thuc = $_POST['phuong_thuc'] ?? 'cod';
+
+if (!in_array($phuong_thuc, ['cod', 'bank'])) {
+    $phuong_thuc = 'cod';
+}
 
 // === BƯỚC 2: TÍNH TỔNG TIỀN (SỬA: dùng bảng bicycles) ===
 $tong_tien = 0;
@@ -56,7 +60,7 @@ if (!$stmt) {
 }
 
 $stmt->bind_param(
-    "isssssid",
+    "issssssd",
     $kh_id,
     $ho_ten,
     $dien_thoai,
@@ -81,7 +85,7 @@ $paymentData = [
     "method"   => $phuong_thuc
 ];
 
-$ch = curl_init("http://localhost/Website_OOP/payment-service/public/payments");
+$ch = curl_init("http://localhost/Website_OOP/payment-service/public/");
 
 curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
@@ -97,6 +101,10 @@ if (curl_errno($ch)) {
 }
 
 curl_close($ch);
+// DEBUG 
+if (!$response) {
+    die("Payment service không trả dữ liệu");
+}
 
 $result = json_decode($response, true);
 
@@ -135,7 +143,7 @@ if ($result['status'] === 'success') {
     header("Location: thank_you.php?order=" . $don_hang_id);
 } 
 else if ($result['status'] === 'pending') {
-    header("Location: " . $result['payment_url']);
+    header("Location: bank.php?order=" . $don_hang_id);
 } 
 else {
     header("Location: payment_fail.php");

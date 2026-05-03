@@ -51,7 +51,7 @@ $stmt->close();
                     </div>
                     <h1 class="display-4 fw-bold text-success mb-3">ĐẶT HÀNG THÀNH CÔNG!</h1>
                     <p class="lead text-dark">
-                        Cảm ơn <strong class="text-success"><?= htmlspecialchars($don_hang['ho_ten']) ?></strong> đã tin tưởng mua sắm tại <strong>BlankLabel</strong>
+                        Cảm ơn <strong class="text-success"><?= htmlspecialchars($don_hang['ho_ten']) ?></strong> đã tin tưởng mua sắm tại <strong>BikeMarket</strong>
                     </p>
                 </div>
 
@@ -98,7 +98,7 @@ $stmt->close();
                                     <div>
                                         <p class="text-muted mb-1 fw-semibold">Phương thức thanh toán</p>
                                         <h5 class="fw-bold text-dark mb-0">
-                                            <?= $don_hang['phuong_thuc_thanh_toan'] === 'cod' 
+                                            <?= strtolower($don_hang['phuong_thuc_thanh_toan']) === 'cod'
                                                 ? '<span class="text-warning">Thanh toán khi nhận hàng (COD)</span>' 
                                                 : 'Chuyển khoản ngân hàng' ?>
                                         </h5>
@@ -127,20 +127,16 @@ $stmt->close();
                                 <i class="fas fa-shopping-bag me-2"></i>
                                 <strong>TIẾP TỤC MUA SẮM</strong>
                             </a>
-                            <a href="orders.php" class="btn btn-outline-dark btn-lg px-5 py-4 rounded-pill border-2 mb-3">
-                                <i class="fas fa-list-alt me-2"></i>
-                                <strong>XEM ĐƠN HÀNG CỦA TÔI</strong>
-                            </a>
                         </div>
 
                         <!-- Footer -->
                         <div class="text-center mt-5 pt-5 border-top border-light">
                             <p class="text-muted mb-2">
-                                Cảm ơn bạn đã ủng hộ <strong>BlankLabel</strong> 
+                                Cảm ơn bạn đã ủng hộ <strong>BikeMarket</strong> 
                                 <i class="fas fa-heart text-danger ms-2"></i>
                             </p>
                             <small class="text-muted">
-                                © 2025 BlankLabel - Thương hiệu thời trang cao cấp
+                                © 2025 BikeMarket - Thương hiệu xe đạp thể thao cao cấp
                             </small>
                         </div>
                     </div>

@@ -15,6 +15,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
 $success_message = '';
 $product_name = '';
 
+
 if (isset($_GET['action']) && $_GET['action'] === 'add' && isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $qty = isset($_GET['qty']) ? max(1, intval($_GET['qty'])) : 1;
@@ -48,6 +49,12 @@ if (isset($_GET['action']) && $_GET['action'] === 'add' && isset($_GET['id'])) {
 
         $product_name = $product['name'];
         $success_message = "Đã thêm <strong>\"$product_name\"</strong> vào giỏ hàng!";
+        $_SESSION['success_message'] = "Đã thêm \"$product_name\" vào giỏ hàng!";
+
+        if (isset($_GET['redirect']) && $_GET['redirect'] === 'detail') {
+    header("Location: detail.php?id=" . $id);
+    exit;
+}
     }
     $stmt->close();
 }

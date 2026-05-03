@@ -1,6 +1,20 @@
 <?php
 require_once "config.php";
 include "includes/header.php";
+?>
+
+<link rel="stylesheet" href="assets/css/detail.css">
+<?php
+$success_message = $_SESSION['success_message'] ?? '';
+unset($_SESSION['success_message']);
+
+// đếm số lượng giỏ giống cart.php
+$cart_count = 0;
+if (isset($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $item) {
+        $cart_count += $item['quantity'] ?? 0;
+    }
+}
 
 /* ===== LẤY ID AN TOÀN ===== */
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -35,279 +49,54 @@ if ($result && mysqli_num_rows($result) > 0) {
 }
 ?>
 
+<?php if ($success_message): ?>
+<div id="addToCartSuccess" class="position-fixed top-50 start-50 translate-middle" style="z-index: 9999;">
+    <div class="bg-white rounded-3 shadow-lg border-0 text-center" style="width: 400px; max-width: 92vw; animation: fadeInUp 0.35s ease-out;">
+        <div class="py-4">
+            <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem; opacity: 0.9;"></i>
+        </div>
+
+        <div class="px-4 pb-4">
+            <h5 class="fw-bold text-dark mb-2">Thêm vào giỏ hàng thành công!</h5>
+            <p class="text-muted small mb-4"><?php echo $success_message; ?></p>
+
+            <div class="d-flex gap-3">
+                <button onclick="closeCartPopup()" 
+                        class="btn btn-lg btn-outline-secondary flex-fill rounded-pill">
+                    Tiếp tục mua sắm
+                </button>
+
+                <a href="cart.php" class="btn btn-lg btn-success flex-fill rounded-pill position-relative">
+                    Xem giỏ hàng
+                    <?php if ($cart_count > 0): ?>
+                        <span class="position-absolute top-0 start-100 translate-middle badge bg-danger">
+                            <?php echo $cart_count; ?>
+                        </span>
+                    <?php endif; ?>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="cartPopupBackdrop" class="position-fixed top-0 start-0 w-100 h-100" 
+     style="background: rgba(0,0,0,0.45); backdrop-filter: blur(6px); z-index: 9998;"></div>
+
 <style>
-/* ===== HERO ===== */
-.detail-banner {
-    display: flex;
-    position: relative;
-    overflow: hidden;
-    min-height: 500px;
-    background: transparent;
-    margin-top: 30px;
-}
-
-/* nền trắng */
-.detail-banner::before {
-    content: "";
-    position: absolute;
-    width: 37%;
-    height: 100%;
-    background: #fff;
-    clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
-    z-index: 1;
-}
-
-/* nền xanh */
-.detail-banner::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 37%;
-    background:
-        linear-gradient(135deg, rgba(37,99,235,0.6), rgba(15,23,42,0.9)),
-        url('assets/images/bgxe.jpg') no-repeat center;
-    background-size: cover;
-    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
-    z-index: 0;
-}
-
-/* ===== KHỐI ĐỎ ===== */
-.red-shape {
-    position: absolute;
-    bottom: 0px;
-    left: 63%;
-    width: 220px;
-    height: 50px;
-    background: linear-gradient(90deg, #ff3b30, #c62828);
-    clip-path: polygon(5% 0, 86% 0, 80% 100%, 0% 100%);
-    z-index: 2;
-}
-
-/* ===== LEFT ===== */
-.detail-left {
-    width: 45%;
-    padding: 80px 80px 80px 120px;
-    z-index: 2;
-}
-
-.detail-left h1 { font-size: 38px; }
-.detail-left h2 { color: red; }
-
-/* ===== INFO ===== */
-.info-table { margin-top: 25px; }
-
-.info-row {
-    display: flex;
-    gap: 20px;
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.label { width: 130px; color: #888; }
-.value { flex: 1; font-weight: normal; }
-
-/* ===== RIGHT ===== */
-.detail-right {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-}
-
-/* ===== MAIN IMAGE ===== */
-#mainImage {
-    max-width: 100%;
-    margin-bottom: 30px;
-    margin-right: -30px;
-    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
-    transition: 0.3s;
-}
-
-/* ===== THUMB ===== */
-.thumbs-outside {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 30px;
-    padding: 12px;
-    background: #fff;
-    border-radius: 14px;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: 40px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-.thumbs-outside img {
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
-    cursor: pointer;
-    border-radius: 8px;
-    border: 1px solid #eee;
-    opacity: 0.85;
-    transition: 0.25s;
-}
-
-.thumbs-outside img:hover {
-    opacity: 1;
-    transform: scale(1.08);
-}
-
-.thumbs-outside img.active {
-    border-color: #ee4d2d;
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-/* ===== BUTTON GROUP ===== */
-.action-buttons {
-    display: flex;
-    gap: 15px;
-    margin-top: 25px;
-}
-
-.action-buttons a {
-    padding: 15px 26px;
-    font-size: 16px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 144px;
-    text-decoration: none;
-}
-
-/* nút giỏ */
-.cart-btn {
-    background: #fff;
-    color: #e53935;
-    border: 2px solid #e53935;
-}
-
-.cart-btn:hover {
-    background: #ffe5e5;
-}
-
-/* nút đặt hàng */
-.order-btn {
-    background: linear-gradient(90deg, #ff3b30, #c62828);
-    color: #fff;
-    border: none;
-}
-
-.order-btn:hover {
-    transform: scale(1.05);
-}
-
-/* icon */
-.cart-icon {
-    font-size: 22px;
-    margin-right: 8px;
-}
-
-/* ===== TAB AREA FULL WIDTH ===== */
-.product-tabs {
-    width: 100%;
-    margin-top: 80px;
-}
-
-/* thanh tab full ngang */
-.tab-buttons {
-    width: 100%;
-    padding-left: 120px;   /* canh thẳng với khối trái phía trên */
-    border-bottom: 3px solid #eee;
-    display: flex;
-    gap: 40px;
-    background: #fff;
-}
-
-/* nút tab */
-.tab-btn {
-    padding: 18px 0;
-    font-size: 20px;
-    cursor: pointer;
-    color: #888;
-    border-bottom: 3px solid transparent;
-    transition: 0.3s;
-}
-
-.tab-btn.active {
-    color: #e53935;
-    border-color: #e53935;
-    font-weight: bold;
-}
-
-/* nội dung tab full ngang */
-.tab-content {
-    display: none;
-    width: 100%;
-    padding: 50px 120px;  /* canh lề giống tab */
-    line-height: 1.8;
-    font-size: 16px;
-    color: #444;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-/* khối nội dung lớn */
-.big-content {
-    background: #fafafa;
-    border-radius: 16px;
-    padding: 45px 60px;   /* bỏ padding trái dư */
-    white-space: pre-line;
-    max-width: 1500px;    /* giúp đọc dễ hơn */
-}
-.tab-buttons {
-    display: flex;
-    border-bottom: 3px solid #eee;
-    gap: 30px;
-}
-
-.tab-btn {
-    padding: 15px 5px;
-    font-size: 18px;
-    cursor: pointer;
-    color: #888;
-    border-bottom: 3px solid transparent;
-    transition: 0.3s;
-}
-
-.tab-btn.active {
-    color: #e53935;
-    border-color: #e53935;
-    font-weight: bold;
-}
-
-.tab-content {
-    display: none;
-    width: 100%;
-    padding: 50px 120px 80px 120px; /* container giữ padding */
-    background: #f5f5f5;            /* nền xám full ngang */
-}
-
-.tab-content.active {
-    display: block;
-}
-
-/* box nội dung */
-.spec-box {
-    background: #fafafa;
-    padding: 30px;
-    border-radius: 14px;
-    margin-bottom: 25px;
-    white-space: pre-line;
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 </style>
 
+<script>
+function closeCartPopup() {
+    document.getElementById('addToCartSuccess')?.remove();
+    document.getElementById('cartPopupBackdrop')?.remove();
+}
+setTimeout(closeCartPopup, 10000);
+</script>
+<?php endif; ?>
 <!-- ===== MAIN ===== -->
 <div class="detail-banner">
 
@@ -359,7 +148,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 
             <div class="action-buttons">
 
-<a href="cart.php?action=add&id=<?php echo $row['bicycle_id']; ?>&qty=1"
+<a href="cart.php?action=add&id=<?php echo $row['bicycle_id']; ?>&redirect=detail"
    class="cart-btn">
     <span class="cart-icon">🛒</span>
     Thêm Giỏ Hàng
