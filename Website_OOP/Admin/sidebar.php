@@ -39,10 +39,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <div class="sidebar">
 
     <div class="logo">
-        VENUS <br>
-        <small style="font-size:12px;color:#999">
-            DASHBOARD
-        </small>
+        BIKE MARKET MANAGE
     </div>
 
     <div class="menu">
@@ -67,19 +64,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <i class="fa fa-check-circle"></i> Kiểm định xe
         </a>
 
-        <a href="transaction_management.php"
-        class="<?= ($current_page == 'transaction_management.php') ? 'active' : '' ?>">
-            <i class="fa fa-credit-card"></i> Quản lý giao dịch
-        </a>
-
         <a href="admin_contacts.php"
         class="<?= ($current_page == 'admin_contacts.php') ? 'active' : '' ?>">
             <i class="fa fa-envelope"></i> Phản hồi tin nhắn
-        </a>
-
-        <a href="system_statistics.php"
-        class="<?= ($current_page == 'system_statistics.php') ? 'active' : '' ?>">
-            <i class="fa fa-chart-bar"></i> Thống kê hệ thống
         </a>
     </div>
 

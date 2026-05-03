@@ -32,8 +32,7 @@ class PaymentService {
 
         return [
             "status" => $status,
-            "payment_id" => $payment_id,
-            "payment_url" => $payment_url ?? null
+            "payment_id" => $payment_id
         ];
     }
 

@@ -4,7 +4,7 @@
 $host = "localhost";
 $username = "root";
 $password = "";
-$database = "payment_service_db"; // 🔥 đổi thành DB của bạn
+$database = "payment_service_db"; 
 
 $conn = new mysqli($host, $username, $password, $database);
 

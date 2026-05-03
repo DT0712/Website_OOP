@@ -30,9 +30,9 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart']) && count($_SESSION['
 
         $stmt = $conn->prepare($sql);
 
-        // 🔥 BẮT LỖI QUAN TRỌNG
+        // BẮT LỖI QUAN TRỌNG
         if (!$stmt) {
-            die("❌ Lỗi SQL: " . $conn->error);
+            die("Lỗi SQL: " . $conn->error);
         }
 
         $stmt->bind_param("i", $id_sp);
