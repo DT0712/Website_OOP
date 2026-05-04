@@ -278,6 +278,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
                         </form>
                     </div>
                 </div>
+
+                <div class="profile-card mt-4">
+                    <div class="section-header">
+                        <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</div>
+                    <div class="p-3">
+                        <p class="text-muted">Bạn có thể đăng xuất khỏi tài khoản tại đây.</p>
+                        <a href="logout.php" 
+                           class="btn btn-danger"
+                           onclick="return confirm('Bạn có chắc muốn đăng xuất không?')">
+                           <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -5,7 +5,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Nếu đang dùng /payment-service/public
-$uri = str_replace('/payment-service/public', '', $uri);
+$uri = str_replace('/Website_OOP/payment-service/public', '', $uri);
 
 $controller = new PaymentController();
 
