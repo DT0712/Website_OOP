@@ -392,6 +392,20 @@ include "includes/header.php";
     margin: auto;
 }
 
+.star-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: gold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.star-icon:hover {
+    transform: scale(1.2);
+}
+
 </style>
 
 <!-- ===== BANNER ===== -->
@@ -589,6 +603,8 @@ $locations = mysqli_query($conn,"SELECT DISTINCT location FROM bicycles");
     <div class="bike-card">
         <img src="<?php echo $row['main_image']; ?>">
 
+        <span class="star-icon" onclick="addFavorite(<?php echo $row['bicycle_id']; ?>)">★</span>
+
         <div class="price">
             <?php echo number_format($row['price']); ?> VNĐ
         </div>
@@ -627,6 +643,57 @@ document.addEventListener("click", function(e) {
             d.style.display = "none";
         });
     }
+});
+
+function toggleDropdown(btn) {
+    const dropdown = btn.nextElementSibling;
+
+    document.querySelectorAll(".dropdown-content").forEach(d => {
+        if (d !== dropdown) d.style.display = "none";
+    });
+
+    dropdown.style.display =
+        dropdown.style.display === "block" ? "none" : "block";
+}
+
+document.addEventListener("click", function(e) {
+    if (!e.target.closest(".dropdown")) {
+        document.querySelectorAll(".dropdown-content").forEach(d => {
+            d.style.display = "none";
+        });
+    }
+});
+
+// ===== FAVORITE STAR =====
+function addFavorite(bikeId, starElem) {
+    fetch('services/favorite.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'bicycle_id=' + bikeId
+    })
+    .then(res => res.text())
+    .then(data => {
+        if(data.trim() === 'success') {
+            // Đổi màu vàng khi đã favorite
+            starElem.style.color = 'orange';
+            starElem.style.pointerEvents = 'none'; // không click lại
+            alert('Đã thêm vào Yêu thích!');
+        } else {
+            alert('Đã xảy ra lỗi, thử lại sau.');
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('Đã xảy ra lỗi, thử lại sau.');
+    });
+}
+
+// Gắn sự kiện cho tất cả star-icon
+document.querySelectorAll('.star-icon').forEach(star => {
+    const bikeId = star.getAttribute('data-bike-id');
+    star.addEventListener('click', function() {
+        addFavorite(bikeId, star);
+    });
 });
 </script>
 </div>

@@ -164,15 +164,17 @@ body {
 .search-suggestion-info h6 {
     font-size: 13px;
     margin: 0;
+    color: #000; 
 
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* ⭐ chống tràn chữ */
+    text-overflow: ellipsis; 
 }
 
 .search-suggestion-info p {
     font-size: 12px;
     margin: 2px 0 0;
+    color: #e60000;   
 }
 
 /* no result */

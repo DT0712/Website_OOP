@@ -1,11 +1,14 @@
-// ===== CONFIG =====
+// ================= CONFIG =================
 const API_URL = "http://localhost/Website_OOP/chat-service/public/chat/send";
 
-// ===== INIT =====
+console.log("Chat API:", API_URL);
+
+
+// ================= INIT =================
 document.addEventListener("DOMContentLoaded", () => {
     const input = document.getElementById("chat-input");
+    if(!input) return;
 
-    // gửi bằng Enter
     input.addEventListener("keypress", function(e){
         if(e.key === "Enter"){
             e.preventDefault();
@@ -14,58 +17,71 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// ===== SEND MESSAGE =====
+
+// ================= SEND MESSAGE =================
 async function sendMessage() {
+
     const input = document.getElementById("chat-input");
     const message = input.value.trim();
-
     if(message === "") return;
 
     addMessage(message, "user");
     input.value = "";
 
-    // loading tạm
     const loadingId = addMessage("Đang trả lời...", "ai", true);
 
     try {
+        console.log("📤 Sending request to Chat Service...");
+
         const response = await fetch(API_URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 message: message,
                 session_id: getSessionId()
             })
         });
 
-        // ❌ lỗi HTTP
+        console.log("📥 HTTP STATUS:", response.status);
+
+        // lấy raw text trước khi parse JSON
+        const rawText = await response.text();
+        console.log("📦 RAW RESPONSE:", rawText);
+
+        // nếu lỗi HTTP
         if(!response.ok){
-            throw new Error("HTTP error: " + response.status);
+            throw new Error("HTTP ERROR " + response.status + " → " + rawText);
         }
 
-        const data = await response.json();
+        // parse JSON thủ công để bắt lỗi
+        let data;
+        try {
+            data = JSON.parse(rawText);
+        } catch(parseErr){
+            throw new Error("JSON PARSE ERROR → " + rawText);
+        }
 
-        // xoá loading
         removeMessage(loadingId);
 
-        // ❌ API không trả đúng format
-        if(!data || !data.reply){
-            addMessage("AI service error!", "ai");
-            return;
+        if(!data.reply){
+            throw new Error("API trả JSON nhưng thiếu field 'reply'");
         }
 
         addMessage(data.reply, "ai");
 
     } catch (error) {
-        console.error("CHAT ERROR:", error);
+
+        console.error("❌ CHAT SERVICE ERROR:", error);
 
         removeMessage(loadingId);
-        addMessage("Không kết nối được Chat Service ❌", "ai");
+
+        // hiển thị lỗi thật lên UI luôn
+        addMessage("LỖI: " + error.message, "ai");
     }
 }
 
-// ===== ADD MESSAGE =====
+
+// ================= UI =================
 function addMessage(text, sender, isTemp = false){
     const box = document.getElementById("chat-messages");
 
@@ -73,7 +89,6 @@ function addMessage(text, sender, isTemp = false){
     div.className = sender === "user" ? "msg-user" : "msg-ai";
     div.innerText = text;
 
-    // dùng để xoá loading
     if(isTemp){
         const id = "msg_" + Date.now();
         div.id = id;
@@ -86,20 +101,18 @@ function addMessage(text, sender, isTemp = false){
     box.scrollTop = box.scrollHeight;
 }
 
-// ===== REMOVE TEMP MESSAGE =====
 function removeMessage(id){
     const el = document.getElementById(id);
     if(el) el.remove();
 }
 
-// ===== SESSION =====
+
+// ================= SESSION =================
 function getSessionId(){
     let session = localStorage.getItem("chat_session");
-
     if(!session){
-        session = "sess_" + Math.random().toString(36).substring(2, 10);
+        session = "sess_" + Math.random().toString(36).substring(2,10);
         localStorage.setItem("chat_session", session);
     }
-
     return session;
 }

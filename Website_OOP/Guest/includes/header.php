@@ -22,6 +22,7 @@ $avatar = $is_logged_in && !empty($_SESSION['khach_hang']['anh_dai_dien'])
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="stylesheet" href="assets/css/header.css">
+<link rel="stylesheet" href="../assets/css/header.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
@@ -143,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     searchDropdown.innerHTML = data.map(item => `
                         <div class="search-suggestion" onclick="selectSuggestion(${item.bicycle_id})">
-                            <img src="../${item.main_image}" 
+                            <img src="${item.main_image}" 
                                  onerror="this.src='assets/images/default-bike.png'">
                             <div class="search-suggestion-info">
                                 <h6>${item.name}</h6>

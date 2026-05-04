@@ -172,13 +172,17 @@ setTimeout(closeCartPopup, 10000);
 
 </div>
 
-<!-- ===== THUMBNAILS ===== -->
-<div class="thumbs-outside">
-    <?php foreach (['main_image','sub_image1','sub_image2','sub_image3'] as $img): ?>
-        <?php if (!empty($row[$img])): ?>
-            <img src="<?php echo $row[$img]; ?>" onclick="changeImage(this)">
-        <?php endif; ?>
-    <?php endforeach; ?>
+<!-- ===== THUMBNAILS FULL WIDTH ===== -->
+<div class="thumbs-wrapper">
+    <div class="thumbs-outside">
+        <?php foreach (['main_image','sub_image1','sub_image2','sub_image3'] as $img): ?>
+            <?php if (!empty($row[$img])): ?>
+                <div class="thumb-item">
+                    <img src="<?php echo $row[$img]; ?>" onclick="changeImage(this)">
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
 </div>
 
 <!-- ================= TAB ================= -->

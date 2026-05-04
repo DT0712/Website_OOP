@@ -1,13 +1,35 @@
+<!-- FLOAT BUTTON -->
+<div id="chat-bubble">💬</div>
+<!-- CHAT WIDGET -->
 <div id="chat-widget">
-    <div id="chat-header">💬 AI Support</div>
 
-    <div id="chat-body"></div>
-
-    <div id="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Type your message..." />
-        <button id="chat-send">Send</button>
+    <div id="chat-header">
+        🤖 AI Bike Support
+        <span id="chat-close">✖</span>
     </div>
+
+    <div id="chat-messages">
+        <div class="msg-ai">Xin chào 👋 Tôi có thể tư vấn xe đạp cho bạn!</div>
+    </div>
+
+    <div id="chat-input-box">
+        <input id="chat-input" placeholder="Nhập tin nhắn..." />
+        <button onclick="sendMessage()">Gửi</button>
+    </div>
+
 </div>
 
-<link rel="stylesheet" href="/Website_OOP/Website_OOP/guest/chat/chat.css">
-<script src="/Website_OOP/guest/chat/chat.js"></script>
+<script>
+const bubble = document.getElementById("chat-bubble");
+const widget = document.getElementById("chat-widget");
+const closeBtn = document.getElementById("chat-close");
+
+bubble.addEventListener("click", () => {
+    widget.style.display = "flex";
+});
+
+closeBtn.addEventListener("click", () => {
+    widget.style.display = "none";
+});
+</script>
+<script src="/Website_OOP/Website_OOP/guest/chat/chat.js"></script>

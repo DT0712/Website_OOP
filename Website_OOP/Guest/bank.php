@@ -8,7 +8,7 @@ session_start();
 $order_id = isset($_GET['order']) ? (int)$_GET['order'] : 0;
 
 if ($order_id <= 0) {
-    die("❌ Thiếu order_id");
+    die("Thiếu order_id");
 }
 
 // ===== XỬ LÝ KHI SUBMIT =====
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
     if (!in_array($action, ['success', 'fail'])) {
-        die("❌ Action không hợp lệ");
+        die("Action không hợp lệ");
     }
 
     $status = ($action === 'success') ? 'success' : 'failed';
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = curl_exec($ch);
 
     if (curl_errno($ch)) {
-        die("❌ Lỗi curl: " . curl_error($ch));
+        die("Lỗi curl: " . curl_error($ch));
     }
 
     curl_close($ch);
@@ -49,11 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // DEBUG nếu lỗi
     if (!$result) {
-        die("❌ JSON lỗi: " . $response);
+        die("JSON lỗi: " . $response);
     }
 
     if ($result['status'] !== 'success') {
-        die("❌ Payment service lỗi: " . $response);
+        die("Payment service lỗi: " . $response);
     }
 
     // ===== REDIRECT =====
