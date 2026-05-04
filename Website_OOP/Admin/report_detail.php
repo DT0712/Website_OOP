@@ -15,7 +15,7 @@ if ($bicycle_id > 0) {
         'ignore_errors' => true,
     ]];
     $resp   = @file_get_contents(
-        "http://localhost/Website_OOP/Inspection-Service/public/index.php/inspection/$bicycle_id",
+        "http://localhost:8004/inspection/$bicycle_id"
         false, stream_context_create($opts)
     );
     $result = json_decode($resp, true);

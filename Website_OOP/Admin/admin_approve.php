@@ -1,6 +1,6 @@
 <?php
 $current_page = basename($_SERVER['PHP_SELF']);
-$API_BASE = "http://localhost/Website_OOP/Inspection-Service/public/index.php";
+$API_BASE = "http://localhost:8004";
 
 if (session_status() === PHP_SESSION_NONE) session_start();
 $_SESSION['user_id']   = 99;
