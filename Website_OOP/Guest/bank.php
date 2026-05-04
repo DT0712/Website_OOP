@@ -81,9 +81,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         <h3 class="mb-4 text-primary">🏦 Cổng thanh toán ngân hàng</h3>
 
-        <p class="text-muted">
-            Bạn đang thanh toán đơn hàng 
-        </p>
+        <p class="text-muted mb-2">
+    Bạn đang thanh toán đơn hàng <strong>#<?php echo $order_id; ?></strong>
+</p>
+
+<!-- QR CODE -->
+<div class="my-3">
+    <img src="assets/images/QR.png" 
+         alt="QR Thanh toán"
+         class="img-fluid"
+         style="max-width: 220px; border-radius: 12px; border: 1px solid #eee; padding: 8px; background: #fff;">
+</div>
+
+<p class="text-muted small mb-4">
+    Quét mã QR để thanh toán bằng ứng dụng ngân hàng
+</p>
+<p class="text-success fw-semibold">
+    Nội dung chuyển khoản: ORDER_<?php echo $order_id; ?>
+</p>
 
         <hr>
 

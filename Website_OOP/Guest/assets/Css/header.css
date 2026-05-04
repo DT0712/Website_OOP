@@ -1,5 +1,9 @@
-body { margin: 0; font-family: Arial; }
+body {
+    margin: 0;
+    font-family: Arial;
+}
 
+/* ===== TOPBAR ===== */
 .topbar {
     background: #1a1a1a;
     color: #aaa;
@@ -15,42 +19,50 @@ body { margin: 0; font-family: Arial; }
     margin-right: 15px;
 }
 
-.topbar a:hover { color: #fff; }
+.topbar a:hover {
+    color: #fff;
+}
 
+/* ===== HEADER ===== */
 .header {
-    background: rgba(0,0,0,0.85);
+    background: rgba(0,0,0,0.9);
     height: 80px;
     padding: 0 60px;
     display: flex;
     align-items: center;
+    overflow: visible !important;
 }
 
+/* ===== LOGO ===== */
 .logo {
     color: white;
     font-size: 26px;
     font-weight: bold;
 }
 
-.logo span { color: red; }
+.logo span {
+    color: red;
+}
 
+/* ===== MENU ===== */
 .menu {
     display: flex;
     height: 100%;
     margin-left: auto;
     margin-right: 40px;
-    width: 700px;
-    justify-content: space-between;
+    gap: 10px; /* fix cứng width */
 }
 
 .menu a {
     color: #ddd;
     text-decoration: none;
-    padding: 0 20px;
+    padding: 0 18px;
     display: flex;
     align-items: center;
     height: 100%;
     font-size: 14px;
-    transition: 0.3s;
+    transition: 0.25s;
+    border-radius: 6px;
 }
 
 .menu a.active,
@@ -59,49 +71,153 @@ body { margin: 0; font-family: Arial; }
     color: white;
 }
 
-/* SEARCH */
+/* ===== SEARCH ===== */
 .search-box {
     position: relative;
     margin-right: 15px;
+    z-index: 9999;
+    width: 200px;
 }
 
 .search-box input {
-    padding: 6px 30px 6px 10px;
+    width: 100%;
+    padding: 6px 35px 6px 12px;
     border-radius: 20px;
     border: none;
     outline: none;
 }
 
+.search-box input:focus {
+    width: 200px;
+}
+.search-box input:focus {
+    width: 220px;
+}
+
 .search-box button {
     position: absolute;
-    right: 5px;
-    top: 3px;
+    right: 8px;
+    top: 4px;
     border: none;
     background: none;
     cursor: pointer;
 }
 
-/* ICON */
+/* ===== SEARCH DROPDOWN ===== */
+#searchDropdown {
+    position: absolute;
+    top: 100%;        /* luôn nằm dưới input */
+    left: 0;
+
+    width: 100%;      /* ⭐ QUAN TRỌNG: bằng input */
+    
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+
+    display: none;
+    z-index: 9999;
+
+    max-height: 260px;
+    overflow-y: auto;
+
+    margin-top: 5px;  /* cách input 1 chút */
+}
+
+/* bật bằng JS */
+#searchDropdown.show {
+    display: block;
+}
+
+/* item */
+.search-suggestion {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    overflow: hidden; /* ⭐ chặn tràn */
+}
+
+/* FIX ẢNH */
+.search-suggestion img {
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;     /* ⭐ quan trọng */
+    max-width: 40px;
+
+    object-fit: cover;   /* ⭐ đổi contain → cover */
+    border-radius: 6px;
+
+    flex-shrink: 0;      /* ⭐ CHỐT LỖI */
+}
+
+/* FIX TEXT KHÔNG TRÀN */
+.search-suggestion-info {
+    flex: 1;
+    overflow: hidden;
+}
+
+.search-suggestion-info h6 {
+    font-size: 13px;
+    margin: 0;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* ⭐ chống tràn chữ */
+}
+
+.search-suggestion-info p {
+    font-size: 12px;
+    margin: 2px 0 0;
+}
+
+/* no result */
+.search-no-results {
+    padding: 12px;
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+}
+
+/* ===== ICON ===== */
 .icons {
     color: white;
     display: flex;
     align-items: center;
+    position: relative;
 }
 
-.user-box{
-    display:flex;
-    align-items:center;
-    margin-right:15px;
+/* ===== USER ===== */
+.user-pill {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    text-decoration: none;
+    color: white;
+    transition: 0.2s;
 }
 
-.user-box img{
-    width:32px;
-    height:32px;
-    border-radius:50%;
-    margin-right:8px;
-    object-fit:cover;
+.user-pill:hover {
+    background: rgba(255,255,255,0.15);
 }
 
+.user-pill img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+    object-fit: cover;
+}
+
+/* ===== CART ===== */
 .cart {
     position: relative;
     margin-left: 10px;
@@ -118,40 +234,11 @@ body { margin: 0; font-family: Arial; }
     border-radius: 50%;
 }
 
+/* ===== SCROLL FIX ===== */
 html, body {
     overflow-x: hidden !important;
 }
 
-body {
-    overflow-y: scroll;  
-}
-
 body::-webkit-scrollbar {
     display: none;
-}
-
-.user-pill{
-    display:flex;
-    align-items:center;
-    margin-right:15px;
-    padding:5px 12px;
-    border-radius:20px;
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.15);
-    text-decoration:none;
-    color:white;
-    transition:0.2s;
-}
-
-.user-pill:hover{
-    background:rgba(255,255,255,0.15);
-    color:white;
-}
-
-.user-pill img{
-    width:32px;
-    height:32px;
-    border-radius:50%;
-    margin-right:8px;
-    object-fit:cover;
 }

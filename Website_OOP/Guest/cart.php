@@ -76,6 +76,8 @@ if (isset($_GET['remove'])) {
 ?>
 
 <?php if ($success_message): ?>
+
+
 <!-- POPUP ĐƠN GIẢN - SANG TRỌNG - SIÊU ĐẸP -->
 <div id="addToCartSuccess" class="position-fixed top-50 start-50 translate-middle" style="z-index: 9999;">
     <div class="bg-white rounded-3 shadow-lg border-0 text-center" style="width: 400px; max-width: 92vw; animation: fadeInUp 0.35s ease-out;">
@@ -116,6 +118,19 @@ if (isset($_GET['remove'])) {
 
 <!-- Hiệu ứng + đóng mượt -->
 <style>
+    .table td, .table th {
+    vertical-align: middle;
+    padding: 12px 8px;
+}
+
+.table th {
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.table td {
+    font-size: 14px;
+}
     @keyframes fadeInUp {
         from { opacity: 0; transform: translateY(30px); }
         to   { opacity: 1; transform: translateY(0); }
@@ -168,8 +183,9 @@ setTimeout(closeCartPopup, 10000);
         </div>
     <?php else: ?>
         <form method="POST">
-            <div class="table-responsive">
-                <table class="table table-bordered align-middle text-center">
+            <div class="table-responsive d-flex justify-content-center">
+                <div style="max-width: 1000px; width: 100%;">
+                <table class="table table-bordered align-middle text-center table-hover">
                     <thead class="table-light">
                         <tr>
                             <th>Ảnh</th>
@@ -183,13 +199,13 @@ setTimeout(closeCartPopup, 10000);
                     <tbody>
                         <?php $total = 0; ?>
                         <?php foreach ($_SESSION['cart'] as $item): ?>
-                            <?php $subtotal = $item['price'] * $item['quantity']; $total += $subtotal; ?>
+                            <?php $qty = $item['quantity'] ?? 1; $subtotal = $item['price'] * $qty;  $total += $subtotal; ?>
                             <tr>
-                                <td><img src="<?php echo htmlspecialchars($item['image']); ?>" style="width:80px; height:80px; object-fit:cover;"></td>
+                                <td><img src="<?php echo htmlspecialchars($item['image']); ?>" style="width:100px; height:auto; max-height:80px; object-fit:contain;"></td>
                                 <td class="text-start fw-bold"><?php echo htmlspecialchars($item['name']); ?></td>
                                 <td><?php echo number_format($item['price']); ?>₫</td>
                                 <td>
-                                    <input type="number" name="quantity[<?php echo $item['id']; ?>]" value="<?php echo $item['quantity']; ?>" min="1" class="form-control w-75 mx-auto">
+                                    <input type="number" name="quantity[<?php echo $item['id']; ?>]" value="<?php echo $item['quantity'] ?? 1; ?>" min="1" class="form-control text-center mx-auto" style="width:70px;">
                                 </td>
                                 <td class="fw-bold text-danger"><?php echo number_format($subtotal); ?>₫</td>
                                 <td>
@@ -202,9 +218,11 @@ setTimeout(closeCartPopup, 10000);
                     </tbody>
                 </table>
             </div>
+            </div>
 
             <div class="row justify-content-end mt-4">
-                <div class="col-md-5">
+                <div class="col-md-4 d-flex justify-content-center">
+                <div style="width: 100%; max-width: 350px;">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
@@ -217,6 +235,7 @@ setTimeout(closeCartPopup, 10000);
                             <a href="checkout.php" class="btn btn-success w-100 btn-lg">Thanh toán</a>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </form>
