@@ -128,7 +128,7 @@ $baseURL = "http://localhost:8000/";
 
     <script>
 
-        const API = "http://localhost/website_oop/user-service/public/users";
+        const API = "http://localhost:8000/api/user/users";
 
         function getUserId() {
             const params = new URLSearchParams(window.location.search);
@@ -150,7 +150,7 @@ $baseURL = "http://localhost:8000/";
 
             document.getElementById("avatar").src =
                 user.anh_dai_dien
-                ? "http://localhost/website_oop/file-service/storage/" + user.anh_dai_dien
+                ? "http://localhost:8000/api/file/storage/" + user.anh_dai_dien
                 : "https://i.pravatar.cc/100";
         }
 

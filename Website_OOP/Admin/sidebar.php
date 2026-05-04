@@ -49,7 +49,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <i class="fa fa-chart-line"></i> Dashboard
         </a>
 
-        <a href="index1.php?page=user_management"
+        <a href="http://localhost:3000/Admin/user_page.php?page=user_management"
         class="<?= ($current_page == 'user_management.php') ? 'active' : '' ?>">
             <i class="fa fa-users"></i> Quản lý người dùng
         </a>

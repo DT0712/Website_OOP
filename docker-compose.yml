@@ -23,6 +23,82 @@ services:
     networks:
       - website_oop_net
 
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8000:80"
+    depends_on:
+      - user-service
+      - file-service
+    networks:
+      - app-network
+
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    ports:
+      - "9001:80"
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASS: root
+      DB_NAME: bike_market
+    networks:
+      - app-network
+
+  file-service:
+    build: ./file-service
+    container_name: file-service
+    ports:
+      - "9002:80"
+    volumes:
+      - ./file-service/storage:/var/www/html/storage
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bike_market
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+  frontend:
+    image: php:8.2-apache
+    ports:
+      - "3000:80"
+    volumes:
+      - ./website_oop:/var/www/html
+
 networks:
   website_oop_net:
     driver: bridge
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:

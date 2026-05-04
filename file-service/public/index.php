@@ -4,20 +4,29 @@ require_once '../app/controllers/FileController.php';
 $controller = new FileController();
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
-// nếu request tới uploads
-if (strpos($uri, '/uploads/') === 0) {
+if (strpos($uri, '/storage/') !== false) {
 
-    $file = __DIR__ . '/../storage' . $uri;
+    $parts = explode('/storage/', $uri);
 
-    if (file_exists($file)) {
-        header('Content-Type: ' . mime_content_type($file));
-        readfile($file);
+    if (count($parts) < 2) {
+        http_response_code(400);
+        echo "Invalid path";
         exit;
-    } else {
+    }
+
+    $path = $parts[1];
+
+    $file = __DIR__ . '/../storage/' . $path;
+
+    if (!file_exists($file)) {
         http_response_code(404);
         echo "File not found";
         exit;
     }
+
+    header('Content-Type: ' . mime_content_type($file));
+    readfile($file);
+    exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_GET['action'] ?? '') === 'upload') {
@@ -98,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && ($_GET['action'] ?? '') === 'list') 
     if ($type === 'suggest') {
 
         $dir = __DIR__ . '/../storage/uploads/avatars/suggest/';
-        $baseUrl = "http://localhost/website_oop/file-service/storage/uploads/avatars/suggest/";
+        $baseUrl = "http://localhost:8000/api/file/storage/";
 
         if (!is_dir($dir)) {
             echo json_encode([
@@ -117,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && ($_GET['action'] ?? '') === 'list') 
         $result = array_map(function($file) use ($baseUrl) {
             return [
                 "name" => $file,
-                "url" => $baseUrl . $file,
+                "url" => $baseUrl . "uploads/avatars/suggest/" . $file,
                 "path" => "uploads/avatars/suggest/" . $file
             ];
         }, $images);

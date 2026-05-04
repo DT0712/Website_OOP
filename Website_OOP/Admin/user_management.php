@@ -3,6 +3,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
 $baseURL = "http://localhost:8000/";
 ?>
 
+<?php include 'sidebar.php'; ?>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -12,51 +14,19 @@ body {
     background: #f5f7fb;
 }
 
-/* Sidebar */
 .sidebar {
-    width: 250px;
-    background: white;
-    height: 100vh;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,.05);
-    position: fixed;
+    position: fixed !important;
     top: 0;
     left: 0;
+    height: 100vh;
+    z-index: 1000;
 }
 
-.logo {
-    font-size: 22px;
-    font-weight: 700;
-    color: #5b5ce2;
-    margin-bottom: 30px;
-}
-
-.menu a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 8px;
-
-    text-decoration: none;
-    color: #555;
-    font-size: 14px;
-
-    transition: 0.2s;
-}
-
-.menu a.active,
-.menu a:hover {
-    background: linear-gradient(90deg,#6c5ce7,#5b5ce2);
-    color: white;
-}
-
-/* Main */
 .main {
     margin-left: 260px;
-    padding: 20px;
+    padding: 30px;
+    background: #f5f6fa;
+    min-height: 100vh;
 }
 
 /* Card */
@@ -442,7 +412,7 @@ body {
 
     async function loadUsers() {
 
-        let res = await fetch("http://localhost/website_oop/user-service/public/users");
+        let res = await fetch("http://localhost:8000/api/user/users");
         let data = await res.json();
 
         let tbody = document.querySelector("#userTable tbody");
@@ -452,7 +422,7 @@ body {
         data.data.forEach(user => {
 
             let avatar = user.anh_dai_dien 
-                ? "http://localhost/website_oop/file-service/public/" + user.anh_dai_dien
+                ? "http://localhost:8000/api/file/storage/" + user.anh_dai_dien
                 : "https://i.pravatar.cc/40";
 
             let row = `
@@ -632,7 +602,7 @@ body {
         try {
             showLoading();
 
-            let res = await fetch(`http://localhost/website_oop/user-service/public/users/${deleteId}`, {
+            let res = await fetch(`http://localhost:8000/api/user/users/${deleteId}`, {
                 method: "DELETE"
             });
 

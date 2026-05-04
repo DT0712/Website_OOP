@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Forward tất cả /api/... vào api-gateway
+RewriteRule ^api/(.*)$ api-gateway/public/$1 [L,QSA]

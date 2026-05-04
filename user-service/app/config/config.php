@@ -1,9 +1,9 @@
 <?php
 return [
     'db' => [
-        'host' => 'localhost',
-        'dbname' => 'bike_market',
-        'user' => 'root',
-        'pass' => ''
+        'host' => getenv('DB_HOST') ?: 'mysql',
+        'user' => getenv('DB_USER') ?: 'root',
+        'pass' => getenv('DB_PASS') ?: 'root',
+        'dbname' => getenv('DB_NAME') ?: 'bike_market'
     ]
 ];

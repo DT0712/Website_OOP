@@ -257,7 +257,7 @@ $baseURL = "http://localhost:8000/";
     <script>
 
         async function loadSuggestAvatar() {
-            let res = await fetch("http://localhost/website_oop/file-service/public/upload?action=list&type=suggest");
+            let res = await fetch("http://localhost:8000/api/file/upload?action=list&type=suggest");
             let data = await res.json();
 
             let html = "";
@@ -317,33 +317,50 @@ $baseURL = "http://localhost:8000/";
             let avatarPath = null;
             let coverPath = null;
 
+            console.log("START SUBMIT");
+
             // Upload avatar
             if (avatarFile) {
+                console.log("Uploading avatar...");
                 let fd = new FormData();
                 fd.append("file", avatarFile);
 
-                let res = await fetch("http://localhost/website_oop/file-service/public/upload?action=upload&type=avatar", {
+                let res = await fetch("http://localhost:8000/api/file/upload?action=upload&type=avatar", {
                     method: "POST",
                     body: fd
                 });
 
                 let data = await res.json();
-                avatarPath = data.path;
+                if (data.status === "success") {
+                    avatarPath = data.path;
+                } else {
+                    alert("Upload avatar lỗi: " + (data.error || "Unknown"));
+                    return;
+                }
             }
 
             // Upload cover
             if (coverFile) {
+                console.log("Uploading cover...");
+                console.log("coverFile:", coverFile);
                 let fd = new FormData();
                 fd.append("file", coverFile);
 
-                let res = await fetch("http://localhost/website_oop/file-service/public/upload?action=upload&type=cover", {
+                let res = await fetch("http://localhost:8000/api/file/upload?action=upload&type=cover", {
                     method: "POST",
                     body: fd
                 });
 
-                let data = await res.json();
-                coverPath = data.path;
+                let data = await res.json();  
+                if (data.status === "success") {
+                    coverPath = data.path;
+                } else {
+                    alert("Upload cover lỗi: " + (data.error || "Unknown"));
+                    return;
+                }
             }
+
+            console.log("READY TO CREATE USER");
 
             // Gửi dữ liệu user
             let userData = new FormData();
@@ -362,14 +379,16 @@ $baseURL = "http://localhost:8000/";
             }
             if (coverPath) userData.append("anh_nen", coverPath);
 
-            let res = await fetch("http://localhost/website_oop/user-service/public/users", {
+            let res = await fetch("http://localhost:8000/api/user/users", {
                 method: "POST",
                 body: userData
             });
 
             let result = await res.json();
 
-            if (result.status === "success") {
+            if (res.ok && result.status === "success") {
+                console.log("USER RESPONSE:", result);
+                console.log("HTTP STATUS:", res.status);
                 let successModal = new bootstrap.Modal(document.getElementById('successModal'));
                 successModal.show();
 
@@ -377,8 +396,15 @@ $baseURL = "http://localhost:8000/";
                     window.location.href = "user_page.php?page=user_management";
                 });
             } else {
+                console.log("USER RESPONSE:", result);
+                console.log("HTTP STATUS:", res.status);
                 alert(result.error || "Có lỗi xảy ra");
             }
+        });
+
+        document.querySelector("#successModal .btn-success")
+        .addEventListener("click", () => {
+            window.location.href = "user_page.php?page=user_management";
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

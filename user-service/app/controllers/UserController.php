@@ -69,15 +69,17 @@ class UserController {
 
         $result = $this->service->update($id, $data);
 
-        if ($result) {
-            echo json_encode([
-                "status" => "success",
-                "message" => "Updated"
-            ]);
-        } else {
-            http_response_code(500);
-            echo json_encode(["error" => "Update failed"]);
+        // Kiểm tra nếu có lỗi
+        if (isset($result['error'])) {
+            http_response_code(400);
+            echo json_encode(["error" => $result['error']]);
+            return;
         }
+
+        echo json_encode([
+            "status" => "success",
+            "message" => "Updated"
+        ]);
     }
 
     public function delete($id){
@@ -113,6 +115,15 @@ class UserController {
 
         $data = $_POST;
 
+        // If no POST data, try to parse raw input (for multipart/form-data)
+        if (empty($data)) {
+            $rawInput = file_get_contents("php://input");
+            if ($rawInput) {
+                // Parse multipart data manually or use parse_str for urlencoded
+                parse_str($rawInput, $data);
+            }
+        }
+
         if (!$data) {
             http_response_code(400);
             echo json_encode(["error" => "No data"]);
@@ -130,25 +141,34 @@ class UserController {
 
         // nhận path từ FE
         $data['anh_dai_dien'] = $data['anh_dai_dien'] ?? null;
-        if ($data['anh_dai_dien'] && !preg_match('#^uploads/avatars/(suggest/)?[a-zA-Z0-9._-]+$#', $data['anh_dai_dien'])) {
-            echo json_encode(["error" => "Avatar không hợp lệ"]);
+        if ($data['anh_dai_dien'] && !preg_match('#^uploads/avatars/(suggest/)?[a-zA-Z0-9._\-]+$#', $data['anh_dai_dien'])) {
+            http_response_code(400);
+            echo json_encode(["error" => "Avatar không hợp lệ: " . $data['anh_dai_dien']]);
             exit;
         }
 
-        $data['anh_nen']      = $data['anh_nen'] ?? null;
+        $data['anh_nen'] = $data['anh_nen'] ?? null;
+        if ($data['anh_nen'] && !preg_match('#^uploads/covers/[a-zA-Z0-9._\-]+$#', $data['anh_nen'])) {
+            http_response_code(400);
+            echo json_encode(["error" => "Cover không hợp lệ: " . $data['anh_nen']]);
+            exit;
+        }
 
         // lưu DB
         $result = $this->service->create($data);
 
-        if ($result) {
-            echo json_encode([
-                "status" => "success",
-                "message" => "User created"
-            ]);
-        } else {
-            http_response_code(500);
-            echo json_encode(["error" => "Create failed"]);
+        // Kiểm tra nếu có lỗi
+        if (isset($result['error'])) {
+            http_response_code(400);
+            echo json_encode(["error" => $result['error']]);
+            exit;
         }
+
+        echo json_encode([
+            "status" => "success",
+            "message" => "User created"
+        ]);
+        exit;
     }
 
     public function uploadAvatar() {
