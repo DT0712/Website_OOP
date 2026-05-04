@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  payment-service:
+    build: ./payment-service
+    container_name: website_oop_payment
+    ports:
+      - "8002:80"
+    volumes:
+      - ./payment-service:/var/www/html:delegated
+    restart: unless-stopped
+    networks:
+      - website_oop_net
+
+  chat-service:
+    build: ./chat-service
+    container_name: website_oop_chat
+    ports:
+      - "8003:80"
+    volumes:
+      - ./chat-service:/var/www/html:delegated
+    restart: unless-stopped
+    networks:
+      - website_oop_net
+
+networks:
+  website_oop_net:
+    driver: bridge
