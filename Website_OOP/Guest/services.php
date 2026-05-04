@@ -90,13 +90,6 @@ include "includes/header.php";
 
         <div class="service-grid">
 
-            <a href="services/buyer_order.php" class="app-card">
-                <div class="icon-circle">
-                    <i class="fa fa-bicycle"></i>
-                </div>
-                <h3>Quản lý sản phẩm</h3>
-            </a>
-
             <a href="services/chat.php" class="app-card">
                 <div class="icon-circle">
                     <i class="fa fa-comments"></i>

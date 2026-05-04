@@ -1,84 +1,179 @@
 <?php
 require_once "../config.php";
-session_start();
 
-// Giả lập user đang đăng nhập
+// ===== FIX SESSION =====
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $user_id = $_SESSION['user_id'] ?? 1;
 
-// Xử lý AJAX POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bicycle_id'])) {
+// ===== AJAX =====
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    ob_clean();
+    header('Content-Type: application/json');
+
+    if (!isset($_POST['bicycle_id'])) {
+        echo json_encode(["status" => "error", "message" => "Missing ID"]);
+        exit;
+    }
+
     $bicycle_id = intval($_POST['bicycle_id']);
 
-    // Chặn trùng lặp
-    $stmt = $conn->prepare("INSERT IGNORE INTO favorites (user_id,bicycle_id) VALUES (?,?)");
+    $stmt = $conn->prepare("
+        INSERT INTO favorites (user_id, bicycle_id)
+        VALUES (?, ?)
+        ON DUPLICATE KEY UPDATE bicycle_id = bicycle_id
+    ");
+
+    if (!$stmt) {
+        echo json_encode(["status" => "error", "message" => $conn->error]);
+        exit;
+    }
+
     $stmt->bind_param("ii", $user_id, $bicycle_id);
 
-    if($stmt->execute()){
-        echo "success";
+    if ($stmt->execute()) {
+        echo json_encode(["status" => "success"]);
     } else {
-        echo "error";
+        echo json_encode(["status" => "error", "message" => $stmt->error]);
     }
+
     exit;
 }
 
-// Nếu là GET, hiển thị danh sách favorite
+// ===== LẤY DANH SÁCH FAVORITE =====
 $result = $conn->query("
-    SELECT f.*, b.name, b.main_image, b.price
+    SELECT f.*, b.name, b.main_image, b.price, b.frame_size, b.location, b.condition_status
     FROM favorites f
     LEFT JOIN bicycles b ON f.bicycle_id = b.bicycle_id
     WHERE f.user_id = $user_id
     ORDER BY f.created_at DESC
 ");
+
+include "../includes/header.php";
 ?>
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<title>Yêu thích</title>
 <style>
-body { font-family: Arial; background: #f8f9fa; padding: 20px; }
-h1 { text-align: center; color: red; }
-.fav-list { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1200px; margin: auto; }
-.fav-card { background: #fff; border-radius: 10px; overflow: hidden; width: 220px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); position: relative; }
-.fav-card img { width: 100%; height: 150px; object-fit: cover; }
-.fav-card h3 { margin: 10px; font-size: 16px; }
-.fav-card .price { margin: 0 10px 10px; color: orange; font-weight: bold; }
+.page-title {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 32px;
+    color: red;
+}
+
+.fav-container {
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* CARD NGANG */
+.fav-item {
+    display: flex;
+    gap: 20px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.fav-item:hover {
+    transform: translateY(-5px);
+}
+
+/* IMAGE */
+.fav-img {
+    width: 180px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* INFO */
+.fav-info {
+    flex: 1;
+}
+
+.fav-info h3 {
+    margin: 0 0 10px;
+}
+
+/* PRICE */
+.price {
+    color: orange;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* META */
+.meta {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+/* BUTTON */
+.btn-view {
+    display: inline-block;
+    padding: 8px 15px;
+    background: red;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-view:hover {
+    background: darkred;
+}
+
+.empty {
+    text-align: center;
+    color: #777;
+    font-size: 18px;
+}
 </style>
-</head>
-<body>
 
-<h1>Danh sách Yêu thích</h1>
+<h1 class="page-title">Danh sách Yêu thích</h1>
 
-<div class="fav-list">
-<?php while($row = $result->fetch_assoc()): ?>
-    <div class="fav-card">
-        <img src="<?php echo $row['main_image']; ?>">
-        <h3><?php echo htmlspecialchars($row['name']); ?></h3>
-        <div class="price"><?php echo number_format($row['price']); ?> VNĐ</div>
-    </div>
-<?php endwhile; ?>
+<div class="fav-container">
+<?php if($result && $result->num_rows > 0): ?>
+    
+    <?php while($row = $result->fetch_assoc()): ?>
+        <div class="fav-item">
+
+            <!-- IMAGE -->
+            <img src="../<?php echo $row['main_image']; ?>" class="fav-img">
+
+            <!-- INFO -->
+            <div class="fav-info">
+                <h3><?php echo htmlspecialchars($row['name']); ?></h3>
+
+                <div class="price">
+                    <?php echo number_format($row['price']); ?> VNĐ
+                </div>
+
+                <div class="meta">
+                    Size: <?php echo $row['frame_size']; ?> |
+                    Location: <?php echo $row['location']; ?> |
+                    Condition: <?php echo $row['condition_status']; ?>
+                </div>
+
+                <a href="../detail.php?id=<?php echo $row['bicycle_id']; ?>" class="btn-view">
+                    Xem chi tiết
+                </a>
+            </div>
+
+        </div>
+    <?php endwhile; ?>
+
+<?php else: ?>
+    <p class="empty">Chưa có sản phẩm yêu thích</p>
+<?php endif; ?>
 </div>
 
-<script>
-// Hàm dùng cho bikes.php: thêm favorite bằng AJAX
-function addFavorite(bikeId) {
-    fetch('favorite.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'bicycle_id=' + bikeId
-    })
-    .then(res => res.text())
-    .then(data => {
-        if(data === 'success') {
-            alert('Đã thêm vào Yêu thích!');
-        } else {
-            alert('Đã xảy ra lỗi, thử lại.');
-        }
-    })
-    .catch(err => console.error(err));
-}
-</script>
-
-</body>
-</html>
+<?php include "../includes/footer.php"; ?>
