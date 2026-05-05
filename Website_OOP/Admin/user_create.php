@@ -257,7 +257,7 @@ $baseURL = "http://localhost:8000/";
     <script>
 
         async function loadSuggestAvatar() {
-            let res = await fetch("http://localhost:8000/api/file/upload?action=list&type=suggest");
+            let res = await fetch("http://localhost/website_oop/file-service/public/upload?action=list&type=suggest");
             let data = await res.json();
 
             let html = "";
@@ -325,7 +325,7 @@ $baseURL = "http://localhost:8000/";
                 let fd = new FormData();
                 fd.append("file", avatarFile);
 
-                let res = await fetch("http://localhost:8000/api/file/upload?action=upload&type=avatar", {
+                let res = await fetch("http://localhost/website_oop/file-service/public/upload?action=upload&type=avatar", {
                     method: "POST",
                     body: fd
                 });
@@ -346,7 +346,7 @@ $baseURL = "http://localhost:8000/";
                 let fd = new FormData();
                 fd.append("file", coverFile);
 
-                let res = await fetch("http://localhost:8000/api/file/upload?action=upload&type=cover", {
+                let res = await fetch("http://localhost/website_oop/file-service/public/upload?action=upload&type=cover", {
                     method: "POST",
                     body: fd
                 });
@@ -379,7 +379,7 @@ $baseURL = "http://localhost:8000/";
             }
             if (coverPath) userData.append("anh_nen", coverPath);
 
-            let res = await fetch("http://localhost:8000/api/user/users", {
+            let res = await fetch("http://localhost/website_oop/user-service/public/users", {
                 method: "POST",
                 body: userData
             });

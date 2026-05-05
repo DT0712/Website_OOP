@@ -6,8 +6,13 @@ class Router {
 
     public static function handle() {
 
-        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $uri = trim($uri, '/');
+        // $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        // $uri = trim($uri, '/');
+
+        $uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+
+        $parts = explode('public/', $uri);
+        $uri = end($parts);
 
         $method = $_SERVER['REQUEST_METHOD'];
 

@@ -275,48 +275,6 @@ body {
 }
 </style>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-
-    <div class="logo">
-        VENUS <br>
-        <small style="font-size:12px;color:#999">DASHBOARD</small>
-    </div>
-
-    <div class="menu">
-
-        <a href="dashboard.php" class="<?= ($current_page == 'dashboard.php') ? 'active' : '' ?>">
-            <i class="fa fa-chart-line"></i> Dashboard
-        </a>
-
-        <a href="user_page.php?page=user_management" class="<?= ($_GET['page'] ?? '') == 'user_management' ? 'active' : '' ?>">
-            <i class="fa fa-users"></i> Quản lý người dùng
-        </a>
-
-        <a href="bicycle_management.php" class="<?= ($current_page == 'bicycle_management.php') ? 'active' : '' ?>">
-            <i class="fa fa-bicycle"></i> Quản lý xe đạp
-        </a>
-
-        <a href="inspection_management.php" class="<?= ($current_page == 'inspection_management.php') ? 'active' : '' ?>">
-            <i class="fa fa-check-circle"></i> Kiểm định xe
-        </a>
-
-        <a href="transaction_management.php" class="<?= ($current_page == 'transaction_management.php') ? 'active' : '' ?>">
-            <i class="fa fa-credit-card"></i> Giao dịch
-        </a>
-
-        <a href="message_management.php" class="<?= ($current_page == 'message_management.php') ? 'active' : '' ?>">
-            <i class="fa fa-envelope"></i> Tin nhắn
-        </a>
-
-        <a href="system_statistics.php" class="<?= ($current_page == 'system_statistics.php') ? 'active' : '' ?>">
-            <i class="fa fa-chart-bar"></i> Thống kê
-        </a>
-
-    </div>
-
-</div>
-
 <!-- MAIN -->
 <div class="main">
 
@@ -412,7 +370,7 @@ body {
 
     async function loadUsers() {
 
-        let res = await fetch("http://localhost:8000/api/user/users");
+        let res = await fetch("http://localhost/website_oop/user-service/public/users");
         let data = await res.json();
 
         let tbody = document.querySelector("#userTable tbody");
@@ -422,7 +380,7 @@ body {
         data.data.forEach(user => {
 
             let avatar = user.anh_dai_dien 
-                ? "http://localhost:8000/api/file/storage/" + user.anh_dai_dien
+                ? "http://localhost/website_oop/file-service/storage/" + user.anh_dai_dien
                 : "https://i.pravatar.cc/40";
 
             let row = `
@@ -602,7 +560,7 @@ body {
         try {
             showLoading();
 
-            let res = await fetch(`http://localhost:8000/api/user/users/${deleteId}`, {
+            let res = await fetch(`http://localhost/website_oop/user-service/public/users/${deleteId}`, {
                 method: "DELETE"
             });
 

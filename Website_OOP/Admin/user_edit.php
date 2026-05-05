@@ -278,7 +278,7 @@ let currentAvatar = null;
 let oldAvatar = null;
 let currentCover = null;
 
-const API = "http://localhost:8000/api/user/users";
+const API = "http://localhost/website_oop/user-service/public/users";
 
 function getUserId() {
     const params = new URLSearchParams(window.location.search);
@@ -315,18 +315,18 @@ async function loadUser() {
 
     document.getElementById("coverPreview").src =
         user.anh_nen
-        ? "http://localhost:8000/api/file/storage/" + user.anh_nen
+        ? "http://localhost/website_oop/file-service/storage/" + user.anh_nen
         : "https://via.placeholder.com/800x200";
 
     document.getElementById("preview").src =
         user.anh_dai_dien
-        ? "http://localhost:8000/api/file/storage/" + user.anh_dai_dien
+        ? "http://localhost/website_oop/file-service/storage/" + user.anh_dai_dien
         : "https://i.pravatar.cc/150";
 }
 
 async function loadAvatarSuggest() {
 
-    let res = await fetch("http://localhost:8000/api/file/upload?action=list&type=suggest");
+    let res = await fetch("http://localhost/website_oop/file-service/public/upload?action=list&type=suggest");
     let data = await res.json();
 
     let container = document.getElementById("avatarList");
@@ -387,7 +387,7 @@ document.getElementById("editForm").addEventListener("submit", async function(e)
             fd.append("old_path", oldAvatar);
         }
 
-        let res = await fetch("http://localhost:8000/api/file/upload?action=upload&type=avatar", {
+        let res = await fetch("http://localhost/website_oop/file-service/public/upload?action=upload&type=avatar", {
             method: "POST",
             body: fd
         });
@@ -398,7 +398,7 @@ document.getElementById("editForm").addEventListener("submit", async function(e)
         avatarPath = currentAvatar;
 
         if (oldAvatar && oldAvatar !== currentAvatar) {
-            await fetch("http://localhost:8000/api/file/delete?file=" 
+            await fetch("http://localhost/website_oop/file-service/public/upload?action=delete&file=" 
                 + encodeURIComponent(oldAvatar));
         }
     }
@@ -412,7 +412,7 @@ document.getElementById("editForm").addEventListener("submit", async function(e)
             fd.append("old_path", currentCover);
         }
         
-        let res = await fetch("http://localhost:8000/api/file/upload?action=upload&type=cover", {
+        let res = await fetch("http://localhost/website_oop/file-service/public/upload?action=upload&type=cover", {
             method: "POST",
             body: fd
         });

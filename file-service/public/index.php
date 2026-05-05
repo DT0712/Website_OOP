@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && ($_GET['action'] ?? '') === 'list') 
     if ($type === 'suggest') {
 
         $dir = __DIR__ . '/../storage/uploads/avatars/suggest/';
-        $baseUrl = "http://localhost:8000/api/file/storage/";
+        $baseUrl = "http://localhost/website_oop/file-service/storage/";
 
         if (!is_dir($dir)) {
             echo json_encode([

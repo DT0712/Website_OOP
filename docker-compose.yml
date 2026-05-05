@@ -55,32 +55,33 @@ services:
     ports:
       - "8004:80"
     depends_on:
-      - inspection-db
+      - mysql
     environment:
-      DB_HOST: inspection-db
+      DB_HOST: mysql
       DB_NAME: db_inspection
       DB_USER: root
-      DB_PASS: root123
+      DB_PASS: root
     restart: unless-stopped
     networks:
       - website_oop_net
       - app-network
 
-  inspection-db:
-    image: mysql:8.0
-    container_name: inspection-db
-    ports:
-      - "3308:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: db_inspection
-    volumes:
-      - ./Inspection-Service/db_inspection.sql:/docker-entrypoint-initdb.d/init.sql
-      - inspection_db_data:/var/lib/mysql
-    restart: unless-stopped
-    networks:
-      - website_oop_net
-      - app-network
+  # inspection-db:
+  #   image: mysql:8.0
+  #   container_name: inspection-db
+  #   ports:
+  #     - "3308:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root123
+  #     MYSQL_DATABASE: db_inspection
+  #   volumes:
+  #     - ./Inspection-Service/db_inspection.sql:/docker-entrypoint-initdb.d/init.sql
+  #     - inspection_db_data:/var/lib/mysql
+  #   restart: unless-stopped
+  #   networks:
+  #     - website_oop_net
+  #     - app-network
+  
   file-service:
     build: ./file-service
     container_name: file-service

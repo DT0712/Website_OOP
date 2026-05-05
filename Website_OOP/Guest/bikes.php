@@ -100,7 +100,7 @@ FROM bicycles b
 LEFT JOIN categories c ON b.category_id = c.id
 LEFT JOIN brands br ON b.brand_id = br.id
 $where_sql
-ORDER BY b.bicycle_id DESC
+ORDER BY b.bicycle_id ASC
 ";
 
 $result = mysqli_query($conn, $sql);
