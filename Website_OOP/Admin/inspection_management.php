@@ -1,11 +1,11 @@
 <?php
-// require_once __DIR__ . "/config.php";
+require_once __DIR__ . "/config.php";
 
 if (session_status() === PHP_SESSION_NONE) session_start();
 $current_page = basename($_SERVER['PHP_SELF']);
 
 // ── Định nghĩa base URL của InspectionService ────────────
-$API_BASE = "http://localhost:8004";
+$API_BASE = "http://localhost/Website_OOP/Inspection-Service/public/index.php";
 // ── Gọi API GET /inspection/stats ───────────────────────
 // Thay vì: $conn->query("SELECT status, COUNT(*) ...")
 $resp = @file_get_contents(

@@ -12,57 +12,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once __DIR__ . '/../app/helpers/Response.php';
 require_once __DIR__ . '/../app/controllers/InspectionController.php';
 
-$method    = $_SERVER['REQUEST_METHOD'];
-$full_path = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+$method = $_SERVER['REQUEST_METHOD'];
 
-$base_with    = '/Website_OOP/Inspection-Service/public/index.php';
-$base_without = '/Website_OOP/Inspection-Service/public';
+/**
+ * 🔥 LẤY PATH CHUẨN (FIX TOÀN BỘ LỖI TRƯỚC)
+ */
+$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-if (str_starts_with($full_path, $base_with)) {
-    $path = substr($full_path, strlen($base_with));
-} elseif (str_starts_with($full_path, $base_without)) {
-    $path = substr($full_path, strlen($base_without));
-} else {
-    $path = $full_path;
-}
+// loại bỏ base path nếu có
+$basePath = '/Website_OOP/Inspection-Service/public';
+$path = str_replace($basePath, '', $requestUri);
 
-if (empty($path) || $path === '/') {
+// loại bỏ index.php nếu có
+$path = str_replace('/index.php', '', $path);
+
+// chuẩn hóa path (quan trọng)
+$path = '/' . trim($path, '/');
+
+/**
+ * Debug nếu cần
+ */
+// echo json_encode(['path' => $path, 'method' => $method]); exit;
+
+/**
+ * ROUTING
+ */
+$controller = new InspectionController();
+
+// Root
+if ($path === '/' || $path === '') {
     Response::success("Inspection Service đang chạy", ['version' => '1.0'], 200);
 }
 
-
-$controller = new InspectionController();
-
-// ── POST /inspection/report — Inspector tạo báo cáo
-if ($method === 'POST' && $path === '/inspection/report') {
+// POST /inspection/report
+elseif ($method === 'POST' && $path === '/inspection/report') {
     $controller->createReport();
 }
 
-// ── GET /inspection/stats — Thống kê + recent (cho inspection_management)
+// GET /inspection/stats
 elseif ($method === 'GET' && $path === '/inspection/stats') {
     $controller->getStats();
 }
 
-// ── GET /inspection/reports — Danh sách tất cả (cho admin_approve)
+// GET /inspection/reports
 elseif ($method === 'GET' && $path === '/inspection/reports') {
     $controller->getAllReports();
 }
 
-// ── GET /inspection/{bicycleId} — Báo cáo theo xe (cho report_detail)
+// GET /inspection/{id}
 elseif ($method === 'GET' && preg_match('#^/inspection/(\d+)$#', $path, $m)) {
     $controller->getByBicycle((int)$m[1]);
 }
 
-// ── PUT /inspection/approve — Admin duyệt
+// PUT /inspection/approve
 elseif ($method === 'PUT' && $path === '/inspection/approve') {
     $controller->approveReport();
 }
 
-// ── PUT /inspection/reject — Admin từ chối
+// PUT /inspection/reject
 elseif ($method === 'PUT' && $path === '/inspection/reject') {
     $controller->rejectReport();
 }
 
+// NOT FOUND
 else {
     Response::error("Endpoint không tồn tại: {$method} {$path}", 404);
 }
